@@ -1,22 +1,25 @@
 import React from "react";
 import { Footer } from "../Footer/Footer";
-import { MainComp } from "./styles";
+import { LoginPageStyle, MainComp } from "./styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Header } from "../Header/Header";
+import { Header } from "../Header";
 
-import "./../../css/reset.css";
-import { LoginPage } from "../LoginPage/LoginPage";
+import "./../../css/global.css";
+import { SignInForm } from "../SignInForm/SigmForm";
 
 export const App: React.FC = () => (
   <MainComp>
     <Header />
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <LoginPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <LoginPageStyle>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <SignInForm />
+          </Route>
+          <Route exact path="/registration"></Route>
+        </Switch>
+      </BrowserRouter>
+    </LoginPageStyle>
     <Footer />
   </MainComp>
 );

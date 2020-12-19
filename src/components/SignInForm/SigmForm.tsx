@@ -1,5 +1,11 @@
 import React from "react";
-import { FormContainer, FormText, FormTextSign } from "./styles";
+import {
+  Button,
+  FormContainer,
+  FormText,
+  FormTextSign,
+  InputForm,
+} from "./styles";
 import { Form, Field } from "react-final-form";
 
 export const SignInForm: React.FC = () => (
@@ -12,37 +18,18 @@ export const SignInForm: React.FC = () => (
       onSubmit={() => {}}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email</label>
-
-            {/* width: 100%;
-height: 50px;
-border-radius: 4px;
-background-color: #eff1f3;
-padding: 6px 12px 10px 37px;
-font-size: 16px;
-line-height: 1.13;
-font-weight: 400;
-color: #667784;
-border: 1px solid transparent; */}
-            <Field
-              name="firstName"
-              component="input"
-              type="text"
-              placeholder="Email"
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <Field
-              name="password"
-              component="input"
-              type="text"
-              placeholder="Password"
-            />
-          </div>
+          <Field name="Email">
+            {(p) => <InputForm type="text" placeholder={p.input.name} />}
+          </Field>
+          <Field name="Password">
+            {(p) => <InputForm type="text" placeholder={p.input.name} />}
+          </Field>
+          <Button>Sign In</Button>
+          <a href="forgotpassword">Forgotten password?</a>
         </form>
       )}
     />
+    <p>Don’t have an account?</p>
+    <a href="registration">Sign Up</a>
   </FormContainer>
 );

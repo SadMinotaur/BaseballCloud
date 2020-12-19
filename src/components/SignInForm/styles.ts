@@ -5,7 +5,6 @@ export const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  width: 100%;
   max-width: 450px;
   height: 400px;
   background-color: hsla(0, 0%, 100%, 0.8);
@@ -25,5 +24,32 @@ export const FormText = styled.div`
 export const FormTextSign = styled.div`
   text-align: center;
   font-size: 16px;
-  margin: 8px;
+  margin: 8px 0 40px 0;
+`;
+
+export const InputForm = styled.input`
+  width: 99%;
+  height: 50px;
+  border-radius: 4px;
+  background-color: #eff1f3;
+  /* padding: 6px 12px 10px 37px; */
+  font-size: 16px;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #667784;
+  border: 1px solid transparent;
+  margin-bottom: 20px;
+`;
+
+export const Button = styled.button`
+  width: 100%;
+  height: 52px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  border: solid 1px transparent;
+  background-color: #48bbff;
+  border-radius: 5px;
+  &:hover {
+    box-shadow: 0 0 4px 0 rgba(72, 187, 255, 0.8);
+  }
 `;
