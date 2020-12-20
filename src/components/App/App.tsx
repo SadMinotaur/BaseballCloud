@@ -13,7 +13,7 @@ export const App: React.FC = () => (
     <Header />
     <LoginPageStyle>
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/login">
           <SignInForm />
         </Route>
         <Route exact path="/registration">

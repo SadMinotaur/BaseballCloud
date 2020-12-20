@@ -6,7 +6,7 @@ export const FormContainer = styled.div`
   align-items: center;
   justify-content: start;
   max-width: 450px;
-  height: 400px;
+  /* height: 400px; */
   background-color: hsla(0, 0%, 100%, 0.8);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   padding: 16px;
@@ -32,19 +32,18 @@ export const InputForm = styled.input`
   height: 50px;
   border-radius: 4px;
   background-color: #eff1f3;
-  /* padding: 6px 12px 10px 37px; */
   font-size: 16px;
   line-height: 1.13;
   font-weight: 400;
   color: #667784;
   border: 1px solid transparent;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 export const Button = styled.button`
   width: 100%;
   height: 52px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: #ffffff;
   border: solid 1px transparent;
   background-color: #48bbff;
@@ -52,4 +51,16 @@ export const Button = styled.button`
   &:hover {
     box-shadow: 0 0 4px 0 rgba(72, 187, 255, 0.8);
   }
+`;
+
+export const ForgotPassword = styled.div`
+  margin-left: 65%;
+  margin-bottom: 15px;
+  color: #23527c;
+`;
+
+export const SignIn = styled.div`
+  font-size: 16px;
+  display: flex;
+  color: #667784;
 `;

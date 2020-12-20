@@ -1,16 +1,42 @@
 import Axios from "axios";
 
 class Api {
-  private urlBase: string;
   private token: string = "";
 
-  constructor(baseUrl: string) {
-    this.urlBase = baseUrl;
+  public async signIn(
+    email: string,
+    password: string
+  ): Promise<{ id: number; email: string; role: string }> {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/auth/sign_in",
+      { email: email, password: password }
+    )
+      .then((v) => {
+        this.token = v.headers["access-token"];
+        console.log(v);
+        return v.data;
+      })
+      .catch((v) => console.log(v));
   }
 
-  public signIn() {
-    Axios.post("", {}, {});
+  // {"password_confirmation":"12121212","password":"12121212","email":"di@gmail.com","role":"player"}
+  public async signUp(
+    email: string,
+    password: string,
+    password_confirmation: string
+  ): Promise<{ id: number; email: string; role: string }> {
+    return Axios.post("https://baseballcloud-back.herokuapp.com/api/v1/auth/", {
+      email: email,
+      password: password,
+      password_confirmation: password_confirmation,
+    })
+      .then((v) => {
+        this.token = v.headers["access-token"];
+        return v.data;
+      })
+      .catch((v) => console.log(v));
   }
 }
 
-export const API = new Api("https://baseballcloud-front.herokuapp.com/");
+const API = new Api();
+export default API;

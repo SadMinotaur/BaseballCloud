@@ -7,7 +7,7 @@ export const LoginPageStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 85vh;
+  min-height: 88vh;
   padding: 16px;
   background-image: url(${back});
   background-position: top center;

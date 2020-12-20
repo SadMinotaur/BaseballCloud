@@ -8,4 +8,6 @@ export const HeaderStyle = styled.header`
   background-color: white;
 `;
 
-export const Icon = styled.div``;
+export const Icon = styled.img`
+  margin-left: 8px;
+`;
