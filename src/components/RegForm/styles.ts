@@ -27,8 +27,7 @@ export const FormTextSign = styled.div`
   margin: 8px 0 40px 0;
 `;
 
-export const InputForm = styled.input`
-  width: 99%;
+export const InputForm = styled.div`
   height: 50px;
   border-radius: 4px;
   background-color: #eff1f3;
@@ -37,7 +36,20 @@ export const InputForm = styled.input`
   font-weight: 400;
   color: #667784;
   border: 1px solid transparent;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 0;
+`;
+
+export const InputFormIcon = styled.div`
+  margin: 10px;
+`;
+
+export const InputFormInput = styled.input`
+  border: 0;
+  background-color: #eff1f3;
+  width: 100%;
 `;
 
 export const Button = styled.button`

@@ -5,12 +5,17 @@ import {
   ButtonInCont,
   FormContainer,
   InputForm,
+  InputFormIcon,
+  InputFormInput,
   TextRect,
   TextRectMain,
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
 import checkbox from "./../../assets/checkbox.svg";
+import API from "../../api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const RegForm: React.FC = () => {
   const [signInState, setSignInState] = useState(true);
@@ -39,17 +44,52 @@ export const RegForm: React.FC = () => {
           : "Coaches and scouts can view players in the system but do not have their own profile."}
       </TextRect>
       <Form
-        onSubmit={() => {}}
+        onSubmit={() =>
+          API.signUp("", "", "", signInState ? "player" : "scout")
+        }
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Field name="Email">
-              {(p) => <InputForm type="text" placeholder={p.input.name} />}
+              {(p) => (
+                <InputForm>
+                  <InputFormIcon>
+                    <FontAwesomeIcon icon={faUser} />
+                  </InputFormIcon>
+                  <InputFormInput
+                    type="text"
+                    onChange={p.input.onChange}
+                    placeholder={p.input.name}
+                  />
+                </InputForm>
+              )}
             </Field>
             <Field name="Password">
-              {(p) => <InputForm type="text" placeholder={p.input.name} />}
+              {(p) => (
+                <InputForm>
+                  <InputFormIcon>
+                    <FontAwesomeIcon icon={faLock} />
+                  </InputFormIcon>
+                  <InputFormInput
+                    type="text"
+                    onChange={p.input.onChange}
+                    placeholder={p.input.name}
+                  />
+                </InputForm>
+              )}
             </Field>
             <Field name="Confirm Password">
-              {(p) => <InputForm type="text" placeholder={p.input.name} />}
+              {(p) => (
+                <InputForm>
+                  <InputFormIcon>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </InputFormIcon>
+                  <InputFormInput
+                    type="text"
+                    onChange={p.input.onChange}
+                    placeholder={p.input.name}
+                  />
+                </InputForm>
+              )}
             </Field>
             <p>
               By clicking Sign Up, you agree to our Terms of Service and Privacy
@@ -60,7 +100,7 @@ export const RegForm: React.FC = () => {
         )}
       />
       <p>Already registered?</p>
-      <Link to="login">Sign In</Link>
+      <Link to="/login">Sign In</Link>
     </FormContainer>
   );
 };

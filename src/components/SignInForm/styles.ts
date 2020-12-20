@@ -6,7 +6,6 @@ export const FormContainer = styled.div`
   align-items: center;
   justify-content: start;
   max-width: 450px;
-  /* height: 400px; */
   background-color: hsla(0, 0%, 100%, 0.8);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   padding: 16px;
@@ -27,8 +26,8 @@ export const FormTextSign = styled.div`
   margin: 8px 0 40px 0;
 `;
 
-export const InputForm = styled.input`
-  width: 99%;
+export const InputForm = styled.div`
+  width: 400px;
   height: 50px;
   border-radius: 4px;
   background-color: #eff1f3;
@@ -38,9 +37,22 @@ export const InputForm = styled.input`
   color: #667784;
   border: 1px solid transparent;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 0;
 `;
 
-export const Button = styled.button`
+export const InputFormIcon = styled.div`
+  margin: 10px;
+`;
+
+export const InputFormInput = styled.input`
+  border: 0;
+  background-color: #eff1f3;
+  width: 100%;
+`;
+
+export const ButtonSubmit = styled.button`
   width: 100%;
   height: 52px;
   margin-bottom: 15px;
@@ -54,7 +66,7 @@ export const Button = styled.button`
 `;
 
 export const ForgotPassword = styled.div`
-  margin-left: 65%;
+  text-align: end;
   margin-bottom: 15px;
   color: #23527c;
 `;
@@ -63,4 +75,8 @@ export const SignIn = styled.div`
   font-size: 16px;
   display: flex;
   color: #667784;
+`;
+
+export const ErrorText = styled.p`
+  color: #f05f62;
 `;
