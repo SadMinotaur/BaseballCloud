@@ -29,7 +29,7 @@ export const App: React.FC = () => {
             </LoginPageStyle>
           </Route>
           <Route path="/profile">
-            <ProfileForms></ProfileForms>
+            <ProfileForms />
           </Route>
           <Route path="/">
             {() =>

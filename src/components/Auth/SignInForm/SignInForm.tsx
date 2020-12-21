@@ -30,7 +30,7 @@ export const SignInForm: React.FC = () => {
       <Form
         onSubmit={(values) => {
           API.signIn(values.email, values.password)
-            .then(() => API.getUser().then((v) => history.push("/profile", v)))
+            .then(() => history.push("/profile"))
             .catch(() => setShowError(true));
         }}
         render={({
