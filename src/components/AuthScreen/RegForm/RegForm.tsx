@@ -11,13 +11,14 @@ import {
   TextRectMain,
 } from "./styles";
 import { Form, Field } from "react-final-form";
-import { Link } from "react-router-dom";
-import checkbox from "./../../assets/checkbox.svg";
-import API from "../../api";
+import { Link, useHistory } from "react-router-dom";
+import checkbox from "./../../../assets/checkbox.svg";
+import API from "../../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const RegForm: React.FC = () => {
+  const history = useHistory();
   const [signInState, setSignInState] = useState(true);
 
   return (
@@ -44,49 +45,55 @@ export const RegForm: React.FC = () => {
           : "Coaches and scouts can view players in the system but do not have their own profile."}
       </TextRect>
       <Form
-        onSubmit={() =>
-          API.signUp("", "", "", signInState ? "player" : "scout")
-        }
+        onSubmit={(values) => {
+          API.signUp(
+            values.email,
+            values.password,
+            values.confirm_password,
+            signInState ? "player" : "scout"
+          );
+          history.push("/profile");
+        }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Field name="Email">
+            <Field name="email">
               {(p) => (
                 <InputForm>
                   <InputFormIcon>
                     <FontAwesomeIcon icon={faUser} />
                   </InputFormIcon>
                   <InputFormInput
-                    type="text"
+                    type="email"
                     onChange={p.input.onChange}
-                    placeholder={p.input.name}
+                    placeholder="Email"
                   />
                 </InputForm>
               )}
             </Field>
-            <Field name="Password">
+            <Field name="password">
               {(p) => (
                 <InputForm>
                   <InputFormIcon>
                     <FontAwesomeIcon icon={faLock} />
                   </InputFormIcon>
                   <InputFormInput
-                    type="text"
+                    type="password"
                     onChange={p.input.onChange}
-                    placeholder={p.input.name}
+                    placeholder="Password"
                   />
                 </InputForm>
               )}
             </Field>
-            <Field name="Confirm Password">
+            <Field name="confirm_password">
               {(p) => (
                 <InputForm>
                   <InputFormIcon>
                     <FontAwesomeIcon icon={faCheck} />
                   </InputFormIcon>
                   <InputFormInput
-                    type="text"
+                    type="password"
                     onChange={p.input.onChange}
-                    placeholder={p.input.name}
+                    placeholder="Confirm Password"
                   />
                 </InputForm>
               )}

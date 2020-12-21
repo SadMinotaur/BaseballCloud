@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
-import API from "../../api";
+import API from "../../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,7 @@ export const SignInForm: React.FC = () => {
       <Form
         onSubmit={(values) => {
           API.signIn(values.email, values.password)
-            .then(() => history.push("/profile"))
+            .then(() => API.getUser().then((v) => history.push("/profile", v)))
             .catch(() => setShowError(true));
         }}
         render={({
@@ -49,9 +49,9 @@ export const SignInForm: React.FC = () => {
                     <FontAwesomeIcon icon={faUser} />
                   </InputFormIcon>
                   <InputFormInput
-                    type="text"
+                    type="email"
                     onChange={p.input.onChange}
-                    placeholder={p.input.name}
+                    placeholder="Email"
                   />
                 </InputForm>
               )}
@@ -66,9 +66,9 @@ export const SignInForm: React.FC = () => {
                     <FontAwesomeIcon icon={faLock} />
                   </InputFormIcon>
                   <InputFormInput
-                    type="text"
+                    type="password"
                     onChange={p.input.onChange}
-                    placeholder={p.input.name}
+                    placeholder="Password"
                   />
                 </InputForm>
               )}
