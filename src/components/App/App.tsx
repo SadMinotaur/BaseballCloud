@@ -5,9 +5,10 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { Header } from "../Header";
 
 import "./../../css/global.css";
-import { SignInForm } from "../AuthScreen/SignInForm";
-import { RegForm } from "../AuthScreen/RegForm";
+import { SignInForm } from "../Auth/SignInForm";
+import { RegForm } from "../Auth/RegForm";
 import API from "../../api";
+import { ProfileForms } from "../Profile/ProfileForms";
 
 export const App: React.FC = () => {
   const history = useHistory();
@@ -27,6 +28,9 @@ export const App: React.FC = () => {
               <RegForm />
             </LoginPageStyle>
           </Route>
+          <Route path="/profile">
+            <ProfileForms></ProfileForms>
+          </Route>
           <Route path="/">
             {() =>
               API.token === ""
@@ -34,7 +38,6 @@ export const App: React.FC = () => {
                 : history.push("/profile")
             }
           </Route>
-          <Route path="/profile"></Route>
         </Switch>
       </MainComp>
       <Footer />
