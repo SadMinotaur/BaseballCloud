@@ -1,10 +1,10 @@
 import React from "react";
 import { Field, Form } from "react-final-form";
-// import API from "../../../api";
+import API from "../../../api";
 import { FormsDiv, Row, Input, Select } from "./styles";
 
 export const ProfileForms: React.FC = () => {
-  // API.getUserInfo().then((v) => console.log(v));
+  API.get().then((v) => console.log(v));
 
   const smallInputSize: number = 48;
 

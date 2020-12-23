@@ -32,11 +32,7 @@ export const App: React.FC = () => {
             <ProfileForms />
           </Route>
           <Route path="/">
-            {() =>
-              API.token === ""
-                ? history.push("/login")
-                : history.push("/profile")
-            }
+            {() => (API.id ? history.push("/profile") : history.push("/login"))}
           </Route>
         </Switch>
       </MainComp>
