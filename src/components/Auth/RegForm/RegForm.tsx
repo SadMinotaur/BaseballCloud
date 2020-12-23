@@ -102,7 +102,7 @@ export const RegForm: React.FC = () => {
               By clicking Sign Up, you agree to our Terms of Service and Privacy
               Policy.
             </p>
-            <Button>Sign In</Button>
+            <Button>Sign Up</Button>
           </form>
         )}
       />

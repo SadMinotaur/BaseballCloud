@@ -14,7 +14,7 @@ export const App: React.FC = () => {
   const history = useHistory();
 
   return (
-    <MainComp>
+    <>
       <Header />
       <MainComp>
         <Switch>
@@ -41,6 +41,6 @@ export const App: React.FC = () => {
         </Switch>
       </MainComp>
       <Footer />
-    </MainComp>
+    </>
   );
 };
