@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
-import API from "../../../api";
 import { FormsDiv, Row, Input, Select } from "./styles";
+import Button from "react-bootstrap/Button";
+import API from "../../../api";
 
 export const ProfileForms: React.FC = () => {
-  API.get().then((v) => console.log(v));
-
   const smallInputSize: number = 48;
+
+  const [schools, setSchools] = useState([] as { id: number; name: string }[]);
+  const [teams, setTeams] = useState([] as { id: number; name: string }[]);
+  const [facilities, setFacilities] = useState(
+    [] as { id: number; u_name: string; email: string }[]
+  );
+
+  useEffect(() => {
+    API.getSchools().then((v) => setSchools(v));
+    API.getTeams().then((v) => setTeams(v));
+    API.getFacilities().then((v) => setFacilities(v));
+  }, []);
 
   return (
     <FormsDiv>
@@ -42,10 +53,31 @@ export const ProfileForms: React.FC = () => {
               </Field>
             </Row>
             <Field name="position_in_game">
-              {(p) => <Select placeholder="Position in game" />}
+              {(p) => (
+                <Select>
+                  <option>Catcher</option>
+                  <option>First Base</option>
+                  <option>Second Base</option>
+                  <option>Shortstop</option>
+                  <option>Third Base</option>
+                  <option>Outfield</option>
+                  <option>Pitcher</option>
+                </Select>
+              )}
             </Field>
             <Field name="secondary_position_in_game">
-              {(p) => <Select placeholder="Secondary in game" />}
+              {(p) => (
+                <Select>
+                  <option>-</option>
+                  <option>Catcher</option>
+                  <option>First Base</option>
+                  <option>Second Base</option>
+                  <option>Shortstop</option>
+                  <option>Third Base</option>
+                  <option>Outfield</option>
+                  <option>Pitcher</option>
+                </Select>
+              )}
             </Field>
             <Field name="age">
               {(p) => <Input type="input" placeholder="Age" />}
@@ -75,26 +107,64 @@ export const ProfileForms: React.FC = () => {
             </Field>
             <Row>
               <Field name="throw">
-                {(p) => <Select width={smallInputSize} placeholder="Throw" />}
+                {(p) => (
+                  <Select width={smallInputSize}>
+                    <option>R</option>
+                    <option>L</option>
+                  </Select>
+                )}
               </Field>
               <Field name="bats">
-                {(p) => <Select width={smallInputSize} placeholder="Bats" />}
+                {(p) => (
+                  <Select width={smallInputSize}>
+                    <option>R</option>
+                    <option>L</option>
+                  </Select>
+                )}
               </Field>
             </Row>
             <Field name="school">
-              {(p) => <Select placeholder="School" />}
+              {(p) => (
+                <Select placeholder="School">
+                  {schools.map((v) => (
+                    <option key={v.id}>{v.name}</option>
+                  ))}
+                </Select>
+              )}
             </Field>
             <Field name="school_year">
-              {(p) => <Select placeholder="School Year" />}
+              {(p) => (
+                <Select>
+                  <option>Freshman</option>
+                  <option>Sophmore</option>
+                  <option>Junior</option>
+                  <option>Senior</option>
+                  <option>None</option>
+                </Select>
+              )}
             </Field>
-            <Field name="team">{(p) => <Select placeholder="Team" />}</Field>
+            <Field name="team">
+              {(p) => (
+                <Select>
+                  {teams.map((v) => (
+                    <option key={v.id}>{v.name}</option>
+                  ))}
+                </Select>
+              )}
+            </Field>
             <Field name="facility">
-              {(p) => <Select placeholder="Facility" />}
+              {(p) => (
+                <Select>
+                  {facilities.map((v) => (
+                    <option key={v.id}>{v.u_name}</option>
+                  ))}
+                </Select>
+              )}
             </Field>
             <Field name="about" component="textarea" placeholder="About" />
             <Row>
-              <button type="submit">Cancel</button>
-              <button type="submit">Save</button>
+              <Button type="submit">Cancel</Button>
+              <Button type="submit">Save</Button>
             </Row>
           </form>
         )}

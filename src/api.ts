@@ -65,16 +65,13 @@ class Api {
           "{ current_profile ()\n {\n id\n first_name\n last_name\n position\n position2\n avatar\n throws_hand\n bats_hand\n biography\n school_year\n feet\n inches\n weight\n age\n school {\n id\n name\n }\n teams {\n id\n name\n }\n facilities {\n id\n email\n u_name\n }\n }\n }",
       },
       {
-        headers: {
-          "access-token": this.token,
-          client: this.client,
-          uid: this.uid,
-        },
+        headers: this.getStandartHeaders(),
       }
     );
   }
 
-  public async get() {
+  // Not working
+  public async getSomething() {
     return Axios.post(
       "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
       {
@@ -83,13 +80,59 @@ class Api {
         variables: { id: this.id.toString() },
       },
       {
-        headers: {
-          "access-token": this.token,
-          client: this.client,
-          uid: this.uid,
-        },
+        headers: this.getStandartHeaders(),
       }
     );
+  }
+
+  public async getSchools(): Promise<{ id: number; name: string }[]> {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+      {
+        query:
+          "query Schools($search:String!)\n { schools(search: $search) {\n schools {\n id\n name\n }\n }\n }",
+        variables: { search: "" },
+      },
+      {
+        headers: this.getStandartHeaders(),
+      }
+    ).then((v) => v.data.data.schools.schools);
+  }
+
+  public async getTeams() {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+      {
+        query:
+          "query Teams($search:String!)\n { teams(search: $search) {\n teams {\n id\n name\n }\n }\n }",
+        variables: { search: "" },
+      },
+      {
+        headers: this.getStandartHeaders(),
+      }
+    ).then((v) => v.data.data.teams.teams);
+  }
+
+  public async getFacilities() {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+      {
+        query:
+          "query Facilities($search:String!)\n { facilities(search: $search) {\n facilities {\n id\n email\n u_name\n }\n }\n }",
+        variables: { search: "" },
+      },
+      {
+        headers: this.getStandartHeaders(),
+      }
+    ).then((v) => v.data.data.facilities.facilities);
+  }
+
+  private getStandartHeaders() {
+    return {
+      "access-token": this.token,
+      client: this.client,
+      uid: this.uid,
+    };
   }
 }
 
