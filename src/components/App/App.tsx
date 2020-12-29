@@ -3,11 +3,10 @@ import { Footer } from "../Footer/Footer";
 import { LoginPageStyle, MainComp } from "./styles";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Header } from "../Header";
-
 import "./../../css/global.css";
 import { SignInForm } from "../Auth/SignInForm";
 import { RegForm } from "../Auth/RegForm";
-import API from "../../api";
+import API from "../../Api/api";
 import { ProfileForms } from "../Profile/ProfileForms";
 
 export const App: React.FC = () => {
@@ -31,6 +30,8 @@ export const App: React.FC = () => {
           <Route path="/profile">
             <ProfileForms />
           </Route>
+          <Route path="/leaderboard">{/* <ProfileForms /> */}</Route>
+          <Route path="/network">{/* <ProfileForms /> */}</Route>
           <Route path="/">
             {() => (API.id ? history.push("/profile") : history.push("/login"))}
           </Route>

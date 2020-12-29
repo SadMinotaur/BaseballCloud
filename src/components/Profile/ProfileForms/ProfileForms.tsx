@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { FormsDiv, Row, Input, Select } from "./styles";
 import Button from "react-bootstrap/Button";
-import API from "../../../api";
+import API from "../../../Api/api";
 
 export const ProfileForms: React.FC = () => {
   const smallInputSize: number = 48;
@@ -22,7 +22,9 @@ export const ProfileForms: React.FC = () => {
   return (
     <FormsDiv>
       <Form
-        onSubmit={(values) => {}}
+        onSubmit={(values) => {
+          // API.mutateProfile({ age: ca });
+        }}
         render={({
           submitError,
           handleSubmit,

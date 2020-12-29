@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import { SignInResp } from "./apiTypes";
+import { SignInResp, UpdateProfile } from "./apiTypes";
 
 class Api {
   public id: number = localStorage.getItem("id")
@@ -71,19 +71,19 @@ class Api {
   }
 
   // Not working
-  public async getSomething() {
-    return Axios.post(
-      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
-      {
-        query:
-          "query Profile($id:String!)\n { profile(id: $id)\n {\n id\n first_name\n last_name\n position\n position2\n school_year\n avatar\n throws_hand\n bats_hand\n biography\n feet\n inches\n weight\n age\n …e\n }\n school {\n id\n name\n }\n teams {\n id\n name\n }\n facilities {\n id\n email\n u_name\n }\n favorite\n events_opened\n paid\n }\n }",
-        variables: { id: this.id.toString() },
-      },
-      {
-        headers: this.getStandartHeaders(),
-      }
-    );
-  }
+  // public async getSomething() {
+  //   return Axios.post(
+  //     "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+  //     {
+  //       query:
+  //         "query Profile($id:String!)\n { profile(id: $id)\n {\n id\n first_name\n last_name\n position\n position2\n school_year\n avatar\n throws_hand\n bats_hand\n biography\n feet\n inches\n weight\n age\n …e\n }\n school {\n id\n name\n }\n teams {\n id\n name\n }\n facilities {\n id\n email\n u_name\n }\n favorite\n events_opened\n paid\n }\n }",
+  //       variables: { id: this.id.toString() },
+  //     },
+  //     {
+  //       headers: this.getStandartHeaders(),
+  //     }
+  //   );
+  // }
 
   public async getSchools(): Promise<{ id: number; name: string }[]> {
     return Axios.post(
@@ -125,6 +125,20 @@ class Api {
         headers: this.getStandartHeaders(),
       }
     ).then((v) => v.data.data.facilities.facilities);
+  }
+
+  public async mutateProfile(profile: UpdateProfile) {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+      {
+        query:
+          "mutation UpdateProfile($form:UpdateProfileInput!)\n { update_profile (input:$form)\n { profile\n {\n id\n first_name\n last_name\n position\n position2\n avatar\n throws_hand\n bats_hand\n biography\n school_year\n … }\n }\n school {\n id\n name\n }\n teams {\n id\n name\n }\n facilities {\n id\n email\n u_name\n }\n }\n }\n }",
+        variables: { form: profile },
+      },
+      {
+        headers: this.getStandartHeaders(),
+      }
+    ).then((v) => v.data.data);
   }
 
   private getStandartHeaders() {
