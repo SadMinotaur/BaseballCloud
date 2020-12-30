@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
-import { FormsDiv, Row, Input, Select } from "./styles";
-import Button from "react-bootstrap/Button";
+import {
+  FormsDiv,
+  Row,
+  Input,
+  Select,
+  AboutTextarea,
+  SectionText,
+  Hr,
+  ButtonProfile,
+} from "./styles";
 import API from "../../../Api/api";
 
 export const ProfileForms: React.FC = () => {
@@ -18,6 +26,15 @@ export const ProfileForms: React.FC = () => {
     API.getTeams().then((v) => setTeams(v));
     API.getFacilities().then((v) => setFacilities(v));
   }, []);
+
+  function sectionText(text: string) {
+    return (
+      <Row>
+        <SectionText>{text}</SectionText>
+        <Hr />
+      </Row>
+    );
+  }
 
   return (
     <FormsDiv>
@@ -81,6 +98,7 @@ export const ProfileForms: React.FC = () => {
                 </Select>
               )}
             </Field>
+            {sectionText("Personal Info")}
             <Field name="age">
               {(p) => <Input type="input" placeholder="Age" />}
             </Field>
@@ -125,6 +143,7 @@ export const ProfileForms: React.FC = () => {
                 )}
               </Field>
             </Row>
+            {sectionText("School")}
             <Field name="school">
               {(p) => (
                 <Select placeholder="School">
@@ -154,6 +173,7 @@ export const ProfileForms: React.FC = () => {
                 </Select>
               )}
             </Field>
+            {sectionText("Facility")}
             <Field name="facility">
               {(p) => (
                 <Select>
@@ -163,10 +183,15 @@ export const ProfileForms: React.FC = () => {
                 </Select>
               )}
             </Field>
-            <Field name="about" component="textarea" placeholder="About" />
+            {sectionText("About")}
+            <Field name="about" component="textarea">
+              {(p) => <AboutTextarea placeholder="About" />}
+            </Field>
             <Row>
-              <Button type="submit">Cancel</Button>
-              <Button type="submit">Save</Button>
+              <ButtonProfile type="submit">Cancel</ButtonProfile>
+              <ButtonProfile borderBlue={true} type="submit">
+                Save
+              </ButtonProfile>
             </Row>
           </form>
         )}

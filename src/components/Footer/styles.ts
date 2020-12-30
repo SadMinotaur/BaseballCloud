@@ -9,6 +9,8 @@ export const FooterStyle = styled.footer`
   padding: 10px 10px 10px 10px;
   background-color: #fff;
   box-sizing: border-box;
+  color: black;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 export const Legal = styled.div`
