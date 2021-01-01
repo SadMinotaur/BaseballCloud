@@ -9,6 +9,7 @@ import {
   SectionText,
   Hr,
   ButtonProfile,
+  ProfilePic,
 } from "./styles";
 import API from "../../../Api/api";
 
@@ -39,9 +40,7 @@ export const ProfileForms: React.FC = () => {
   return (
     <FormsDiv>
       <Form
-        onSubmit={(values) => {
-          // API.mutateProfile({ age: ca });
-        }}
+        onSubmit={(values) => {}}
         render={({
           submitError,
           handleSubmit,
@@ -51,6 +50,7 @@ export const ProfileForms: React.FC = () => {
           invalid,
         }) => (
           <form onSubmit={handleSubmit}>
+            <ProfilePic />
             <Row>
               <Field name="firstName">
                 {(p) => (

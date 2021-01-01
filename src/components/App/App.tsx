@@ -7,7 +7,7 @@ import "./../../css/global.css";
 import { SignInForm } from "../Auth/SignInForm";
 import { RegForm } from "../Auth/RegForm";
 import API from "../../Api/api";
-import { ProfileForms } from "../Profile/ProfileForms";
+import { Page } from "./../Profile/Page";
 
 export const App: React.FC = () => {
   const history = useHistory();
@@ -28,10 +28,10 @@ export const App: React.FC = () => {
             </LoginPageStyle>
           </Route>
           <Route path="/profile">
-            <ProfileForms />
+            <Page />
           </Route>
-          <Route path="/leaderboard">{/* <ProfileForms /> */}</Route>
-          <Route path="/network">{/* <ProfileForms /> */}</Route>
+          <Route path="/leaderboard"></Route>
+          <Route path="/network"></Route>
           <Route path="/">
             {() => (API.id ? history.push("/profile") : history.push("/login"))}
           </Route>

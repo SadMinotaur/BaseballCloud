@@ -36,7 +36,6 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
         </Link>
       </Tabs>
       <ProfileIcon src={IconProfile} onClick={() => nav.push("/profile")} />
-      <Link to="/profile">Profile</Link>
     </RightSide>
   );
 };

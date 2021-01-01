@@ -5,7 +5,7 @@ export const FormsDiv = styled.aside`
   width: 300px;
   height: 100%;
   overflow-y: scroll;
-  padding: 61px 16px 0 16px;
+  padding: 16px 16px 0 16px;
   box-sizing: border-box;
 `;
 
@@ -91,4 +91,10 @@ export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
     border: solid 1px #48bbff;
     ${(p) => !p.borderBlue && "color: #48bbff;"}
   }
+`;
+
+export const ProfilePic = styled.div`
+  height: 200px;
+  width: 100%;
+  justify-content: center;
 `;

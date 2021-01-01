@@ -128,7 +128,8 @@ button {
 html,
 body,
 #root {
-  height: 100%;
+  display: fixed;
+  height: 96%;
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
   color: rgb(120, 139, 153);

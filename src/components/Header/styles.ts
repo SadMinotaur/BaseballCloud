@@ -2,7 +2,6 @@ import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
 
 export const HeaderStyle = styled.header`
-  position: fixed;
   height: 45px;
   display: flex;
   align-items: center;
