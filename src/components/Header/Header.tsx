@@ -5,7 +5,7 @@ import Switch from "react-bootstrap/esm/Switch";
 import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import API from "../../Api/api";
+import API from "../../api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p

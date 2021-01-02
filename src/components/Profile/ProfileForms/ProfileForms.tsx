@@ -11,7 +11,8 @@ import {
   ButtonProfile,
   ProfilePic,
 } from "./styles";
-import API from "../../../Api/api";
+import { Queries } from "../graphql/query";
+import API from "../../../api";
 
 export const ProfileForms: React.FC = () => {
   const smallInputSize: number = 48;
@@ -23,9 +24,15 @@ export const ProfileForms: React.FC = () => {
   );
 
   useEffect(() => {
-    API.getSchools().then((v) => setSchools(v));
-    API.getTeams().then((v) => setTeams(v));
-    API.getFacilities().then((v) => setFacilities(v));
+    API.graphqlPost(Queries.getSchools, { search: "" }).then((v) =>
+      setSchools(v.data.schools.schools)
+    );
+    API.graphqlPost(Queries.getTeams, { search: "" }).then((v) =>
+      setTeams(v.data.teams.teams)
+    );
+    API.graphqlPost(Queries.getFacilities, { search: "" }).then((v) =>
+      setFacilities(v.data.facilities.facilities)
+    );
   }, []);
 
   function sectionText(text: string) {

@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
-import API from "../../../Api/api";
+import API from "../../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
