@@ -141,6 +141,19 @@ class Api {
     ).then((v) => v.data.data);
   }
 
+  public async getPicture() {
+    return Axios.get(
+      "https://baseballcloud-front.herokuapp.com/4625203570ef5f6721fc145b05f790a9.png",
+      {
+        headers: {
+          ...this.getStandartHeaders(),
+          "Access-Control-Allow-Origin": "",
+          Accept: "image/webp,*/*",
+        },
+      }
+    ).then((v) => Buffer.from(v.data, "binary").toString("base64"));
+  }
+
   private getStandartHeaders() {
     return {
       "access-token": this.token,
