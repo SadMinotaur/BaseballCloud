@@ -126,9 +126,13 @@ button {
 }
 
 html,
-body {
-  font-family: "Lato", sans-serif;
+body,
+#root {
+  display: fixed;
+  height: 96%;
   box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  color: rgb(120, 139, 153);
 }
 
 @font-face {

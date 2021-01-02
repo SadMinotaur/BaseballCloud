@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const FooterStyle = styled.footer`
-  padding: 10px 2% 5px 2%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  width: 96%;
+  padding: 10px 10px 10px 10px;
   background-color: #fff;
+  box-sizing: border-box;
+  color: black;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 export const Legal = styled.div`
@@ -14,8 +17,8 @@ export const Legal = styled.div`
 
 export const Links = styled.a`
   margin-left: 8px;
-  color: #23527c;
-  text-decoration: underline;
+  color: #337ab7;
+  text-decoration: none;
 `;
 
 export const Social = styled.div``;

@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
-import API from "../../../api";
+import API from "../../../Api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,7 @@ export const SignInForm: React.FC = () => {
       <Form
         onSubmit={(values) => {
           API.signIn(values.email, values.password)
-            .then(() => API.getUser().then((v) => history.push("/profile", v)))
+            .then(() => history.push("/profile", "test"))
             .catch(() => setShowError(true));
         }}
         render={({
