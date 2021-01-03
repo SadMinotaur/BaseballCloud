@@ -13,14 +13,13 @@ export const Row = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const Input = styledComponentsTS<{ width: number }>(styled.input)`
   height: 40px;
   padding: 0 16px;
   transition: all 0.2s;
-  width: ${(p) => (p.width ? p.width : 100)}%;
+  width: ${(p) => (p.width ? p.width : 97)}%;
   touch-action: manipulation;
   border-radius: 4px;
   background-color: #eff1f3;
@@ -93,8 +92,8 @@ export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
   }
 `;
 
-export const ProfilePic = styled.div`
-  height: 200px;
-  width: 100%;
-  justify-content: center;
+export const WarningText = styled.p`
+  color: #f05f62;
+  font-size: 1.6rem;
+  line-height: 1.42857143;
 `;

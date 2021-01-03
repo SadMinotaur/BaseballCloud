@@ -14,9 +14,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   const [picture, setPicture] = useState("");
 
   useEffect(() => {
-    // API.getPicture().then((v) => {
-    //   // setPicture(v);
-    // });
+    // API.getPicture().then((v) => {});
     return () => {};
   }, []);
   return (

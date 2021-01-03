@@ -74,12 +74,15 @@ class Api {
       "https://baseballcloud-front.herokuapp.com/4625203570ef5f6721fc145b05f790a9.png",
       {
         headers: {
-          ...this.getStandartHeaders(),
-          "Access-Control-Allow-Origin": "",
           Accept: "image/webp,*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Accept-Language": "en-US",
+          Connection: "keep-alive",
+          Host: "baseballcloud-front.herokuapp.com",
+          Referer: "https://baseballcloud-front.herokuapp.com/login",
         },
       }
-    ).then((v) => Buffer.from(v.data, "binary").toString("base64"));
+    ).then((v) => console.log(v));
   }
 
   private getStandartHeaders() {

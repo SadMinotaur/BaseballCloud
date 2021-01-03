@@ -1,28 +1,75 @@
 export const Queries = {
-  getUserInfo:
-    "{ current_profile ()\n {\n id\n first_name\n last_name\n position\n position2\n avatar\n throws_hand\n bats_hand\n biography\n school_year\n feet\n inches\n weight\n age\n school {\n id\n name\n }\n teams {\n id\n name\n }\n facilities {\n id\n email\n u_name\n }\n }\n }",
-  getSchools:
-    "query Schools($search:String!)\n { schools(search: $search) {\n schools {\n id\n name\n }\n }\n }",
-  getTeams:
-    "query Teams($search:String!)\n { teams(search: $search) {\n teams {\n id\n name\n }\n }\n }",
-  getFacilities:
-    "query Facilities($search:String!)\n { facilities(search: $search) {\n facilities {\n id\n email\n u_name\n }\n }\n }",
+  getUserInfo: `{ current_profile ()
+       {
+          id
+          first_name
+          last_name 
+          position 
+          position2
+          avatar
+          throws_hand
+          bats_hand
+          biography
+          school_year
+          feet
+          inches
+          weight
+          age
+          school {
+            id
+            name
+          }
+          teams {
+            id
+            name
+          }
+          facilities {
+            id
+            email
+            u_name
+          }
+        }
+      }`,
+  getSchools: `query Schools($search:String!) { 
+      schools(search: $search) {
+        schools {
+          id
+          name
+        }
+      }
+    }`,
+  getTeams: `query Teams($search:String!) { teams(search: $search) {
+      teams {
+        id
+        name
+      }
+    }
+  }`,
+  getFacilities: `query Facilities($search:String!)
+     { facilities(search: $search) {
+       facilities {
+         id
+         email
+         u_name
+        }
+      }
+    }`,
 };
 
-export interface UpdateProfile {
-  age: number;
-  bats_hand: string;
-  biography: string;
-  facilities: { id: string; u_name: string }[];
-  feet: number;
-  first_name: string;
-  id: string;
-  inches: number;
-  last_name: string;
-  position: string;
-  school: { id: number; name: string }[];
-  school_year: string;
-  teams: [];
-  throws_hand: string;
-  weight: number;
-}
+// export interface UpdateProfile {
+//   age: number;
+//   bats_hand: string;
+//   biography: string;
+//   facilities: { id: string; u_name: string }[];
+//   feet: number;
+//   first_name: string;
+//   id: string;
+//   inches: number;
+//   last_name: string;
+//   position: string;
+//   school: { id: number; name: string }[];
+//   school_year: string;
+//   teams: [];
+//   throws_hand: string;
+//   weight: number;
+// }

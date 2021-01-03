@@ -9,10 +9,11 @@ import {
   SectionText,
   Hr,
   ButtonProfile,
-  ProfilePic,
+  WarningText,
 } from "./styles";
 import { Queries } from "../graphql/query";
 import API from "../../../api";
+import { ProfilePic } from "./../common-styles/styles";
 
 export const ProfileForms: React.FC = () => {
   const smallInputSize: number = 48;
@@ -44,6 +45,10 @@ export const ProfileForms: React.FC = () => {
     );
   }
 
+  function required(value: string) {
+    return value ? undefined : "Required";
+  }
+
   return (
     <FormsDiv>
       <Form
@@ -59,22 +64,24 @@ export const ProfileForms: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <ProfilePic />
             <Row>
-              <Field name="firstName">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="First Name"
-                  />
+              <Field name="firstName" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <Input {...input} type="input" placeholder="First Name" />
+                    {meta.error && meta.touched && (
+                      <WarningText>First Name Required</WarningText>
+                    )}
+                  </div>
                 )}
               </Field>
-              <Field name="lastname">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Last Name"
-                  />
+              <Field name="lastname" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <Input {...input} type="input" placeholder="Last Name" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Last Name Required</WarningText>
+                    )}
+                  </div>
                 )}
               </Field>
             </Row>
@@ -91,6 +98,7 @@ export const ProfileForms: React.FC = () => {
                 </Select>
               )}
             </Field>
+            {/* <WarningText>Position Required</WarningText> */}
             <Field name="secondary_position_in_game">
               {(p) => (
                 <Select>
@@ -109,18 +117,20 @@ export const ProfileForms: React.FC = () => {
             <Field name="age">
               {(p) => <Input type="input" placeholder="Age" />}
             </Field>
+            <WarningText>Age Required</WarningText>
             <Row>
-              <Field name="feet">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Feet"
-                  />
+              <Field name="feet" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <Input {...input} type="input" placeholder="Feet" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Feet Required</WarningText>
+                    )}
+                  </div>
                 )}
               </Field>
               <Field name="inches">
-                {(p) => (
+                {({ input, meta }) => (
                   <Input
                     type="input"
                     width={smallInputSize}
@@ -129,8 +139,15 @@ export const ProfileForms: React.FC = () => {
                 )}
               </Field>
             </Row>
-            <Field name="weight">
-              {(p) => <Input type="input" placeholder="Weight" />}
+            <Field name="weight" validate={required}>
+              {({ input, meta }) => (
+                <>
+                  <Input {...input} type="input" placeholder="Weight" />
+                  {meta.error && meta.touched && (
+                    <WarningText>Weight Required</WarningText>
+                  )}
+                </>
+              )}
             </Field>
             <Row>
               <Field name="throw">
@@ -150,6 +167,8 @@ export const ProfileForms: React.FC = () => {
                 )}
               </Field>
             </Row>
+            {/* <WarningText>Throws Required</WarningText>
+            <WarningText>Bats Required</WarningText> */}
             {sectionText("School")}
             <Field name="school">
               {(p) => (
@@ -194,6 +213,7 @@ export const ProfileForms: React.FC = () => {
             <Field name="about" component="textarea">
               {(p) => <AboutTextarea placeholder="About" />}
             </Field>
+            <WarningText>* Fill out the required fields</WarningText>
             <Row>
               <ButtonProfile type="submit">Cancel</ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">
