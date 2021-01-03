@@ -9,7 +9,9 @@ export const ProfilePage: React.FC = () => {
   const [profileStatus, setProfileStatus] = useState(false);
 
   useEffect(() => {
-    // API.graphqlPost(Queries.getUserInfo, {});
+    API.graphqlPost(Queries.getUserInfo, {}).then((v) =>
+      console.log(v.data.current_profile)
+    );
     return () => {};
   }, []);
 

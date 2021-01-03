@@ -114,10 +114,16 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             {sectionText("Personal Info")}
-            <Field name="age">
-              {(p) => <Input type="input" placeholder="Age" />}
+            <Field name="age" validate={required}>
+              {({ input, meta }) => (
+                <div>
+                  <Input {...input} type="input" placeholder="Age" />
+                  {meta.error && meta.touched && (
+                    <WarningText>Age Required</WarningText>
+                  )}
+                </div>
+              )}
             </Field>
-            <WarningText>Age Required</WarningText>
             <Row>
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
@@ -132,6 +138,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="inches">
                 {({ input, meta }) => (
                   <Input
+                    {...input}
                     type="input"
                     width={smallInputSize}
                     placeholder="Inches"

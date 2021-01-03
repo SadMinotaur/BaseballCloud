@@ -18,9 +18,7 @@ export const Row = styled.div`
 export const Input = styledComponentsTS<{ width: number }>(styled.input)`
   height: 40px;
   padding: 0 16px;
-  transition: all 0.2s;
-  width: ${(p) => (p.width ? p.width : 97)}%;
-  touch-action: manipulation;
+  width: ${(p) => (p.width ? p.width : 98)}%;
   border-radius: 4px;
   background-color: #eff1f3;
   font-weight: 400;

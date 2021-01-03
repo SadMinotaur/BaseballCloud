@@ -1,4 +1,4 @@
 import styled from "styled-components";
 
-const Stl = { container: styled.div`` };
+const Stl = { Container: styled.div`` };
 export default Stl;
