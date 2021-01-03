@@ -2,8 +2,8 @@ import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
 
 export const FormsDiv = styled.aside`
-  width: 300px;
-  height: 100%;
+  min-width: 270px;
+  max-width: 300px;
   overflow-y: scroll;
   padding: 16px 16px 0 16px;
   box-sizing: border-box;
@@ -18,7 +18,7 @@ export const Row = styled.div`
 export const Input = styledComponentsTS<{ width: number }>(styled.input)`
   height: 40px;
   padding: 0 16px;
-  width: ${(p) => (p.width ? p.width : 98)}%;
+  width: ${(p) => (p.width ? p.width : 100)}%;
   border-radius: 4px;
   background-color: #eff1f3;
   font-weight: 400;
@@ -93,5 +93,4 @@ export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
 export const WarningText = styled.p`
   color: #f05f62;
   font-size: 1.6rem;
-  line-height: 1.42857143;
 `;

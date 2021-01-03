@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
-const Stl = {
+export const Styles = {
   Container: styled.div`
-    display: flex;
     width: 100%;
     height: 100%;
-    justify-content: center;
-    align-items: center;
+    background: #788b99;
+    display: flex;
   `,
 };
-export default Stl;

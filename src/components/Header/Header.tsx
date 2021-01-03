@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HeaderStyle, Icon, RightSide, Tabs, ProfileIcon } from "./styles";
 import Logo from "./../../assets/logo.svg";
-import Switch from "react-bootstrap/esm/Switch";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import API from "../../api";
@@ -46,20 +45,23 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   );
 };
 
-export const Header: React.FC = () => (
-  <HeaderStyle>
-    <Icon src={Logo} alt="Logo" />
-    <Switch>
-      <Route path="/login"></Route>
-      <Route path="/profile">
-        <LinksComp />
-      </Route>
-      <Route path="/network">
-        <LinksComp network={true} />
-      </Route>
-      <Route path="/leaderboard">
-        <LinksComp leaderboard={true} />
-      </Route>
-    </Switch>
-  </HeaderStyle>
-);
+export const Header: React.FC = () => {
+  const nav = useHistory();
+  return (
+    <HeaderStyle>
+      <Icon src={Logo} alt="Logo" onClick={() => nav.push("/")} />
+      <Switch>
+        <Route path="/login"></Route>
+        <Route path="/profile">
+          <LinksComp />
+        </Route>
+        <Route path="/network">
+          <LinksComp network={true} />
+        </Route>
+        <Route path="/leaderboard">
+          <LinksComp leaderboard={true} />
+        </Route>
+      </Switch>
+    </HeaderStyle>
+  );
+};

@@ -17,6 +17,7 @@ import { ProfilePic } from "./../common-styles/styles";
 
 export const ProfileForms: React.FC = () => {
   const smallInputSize: number = 48;
+  const inputSize: number = 88;
 
   const [schools, setSchools] = useState([] as { id: number; name: string }[]);
   const [teams, setTeams] = useState([] as { id: number; name: string }[]);
@@ -67,7 +68,12 @@ export const ProfileForms: React.FC = () => {
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="First Name" />
+                    <Input
+                      {...input}
+                      width={inputSize}
+                      type="input"
+                      placeholder="First Name"
+                    />
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
@@ -116,19 +122,24 @@ export const ProfileForms: React.FC = () => {
             {sectionText("Personal Info")}
             <Field name="age" validate={required}>
               {({ input, meta }) => (
-                <div>
+                <>
                   <Input {...input} type="input" placeholder="Age" />
                   {meta.error && meta.touched && (
                     <WarningText>Age Required</WarningText>
                   )}
-                </div>
+                </>
               )}
             </Field>
             <Row>
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="Feet" />
+                    <Input
+                      {...input}
+                      type="input"
+                      placeholder="Feet"
+                      width={inputSize}
+                    />
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
@@ -138,7 +149,6 @@ export const ProfileForms: React.FC = () => {
               <Field name="inches">
                 {({ input, meta }) => (
                   <Input
-                    {...input}
                     type="input"
                     width={smallInputSize}
                     placeholder="Inches"
