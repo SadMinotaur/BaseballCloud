@@ -74,7 +74,6 @@ export const ForgotPassword = styled.div`
 export const SignIn = styled.div`
   display: flex;
   font-size: 16px;
-  display: flex;
   color: #667784;
 `;
 

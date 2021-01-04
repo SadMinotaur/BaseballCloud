@@ -51,7 +51,7 @@ export const ProfileForms: React.FC = () => {
   function dropdown(options: string[], placeholder: string, fixed?: boolean) {
     return (
       <Dropdown
-        className={"main"}
+        className="main"
         menuClassName="menu"
         options={options}
         placeholder={placeholder}
@@ -109,7 +109,7 @@ export const ProfileForms: React.FC = () => {
                     "Outfield",
                     "Pitcher",
                   ],
-                  "Position"
+                  "Position in Game"
                 )
               }
             </Field>
@@ -127,7 +127,7 @@ export const ProfileForms: React.FC = () => {
                     "Outfield",
                     "Pitcher",
                   ],
-                  "secondary_position_in_game"
+                  "Secondary Position in Game"
                 )
               }
             </Field>
@@ -175,8 +175,8 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Row>
-              <Field name="throw">{(p) => dropdown(["R", "L"], "throw")}</Field>
-              <Field name="bats">{(p) => dropdown(["R", "L"], "bats")}</Field>
+              <Field name="throw">{(p) => dropdown(["R", "L"], "Throw")}</Field>
+              <Field name="bats">{(p) => dropdown(["R", "L"], "Bats")}</Field>
             </Row>
             {/* <WarningText>Throws Required</WarningText>
             <WarningText>Bats Required</WarningText> */}
@@ -193,7 +193,7 @@ export const ProfileForms: React.FC = () => {
               {(p) =>
                 dropdown(
                   ["Freshman", "Sophomore", "Junior", "Senior", "None"],
-                  "school_year"
+                  "School Year"
                 )
               }
             </Field>
@@ -201,7 +201,7 @@ export const ProfileForms: React.FC = () => {
               {(p) =>
                 dropdown(
                   teams.map((v) => v.name),
-                  "team"
+                  "Team"
                 )
               }
             </Field>
@@ -210,7 +210,7 @@ export const ProfileForms: React.FC = () => {
               {(p) =>
                 dropdown(
                   facilities.map((v) => v.u_name),
-                  "facility"
+                  "Facility"
                 )
               }
             </Field>
@@ -218,7 +218,7 @@ export const ProfileForms: React.FC = () => {
             <Field name="about" component="textarea">
               {(p) => <AboutTextarea placeholder="About" />}
             </Field>
-            <WarningText>* Fill out the required fields</WarningText>
+            {/* <WarningText>* Fill out the required fields</WarningText> */}
             <Row>
               <ButtonProfile type="submit">Cancel</ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">

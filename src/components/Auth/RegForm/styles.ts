@@ -104,3 +104,7 @@ export const TextRectMain = styled.div`
   line-height: 0.78;
   margin-bottom: 21px;
 `;
+
+export const SignUpSwitch = styled.div`
+  display: flex;
+`;

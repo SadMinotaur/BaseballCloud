@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  SignUpSwitch,
   Button,
   ButtonContainer,
   ButtonInCont,
@@ -106,8 +107,10 @@ export const RegForm: React.FC = () => {
           </form>
         )}
       />
-      <p>Already registered?</p>
-      <Link to="/login">Sign In</Link>
+      <SignUpSwitch>
+        <p>Already registered?</p>
+        <Link to="/login">Sign In</Link>
+      </SignUpSwitch>
     </FormContainer>
   );
 };

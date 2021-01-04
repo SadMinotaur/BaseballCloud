@@ -2,6 +2,8 @@ import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
 
 export const HeaderStyle = styled.header`
+  grid-area: hd;
+  grid-column-end: span 2;
   height: 45px;
   display: flex;
   align-items: center;

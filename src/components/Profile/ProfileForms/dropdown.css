@@ -1,5 +1,5 @@
 .main {
-  margin-bottom: 10px;
+  margin: 0 0 10px 0;
   text-indent: 16px;
   font-size: 16px;
   line-height: 38px;
@@ -9,6 +9,7 @@
   background-color: #eff1f3;
   border-radius: 4px;
   height: 40px;
+  width: 100%;
 }
 
 .menu {
@@ -28,7 +29,7 @@
 .arrow-open {
   position: relative;
   display: inline-block;
-  margin-left: 210px;
+  margin-left: 85%;
   border: solid #333;
   border-width: 0 2px 2px 0;
   padding: 3.5px;

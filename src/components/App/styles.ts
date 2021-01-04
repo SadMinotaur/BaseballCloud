@@ -2,7 +2,8 @@ import styled from "styled-components";
 import back from "./../../assets/loginScreenBack.png";
 
 export const MainComp = styled.div`
-  height: 100%;
+  grid-area: content;
+  overflow: hidden;
 `;
 
 export const LoginPageStyle = styled.div`
