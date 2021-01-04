@@ -1,0 +1,47 @@
+.main {
+  margin-bottom: 10px;
+  text-indent: 16px;
+  font-size: 16px;
+  line-height: 38px;
+  font-weight: 400;
+  color: #667784;
+  border: 1px solid transparent;
+  background-color: #eff1f3;
+  border-radius: 4px;
+  height: 40px;
+}
+
+.menu {
+  margin: -33px 0 0 0;
+  background-color: white;
+  border-radius: 4px;
+  text-indent: 16px;
+  font-size: 16px;
+  line-height: 38px;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  position: relative;
+  z-index: 1;
+}
+
+.arrow-closed,
+.arrow-open {
+  position: relative;
+  display: inline-block;
+  margin-left: 210px;
+  border: solid #333;
+  border-width: 0 2px 2px 0;
+  padding: 3.5px;
+}
+
+.arrow-closed {
+  top: -40px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.arrow-open {
+  top: -35px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}

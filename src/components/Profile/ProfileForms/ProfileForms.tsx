@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
+import Dropdown from "react-dropdown";
 import {
   FormsDiv,
   Row,
   Input,
-  Select,
   AboutTextarea,
   SectionText,
-  Hr,
+  Line,
   ButtonProfile,
   WarningText,
 } from "./styles";
 import { Queries } from "../graphql/query";
 import API from "../../../api";
 import { ProfilePic } from "./../common-styles/styles";
+import "./dropdown.css";
 
 export const ProfileForms: React.FC = () => {
-  const smallInputSize: number = 48;
-  const inputSize: number = 88;
-
   const [schools, setSchools] = useState([] as { id: number; name: string }[]);
   const [teams, setTeams] = useState([] as { id: number; name: string }[]);
   const [facilities, setFacilities] = useState(
@@ -41,13 +39,26 @@ export const ProfileForms: React.FC = () => {
     return (
       <Row>
         <SectionText>{text}</SectionText>
-        <Hr />
+        <Line />
       </Row>
     );
   }
 
   function required(value: string) {
     return value ? undefined : "Required";
+  }
+
+  function dropdown(options: string[], placeholder: string, fixed?: boolean) {
+    return (
+      <Dropdown
+        className={"main"}
+        menuClassName="menu"
+        options={options}
+        placeholder={placeholder}
+        arrowOpen={<span className="arrow-open" />}
+        arrowClosed={<span className="arrow-closed" />}
+      />
+    );
   }
 
   return (
@@ -68,12 +79,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input
-                      {...input}
-                      width={inputSize}
-                      type="input"
-                      placeholder="First Name"
-                    />
+                    <Input {...input} type="input" placeholder="First Name" />
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
@@ -92,32 +98,38 @@ export const ProfileForms: React.FC = () => {
               </Field>
             </Row>
             <Field name="position_in_game">
-              {(p) => (
-                <Select>
-                  <option>Catcher</option>
-                  <option>First Base</option>
-                  <option>Second Base</option>
-                  <option>Shortstop</option>
-                  <option>Third Base</option>
-                  <option>Outfield</option>
-                  <option>Pitcher</option>
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  [
+                    "Catcher",
+                    "First Base",
+                    "Second Base",
+                    "Shortstop",
+                    "Third Base",
+                    "Outfield",
+                    "Pitcher",
+                  ],
+                  "Position"
+                )
+              }
             </Field>
             {/* <WarningText>Position Required</WarningText> */}
             <Field name="secondary_position_in_game">
-              {(p) => (
-                <Select>
-                  <option>-</option>
-                  <option>Catcher</option>
-                  <option>First Base</option>
-                  <option>Second Base</option>
-                  <option>Shortstop</option>
-                  <option>Third Base</option>
-                  <option>Outfield</option>
-                  <option>Pitcher</option>
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  [
+                    "-",
+                    "Catcher",
+                    "First Base",
+                    "Second Base",
+                    "Shortstop",
+                    "Third Base",
+                    "Outfield",
+                    "Pitcher",
+                  ],
+                  "secondary_position_in_game"
+                )
+              }
             </Field>
             {sectionText("Personal Info")}
             <Field name="age" validate={required}>
@@ -134,12 +146,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input
-                      {...input}
-                      type="input"
-                      placeholder="Feet"
-                      width={inputSize}
-                    />
+                    <Input {...input} type="input" placeholder="Feet" />
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
@@ -148,11 +155,12 @@ export const ProfileForms: React.FC = () => {
               </Field>
               <Field name="inches">
                 {({ input, meta }) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Inches"
-                  />
+                  <div>
+                    <Input {...input} type="input" placeholder="Inches" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Inches Required</WarningText>
+                    )}
+                  </div>
                 )}
               </Field>
             </Row>
@@ -167,64 +175,44 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Row>
-              <Field name="throw">
-                {(p) => (
-                  <Select width={smallInputSize}>
-                    <option>R</option>
-                    <option>L</option>
-                  </Select>
-                )}
-              </Field>
-              <Field name="bats">
-                {(p) => (
-                  <Select width={smallInputSize}>
-                    <option>R</option>
-                    <option>L</option>
-                  </Select>
-                )}
-              </Field>
+              <Field name="throw">{(p) => dropdown(["R", "L"], "throw")}</Field>
+              <Field name="bats">{(p) => dropdown(["R", "L"], "bats")}</Field>
             </Row>
             {/* <WarningText>Throws Required</WarningText>
             <WarningText>Bats Required</WarningText> */}
             {sectionText("School")}
             <Field name="school">
-              {(p) => (
-                <Select placeholder="School">
-                  {schools.map((v) => (
-                    <option key={v.id}>{v.name}</option>
-                  ))}
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  schools.map((v) => v.name),
+                  "School"
+                )
+              }
             </Field>
             <Field name="school_year">
-              {(p) => (
-                <Select>
-                  <option>Freshman</option>
-                  <option>Sophmore</option>
-                  <option>Junior</option>
-                  <option>Senior</option>
-                  <option>None</option>
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  ["Freshman", "Sophomore", "Junior", "Senior", "None"],
+                  "school_year"
+                )
+              }
             </Field>
             <Field name="team">
-              {(p) => (
-                <Select>
-                  {teams.map((v) => (
-                    <option key={v.id}>{v.name}</option>
-                  ))}
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  teams.map((v) => v.name),
+                  "team"
+                )
+              }
             </Field>
             {sectionText("Facility")}
             <Field name="facility">
-              {(p) => (
-                <Select>
-                  {facilities.map((v) => (
-                    <option key={v.id}>{v.u_name}</option>
-                  ))}
-                </Select>
-              )}
+              {(p) =>
+                dropdown(
+                  facilities.map((v) => v.u_name),
+                  "facility"
+                )
+              }
             </Field>
             {sectionText("About")}
             <Field name="about" component="textarea">

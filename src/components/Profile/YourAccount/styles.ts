@@ -8,6 +8,7 @@ export const Styles = {
     display: flex;
   `,
   WhiteContainer: styled.div`
+    border-radius: 10px;
     background-color: #ffffff;
     flex: 1;
     height: 570px;

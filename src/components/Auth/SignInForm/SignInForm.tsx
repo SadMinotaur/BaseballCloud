@@ -88,8 +88,8 @@ export const SignInForm: React.FC = () => {
         )}
       />
       <SignIn>
-        <div>Don’t have an account? </div>
-        <Link to="registration"> Sign Up</Link>
+        <p>Don’t have an account?</p>
+        <Link to="registration">Sign Up</Link>
       </SignIn>
     </FormContainer>
   );

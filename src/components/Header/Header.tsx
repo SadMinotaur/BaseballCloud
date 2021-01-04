@@ -51,7 +51,7 @@ export const Header: React.FC = () => {
     <HeaderStyle>
       <Icon src={Logo} alt="Logo" onClick={() => nav.push("/")} />
       <Switch>
-        <Route path="/login"></Route>
+        <Route path="/login" />
         <Route path="/profile">
           <LinksComp />
         </Route>

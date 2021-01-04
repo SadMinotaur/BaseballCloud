@@ -15,31 +15,16 @@ export const Row = styled.div`
   justify-content: space-between;
 `;
 
-export const Input = styledComponentsTS<{ width: number }>(styled.input)`
+export const Input = styled.input`
+  width: 100%;
   height: 40px;
   padding: 0 16px;
-  width: ${(p) => (p.width ? p.width : 100)}%;
   border-radius: 4px;
   background-color: #eff1f3;
   font-weight: 400;
   color: #667784;
   border: 1px solid transparent;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-`;
-
-export const Select = styledComponentsTS<{ width: number }>(styled.select)`
-  height: 40px;
-  width: ${(p) => (p.width ? p.width : 100)}%;
-  margin-bottom: 10px;
-  padding-left: 16px;
-  font-size: 16px;
-  line-height: 38px;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  background-color: #eff1f3;
-  border-radius: 4px;
+  margin: 0 0 10px 0;
 `;
 
 export const AboutTextarea = styled.textarea`
@@ -65,8 +50,11 @@ export const SectionText = styled.p`
   padding-right: 12px;
 `;
 
-export const Hr = styled.hr`
+export const Line = styled.div`
+  margin: 12px 0 0 0;
+  height: 0.5px;
   width: 100%;
+  border: 1px solid #e7ebef;
 `;
 
 export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
