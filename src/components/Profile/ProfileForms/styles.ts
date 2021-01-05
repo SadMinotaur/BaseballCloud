@@ -5,18 +5,18 @@ export const FormsDiv = styled.aside`
   min-width: 270px;
   max-width: 300px;
   overflow-y: scroll;
-  padding: 16px 16px 0 16px;
+  padding: 16px 16px 16px 16px;
   box-sizing: border-box;
 `;
 
 export const Row = styled.div`
   display: flex;
-  width: 100%;
   justify-content: space-between;
+  width: 100%;
 `;
 
-export const Input = styled.input`
-  width: 100%;
+export const Input = styledComponentsTS<{ width: number }>(styled.input)`
+  width: ${(p) => (p.width ? p.width : 100)}%;
   height: 40px;
   padding: 0 16px;
   border-radius: 4px;

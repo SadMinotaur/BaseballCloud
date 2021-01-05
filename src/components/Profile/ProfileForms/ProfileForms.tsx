@@ -48,7 +48,7 @@ export const ProfileForms: React.FC = () => {
     return value ? undefined : "Required";
   }
 
-  function dropdown(options: string[], placeholder: string, fixed?: boolean) {
+  function dropdown(options: string[], placeholder: string) {
     return (
       <Dropdown
         className="main"
@@ -79,7 +79,12 @@ export const ProfileForms: React.FC = () => {
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="First Name" />
+                    <Input
+                      {...input}
+                      width={95}
+                      type="input"
+                      placeholder="First Name"
+                    />
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
@@ -146,7 +151,12 @@ export const ProfileForms: React.FC = () => {
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="Feet" />
+                    <Input
+                      {...input}
+                      width={95}
+                      type="input"
+                      placeholder="Feet"
+                    />
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
