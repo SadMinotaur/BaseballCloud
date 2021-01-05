@@ -30,10 +30,12 @@ export const Tabs = styledComponentsTS<{
 
 export const RightSide = styled.div`
   display: flex;
+  padding: 0 10px 0 0;
+  align-items: center;
 `;
 
 export const ProfileIcon = styled.img`
-  margin: 5px 0 0 0;
+  margin: 0 10px 0 0;
   height: 32px;
   width: 32px;
 `;

@@ -21,3 +21,18 @@ export const Text = styled.p`
   font-weight: 900;
   color: #414f5a;
 `;
+
+export const StatsItem = styled.div`
+  flex: 1;
+  margin-right: 10px;
+`;
+
+export const StatsInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StatsContainer = styled.div`
+  display: flex;
+`;

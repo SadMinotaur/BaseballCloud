@@ -1,16 +1,42 @@
 import React from "react";
-import { Stats, StBlock, Text } from "./styles";
-import Progress from "./../../../assets/profile/progressLine.svg";
+import {
+  Stats,
+  StatsContainer,
+  StatsInfo,
+  StatsItem,
+  StBlock,
+  Text,
+} from "./styles";
+import { Progress } from "reactstrap";
+import "./progress.css";
 
 export const StatsBlock: React.FC = () => (
   <StBlock>
     <Stats>
       <Text>Top Batting Values</Text>
-      <p>Exit Velocity</p>
-      <p>Carry Distance</p>
-      <p>Launch Angle</p>
-      {/* TODO: Figure it out */}
-      {/* <img src={Progress} alt="" /> */}
+      <StatsContainer>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress bar barClassName="progressBar" value={1} />
+        </StatsItem>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress bar barClassName="progressBar" value={1} />
+        </StatsItem>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress bar barClassName="progressBar" value={1} />
+        </StatsItem>
+      </StatsContainer>
     </Stats>
     <Stats>
       <Text>Recent Session Reports</Text>
