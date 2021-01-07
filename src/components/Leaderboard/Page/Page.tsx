@@ -4,6 +4,7 @@ import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as heartReg } from "@fortawesome/free-regular-svg-icons";
 import { Spinner } from "../../../common-components/spinner";
 import { Queries } from "./../graphql/query";
+import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import API from "../../../grahql/api";
 import Profile from "../../../grahql/queries/Profile";
 import Stl from "./styles";
@@ -40,8 +41,14 @@ export const LeaderboardPage: React.FC = () => {
     return () => {};
   }, []);
 
+  let container: ToastContainer | null;
+
   return (
     <>
+      <ToastContainer
+        ref={(ref) => (container = ref)}
+        toastMessageFactory={React.createFactory(ToastMessageAnimated)}
+      />
       {loadingProfile ? (
         <Spinner loading={loadingProfile} />
       ) : (
@@ -95,6 +102,15 @@ export const LeaderboardPage: React.FC = () => {
                     <Stl.TabText width={10}>{v.distance}</Stl.TabText>
                     <Stl.TabText width={5}>
                       <FontAwesomeIcon
+                        onClick={() =>
+                          container &&
+                          container.success("Done", "Stuff", {
+                            className: "toast-top-right",
+                            closeButton: true,
+                            timeOut: 3000,
+                            tapToDismiss: true,
+                          })
+                        }
                         style={{ color: "#48bbff" }}
                         icon={v.favorite ? heartSol : heartReg}
                       />
