@@ -12,7 +12,7 @@ import {
   WarningText,
 } from "./styles";
 import { Queries } from "../graphql/query";
-import API from "../../../api";
+import API from "../../../grahql/api";
 import { ProfilePic } from "./../common-styles/styles";
 import "./dropdown.css";
 

@@ -6,7 +6,7 @@ import { Header } from "../Header";
 import "./../../css/global.css";
 import { SignInForm } from "../Auth/SignInForm";
 import { RegForm } from "../Auth/RegForm";
-import API from "../../api";
+import API from "../../grahql/api";
 import { ProfilePage } from "./../Profile/Page";
 import { LeaderboardPage } from "./../Leaderboard/Page";
 import { NetworkPage } from "./../Network/Page";

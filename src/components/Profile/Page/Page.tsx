@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../../../api";
+import API from "../../../grahql/api";
 import { Spinner } from "../../../common-components/spinner";
 import { Queries } from "../graphql/query";
 import { StatsBlock } from "../StatsBlock";

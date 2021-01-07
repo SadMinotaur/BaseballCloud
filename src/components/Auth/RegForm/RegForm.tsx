@@ -14,7 +14,7 @@ import {
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
 import checkbox from "./../../../assets/checkbox.svg";
-import API from "../../../api";
+import API from "../../../grahql/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 

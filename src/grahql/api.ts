@@ -80,6 +80,7 @@ class Api {
           Connection: "keep-alive",
           Host: "baseballcloud-front.herokuapp.com",
           Referer: "https://baseballcloud-front.herokuapp.com/login",
+          ...this.getStandartHeaders(),
         },
       }
     ).then((v) => console.log(v));

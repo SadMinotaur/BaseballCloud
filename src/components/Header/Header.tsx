@@ -11,7 +11,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import API from "../../api";
+import API from "../../grahql/api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p
