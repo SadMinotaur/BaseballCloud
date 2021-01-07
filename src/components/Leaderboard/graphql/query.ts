@@ -20,4 +20,32 @@ export const Queries = {
       }
     }
   }`,
+  getPitching: `query LeaderboardPitching($input:FilterLeaderboardInput!) { 
+    leaderboard_pitching(input: $input) { 
+      leaderboard_pitching {
+        pitcher_name
+        pitch_type
+        velocity
+        spin_rate
+        vertical_break
+        horizontal_break
+        pitcher_datraks_id
+        age
+        school {
+          id
+          name
+        }
+        teams {
+          id
+          name
+        }
+        favorite
+      }
+    }
+  }`,
+  favorite: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+      update_favorite_profile(input: $form) {
+        favorite
+      }
+    }`,
 };

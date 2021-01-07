@@ -5,6 +5,11 @@ const Stl = {
   Container: styled.div`
     height: 100%;
   `,
+  Toast: styled.div`
+    position: absolute;
+    top: 10px;
+    right: 320px;
+  `,
   Header: styled.div`
     padding: 10px 16px 16px 16px;
     display: flex;
@@ -23,7 +28,7 @@ const Stl = {
     padding: 8px;
     margin: 8px;
     ${(p) =>
-      p.active ? "color: #788b99;" : "color: #fff; background: #788b99;"};
+      p.active ? "color: #fff; background: #788b99;" : "color: #788b99;"};
     border: 2px solid #788b99;
     border-radius: 40px;
     font-size: 14px;
