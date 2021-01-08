@@ -108,6 +108,7 @@ export const LeaderboardPage: React.FC = () => {
         <Stl.Container>
           <Stl.Header>
             <h3>Leaderboard</h3>
+            <Stl.PageInput placeholder="School" />
           </Stl.Header>
           <Stl.HeaderTabs>
             <Stl.TabsContainer>

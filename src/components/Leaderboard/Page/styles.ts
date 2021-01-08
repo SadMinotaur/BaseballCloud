@@ -73,5 +73,21 @@ const Stl = {
     color: #414f5a;
     padding: 10px 0 10px 0;
  `,
+  PageInput: styled.input`
+    transition: width 0.5s ease-in-out;
+    padding: 5px 5px 7px 0;
+    width: 50px;
+    height: 20px;
+    border: 0;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 400;
+    color: rgb(72, 187, 255);
+    :focus {
+      border-bottom: 1px solid blue;
+      color: #788b99;
+      width: ${(p) => (p.width ? p.width : "100px")};
+    }
+  `,
 };
 export default Stl;

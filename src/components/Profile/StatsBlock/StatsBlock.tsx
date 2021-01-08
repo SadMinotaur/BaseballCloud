@@ -20,21 +20,21 @@ export const StatsBlock: React.FC = () => (
             <p>Exit Velocity</p>
             <p>N/A</p>
           </StatsInfo>
-          <Progress bar barClassName="progressBar" value={1} color="#f5d142" />
+          <Progress bar barClassName="progressBar" value={1} />
         </StatsItem>
         <StatsItem>
           <StatsInfo>
             <p>Exit Velocity</p>
             <p>N/A</p>
           </StatsInfo>
-          <Progress bar barClassName="progressBar" value={1} color="#f5d142" />
+          <Progress bar barClassName="progressBar" value={1} />
         </StatsItem>
         <StatsItem>
           <StatsInfo>
             <p>Exit Velocity</p>
             <p>N/A</p>
           </StatsInfo>
-          <Progress bar barClassName="progressBar" value={1} color="#f5d142" />
+          <Progress bar barClassName="progressBar" value={1} />
         </StatsItem>
       </StatsContainer>
     </Stats>
