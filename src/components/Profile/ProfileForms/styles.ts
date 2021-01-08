@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
+import { makeStyles } from "@material-ui/core/styles";
 
 export const FormsDiv = styled.aside`
   min-width: 270px;
@@ -13,18 +14,6 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-`;
-
-export const Input = styledComponentsTS<{ width: number }>(styled.input)`
-  width: ${(p) => (p.width ? p.width : 100)}%;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 4px;
-  background-color: #eff1f3;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  margin: 0 0 10px 0;
 `;
 
 export const AboutTextarea = styled.textarea`
@@ -82,3 +71,31 @@ export const WarningText = styled.p`
   color: #f05f62;
   font-size: 1.6rem;
 `;
+
+export const MaterialStyles = makeStyles({
+  input: {
+    width: "98%",
+    margin: "0 0 10px 0",
+    padding: "0 0 15px 0",
+    height: 40,
+    borderRadius: 4,
+    backgroundColor: "#eff1f3",
+    color: "#667784",
+    fontWeight: 400,
+    border: "1px solid transparent",
+    fontSize: 14,
+    "&:hover": {
+      backgroundColor: "#fff",
+      border: "1px solid rgba(72, 187, 255, 0.8);",
+    },
+    "&:focus": {
+      backgroundColor: "#fff",
+      border: "1px solid rgba(72, 187, 255, 0.8);",
+    },
+  },
+  label: {
+    color: "#667784",
+    margin: "-3px 0 0 0",
+    fontSize: 10,
+  },
+});

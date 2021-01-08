@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { HeaderStyle, Icon, RightSide, Tabs, ProfileIcon } from "./styles";
+import {
+  HeaderStyle,
+  Icon,
+  RightSide,
+  Tabs,
+  ProfileIcon,
+  DropdownText,
+} from "./styles";
 import Logo from "./../../assets/logo.svg";
 import PictureProf from "./../../assets/profileIcon.png";
 import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import API from "../../grahql/api";
+import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+// import API from "../../grahql/api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p
 ) => {
   const nav = useHistory();
-  const [picture, setPicture] = useState();
+  // const [picture, setPicture] = useState();
   const [dropdownState, setDropdownState] = useState(false);
 
   useEffect(() => {
@@ -55,11 +57,15 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
       >
         <DropdownToggle caret>Profile Name</DropdownToggle>
         <DropdownMenu>
-          {/*Ugly*/}
-          <DropdownItem color="white" onClick={(v) => nav.push("profile")}>
+          <DropdownText
+            onClick={(v) => {
+              nav.push("profile");
+              setDropdownState((ps) => !ps);
+            }}
+          >
             My profile
-          </DropdownItem>
-          <DropdownItem color="white">Log out</DropdownItem>
+          </DropdownText>
+          <DropdownText>Log out</DropdownText>
         </DropdownMenu>
       </Dropdown>
     </RightSide>

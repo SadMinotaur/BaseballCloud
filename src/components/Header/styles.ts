@@ -39,3 +39,10 @@ export const ProfileIcon = styled.img`
   height: 32px;
   width: 32px;
 `;
+
+export const DropdownText = styled.div`
+  padding: 5px 0 5px 10px;
+  :hover {
+    background-color: lightgray;
+  }
+`;

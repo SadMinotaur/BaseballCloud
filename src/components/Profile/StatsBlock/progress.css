@@ -1,4 +1,4 @@
 .progressBar {
-  height: 5px;
-  background-color: orange;
+  max-height: 5px;
+  border-radius: 5px;
 }

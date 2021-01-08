@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as heartReg } from "@fortawesome/free-regular-svg-icons";
 import { Spinner } from "../../../common-components/spinner";
 import { Queries } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
+import { ItemTab } from "./../ItemTab";
 import API from "../../../grahql/api";
 import Profile from "../../../grahql/queries/Profile";
 import Stl from "./styles";
 
 export const LeaderboardPage: React.FC = () => {
   let container: ToastContainer | null;
+  const timeout: number = 4000;
+
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [loadingContent, setLoadingContent] = useState(true);
   const [currentSwitch, setCurrentSwitch] = useState(true);
@@ -28,7 +28,6 @@ export const LeaderboardPage: React.FC = () => {
       teams: { id: string; name: string }[];
     }[]
   );
-
   const [contentPitching, setPitchingContent] = useState(
     [] as {
       pitcher_name: string;
@@ -44,7 +43,7 @@ export const LeaderboardPage: React.FC = () => {
   );
 
   function getB(): void {
-    setLoadingContent(false);
+    setLoadingContent(true);
     API.graphqlPost(Queries.getBatting, {
       input: { type: "exit_velocity" },
     }).then((v) => {
@@ -54,13 +53,37 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   function getP(): void {
-    setLoadingContent(false);
+    setLoadingContent(true);
     API.graphqlPost(Queries.getPitching, {
       input: { type: "pitch_velocity" },
     }).then((v) => {
       setPitchingContent(v.data.leaderboard_pitching.leaderboard_pitching);
       setLoadingContent(false);
     });
+  }
+
+  function showSuccessToast(fav: boolean): void {
+    container &&
+      container.success(
+        `This profile ${
+          fav ? "removed from favorite" : "added to favorite"
+        }  list successfully.`,
+        "Success",
+        {
+          closeButton: true,
+          tapToDismiss: true,
+          timeOut: timeout,
+        }
+      );
+  }
+
+  function showErrorToast(): void {
+    container &&
+      container.error("Error", {
+        closeButton: true,
+        tapToDismiss: true,
+        timeOut: timeout,
+      });
   }
 
   useEffect(() => {
@@ -134,130 +157,73 @@ export const LeaderboardPage: React.FC = () => {
               <>
                 {currentSwitch
                   ? contentBatting.map((v, i: number) => (
-                      <Stl.Tab>
-                        <Stl.TabText width={6.5}>{i + 1}</Stl.TabText>
-                        <Stl.TabText width={14}>{v.batter_name}</Stl.TabText>
-                        <Stl.TabText width={5}>{v.age}</Stl.TabText>
-                        <Stl.TabText width={14}>{v.school.name}</Stl.TabText>
-                        <Stl.TabText width={14.5}>
-                          {v.teams[0].name}
-                        </Stl.TabText>
-                        <Stl.TabText width={14.5}>
-                          {v.exit_velocity}
-                        </Stl.TabText>
-                        <Stl.TabText width={14.5}>
-                          {v.launch_angle ? v.launch_angle : "-"}
-                        </Stl.TabText>
-                        <Stl.TabText width={10}>{v.distance}</Stl.TabText>
-                        <Stl.TabText width={5}>
-                          <FontAwesomeIcon
-                            onClick={() => {
-                              API.graphqlPost(Queries.favorite, {
-                                form: {
-                                  favorite: !v.favorite,
-                                  profile_id: v.batter_datraks_id,
-                                },
-                              })
-                                .then(() => {
-                                  container &&
-                                    container.success(
-                                      `This profile ${
-                                        v.favorite
-                                          ? "removed from favorite"
-                                          : "added to favorite"
-                                      }  list successfully.`,
-                                      "Success",
-                                      {
-                                        closeButton: true,
-                                        tapToDismiss: true,
-                                        timeOut: 5000,
-                                      }
-                                    );
-                                  setBattingContent((ps) =>
-                                    ps.map((item) =>
-                                      item.batter_datraks_id !==
-                                      v.batter_datraks_id
-                                        ? item
-                                        : { ...v, favorite: !v.favorite }
-                                    )
-                                  );
-                                })
-                                .catch(() => {
-                                  container &&
-                                    container.error("Error", {
-                                      closeButton: true,
-                                      tapToDismiss: true,
-                                      timeOut: 5000,
-                                    });
-                                });
-                            }}
-                            style={{ color: "#48bbff" }}
-                            icon={v.favorite ? heartSol : heartReg}
-                          />
-                        </Stl.TabText>
-                      </Stl.Tab>
+                      <ItemTab
+                        arr={[
+                          (i + 1).toString(),
+                          v.batter_name,
+                          v.age.toString(),
+                          v.school.name,
+                          v.teams[0].name,
+                          v.exit_velocity.toString(),
+                          v.launch_angle ? v.launch_angle.toString() : "-",
+                          v.distance.toString(),
+                        ]}
+                        onC={() =>
+                          API.graphqlPost(Queries.favorite, {
+                            form: {
+                              favorite: !v.favorite,
+                              profile_id: v.batter_datraks_id,
+                            },
+                          })
+                            .then(() => {
+                              showSuccessToast(v.favorite);
+                              setBattingContent((ps) =>
+                                ps.map((item) =>
+                                  item.batter_datraks_id !== v.batter_datraks_id
+                                    ? item
+                                    : { ...v, favorite: !v.favorite }
+                                )
+                              );
+                            })
+                            .catch(() => showErrorToast())
+                        }
+                        fav={v.favorite}
+                      />
                     ))
                   : contentPitching.map((v, i: number) => (
-                      <Stl.Tab>
-                        <Stl.TabText width={6.5}>{i + 1}</Stl.TabText>
-                        <Stl.TabText width={14}>{v.pitcher_name}</Stl.TabText>
-                        <Stl.TabText width={5}>{v.age}</Stl.TabText>
-                        <Stl.TabText width={14}>{v.school.name}</Stl.TabText>
-                        <Stl.TabText width={14.5}>
-                          {v.teams[0].name}
-                        </Stl.TabText>
-                        <Stl.TabText width={14.5}>{v.pitch_type}</Stl.TabText>
-                        <Stl.TabText width={14.5}>
-                          {v.velocity ? v.velocity : "-"}
-                        </Stl.TabText>
-                        <Stl.TabText width={10}>{v.spin_rate}</Stl.TabText>
-                        <Stl.TabText width={5}>
-                          <FontAwesomeIcon
-                            onClick={() => {
-                              API.graphqlPost(Queries.favorite, {
-                                form: {
-                                  favorite: !v.favorite,
-                                  profile_id: v.pitcher_datraks_id,
-                                },
-                              })
-                                .then(() => {
-                                  container &&
-                                    container.success(
-                                      `This profile ${
-                                        v.favorite
-                                          ? "removed from favorite"
-                                          : "added to favorite"
-                                      }  list successfully.`,
-                                      "Success",
-                                      {
-                                        closeButton: true,
-                                        tapToDismiss: true,
-                                        timeOut: 5000,
-                                      }
-                                    );
-                                  setPitchingContent((ps) =>
-                                    ps.map((item) =>
-                                      item.pitcher_datraks_id !==
-                                      v.pitcher_datraks_id
-                                        ? item
-                                        : { ...v, favorite: !v.favorite }
-                                    )
-                                  );
-                                })
-                                .catch(() => {
-                                  container &&
-                                    container.error("Error", {
-                                      closeButton: true,
-                                      tapToDismiss: true,
-                                      timeOut: 5000,
-                                    });
-                                });
-                            }}
-                            style={{ color: "#48bbff" }}
-                            icon={v.favorite ? heartSol : heartReg}
-                          />
-                        </Stl.TabText>
-                      </Stl.Tab>
+                      <ItemTab
+                        arr={[
+                          (i + 1).toString(),
+                          v.pitcher_name,
+                          v.age.toString(),
+                          v.school.name,
+                          v.teams[0].name,
+                          v.pitch_type,
+                          v.velocity.toString(),
+                          v.spin_rate.toString(),
+                        ]}
+                        onC={() =>
+                          API.graphqlPost(Queries.favorite, {
+                            form: {
+                              favorite: !v.favorite,
+                              profile_id: v.pitcher_datraks_id,
+                            },
+                          })
+                            .then(() => {
+                              showSuccessToast(v.favorite);
+                              setPitchingContent((ps) =>
+                                ps.map((item) =>
+                                  item.pitcher_datraks_id !==
+                                  v.pitcher_datraks_id
+                                    ? item
+                                    : { ...v, favorite: !v.favorite }
+                                )
+                              );
+                            })
+                            .catch(() => showErrorToast())
+                        }
+                        fav={v.favorite}
+                      />
                     ))}
               </>
             )}

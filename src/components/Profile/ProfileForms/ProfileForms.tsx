@@ -4,19 +4,23 @@ import Dropdown from "react-dropdown";
 import {
   FormsDiv,
   Row,
-  Input,
   AboutTextarea,
   SectionText,
   Line,
   ButtonProfile,
   WarningText,
+  MaterialStyles,
 } from "./styles";
 import { Queries } from "../graphql/query";
 import API from "../../../grahql/api";
 import { ProfilePic } from "./../common-styles/styles";
 import "./dropdown.css";
+import { TextField } from "@material-ui/core";
+import PictureProf from "./../../../assets/profileIcon.png";
 
 export const ProfileForms: React.FC = () => {
+  const s = MaterialStyles();
+
   const [schools, setSchools] = useState([] as { id: number; name: string }[]);
   const [teams, setTeams] = useState([] as { id: number; name: string }[]);
   const [facilities, setFacilities] = useState(
@@ -61,6 +65,24 @@ export const ProfileForms: React.FC = () => {
     );
   }
 
+  function TextF(input: any, label: string) {
+    return (
+      <TextField
+        {...input}
+        id="filled-basic"
+        label={label}
+        variant="filled"
+        InputProps={{
+          disableUnderline: true,
+          className: s.input,
+        }}
+        InputLabelProps={{
+          className: s.label,
+        }}
+      />
+    );
+  }
+
   return (
     <FormsDiv>
       <Form
@@ -74,17 +96,12 @@ export const ProfileForms: React.FC = () => {
           invalid,
         }) => (
           <form onSubmit={handleSubmit}>
-            <ProfilePic />
+            <ProfilePic src={PictureProf} />
             <Row>
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input
-                      {...input}
-                      width={95}
-                      type="input"
-                      placeholder="First Name"
-                    />
+                    {TextF(input, "First Name*")}
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
@@ -94,7 +111,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="lastname" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="Last Name" />
+                    {TextF(input, "Last Name*")}
                     {meta.error && meta.touched && (
                       <WarningText>Last Name Required</WarningText>
                     )}
@@ -140,7 +157,7 @@ export const ProfileForms: React.FC = () => {
             <Field name="age" validate={required}>
               {({ input, meta }) => (
                 <>
-                  <Input {...input} type="input" placeholder="Age" />
+                  {TextF(input, "Age")}
                   {meta.error && meta.touched && (
                     <WarningText>Age Required</WarningText>
                   )}
@@ -151,12 +168,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    <Input
-                      {...input}
-                      width={95}
-                      type="input"
-                      placeholder="Feet"
-                    />
+                    {TextF(input, "Feet")}
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
@@ -166,7 +178,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="inches">
                 {({ input, meta }) => (
                   <div>
-                    <Input {...input} type="input" placeholder="Inches" />
+                    {TextF(input, "Inches")}
                     {meta.error && meta.touched && (
                       <WarningText>Inches Required</WarningText>
                     )}
@@ -177,7 +189,7 @@ export const ProfileForms: React.FC = () => {
             <Field name="weight" validate={required}>
               {({ input, meta }) => (
                 <>
-                  <Input {...input} type="input" placeholder="Weight" />
+                  {TextF(input, "Weight")}
                   {meta.error && meta.touched && (
                     <WarningText>Weight Required</WarningText>
                   )}

@@ -5,7 +5,7 @@ import HeightSvg from "./../../../assets/profile/height.svg";
 import WeightSvg from "./../../../assets/profile/weight.svg";
 import ThrowSvg from "./../../../assets/profile/throw.svg";
 import BatsSvg from "./../../../assets/profile/bats.svg";
-import Edit from "./../../../assets/profile/edit.svg";
+// import Edit from "./../../../assets/profile/edit.svg";
 
 export const ProfileTotal: React.FC = () => (
   <Styles.Container>
