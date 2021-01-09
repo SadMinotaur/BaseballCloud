@@ -21,7 +21,7 @@ export const ItemTab: React.FC<{
     <Stl.TabText width={5}>
       <FontAwesomeIcon
         onClick={onC}
-        style={{ color: "#48bbff" }}
+        style={{ color: "#4abdff" }}
         icon={fav ? heartSol : heartReg}
       />
     </Stl.TabText>

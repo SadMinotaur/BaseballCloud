@@ -11,9 +11,13 @@ const Stl = {
     right: 320px;
   `,
   Header: styled.div`
-    padding: 10px 16px 16px 16px;
+    align-items: center;
+    padding: 5px 16px 16px 16px;
     display: flex;
     justify-content: space-between;
+  `,
+  InputGroup: styled.div`
+    display: flex;
   `,
   HeaderTabs: styled.div`
     align-items: center;
@@ -28,7 +32,9 @@ const Stl = {
     padding: 8px;
     margin: 8px;
     ${(p) =>
-      p.active ? "color: #fff; background: #788b99;" : "color: #788b99;"};
+      p.active
+        ? "color: #fff; background: #788b99;"
+        : "color: #788b99; background: #fff;"};
     border: 2px solid #788b99;
     border-radius: 40px;
     font-size: 14px;
@@ -73,21 +79,5 @@ const Stl = {
     color: #414f5a;
     padding: 10px 0 10px 0;
  `,
-  PageInput: styled.input`
-    transition: width 0.5s ease-in-out;
-    padding: 5px 5px 7px 0;
-    width: 50px;
-    height: 20px;
-    border: 0;
-    font-size: 16px;
-    line-height: 19px;
-    font-weight: 400;
-    color: rgb(72, 187, 255);
-    :focus {
-      border-bottom: 1px solid blue;
-      color: #788b99;
-      width: ${(p) => (p.width ? p.width : "100px")};
-    }
-  `,
 };
 export default Stl;

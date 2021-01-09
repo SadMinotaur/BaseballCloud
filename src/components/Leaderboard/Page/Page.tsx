@@ -3,6 +3,8 @@ import { Spinner } from "../../../common-components/spinner";
 import { Queries } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { ItemTab } from "./../ItemTab";
+import { PageInput } from "./../PageInput";
+import { DropdownLeaderboard } from "./../Dropdown";
 import API from "../../../grahql/api";
 import Profile from "../../../grahql/queries/Profile";
 import Stl from "./styles";
@@ -108,7 +110,35 @@ export const LeaderboardPage: React.FC = () => {
         <Stl.Container>
           <Stl.Header>
             <h3>Leaderboard</h3>
-            <Stl.PageInput placeholder="School" />
+            <Stl.InputGroup>
+              <DropdownLeaderboard
+                value={"Date"}
+                options={["All", "Catcher", "Last Month"]}
+                onChange={() => {}}
+              />
+              <PageInput name="School" width={55} onChange={() => {}} />
+              <PageInput name="Team" width={45} onChange={() => {}} />
+              <DropdownLeaderboard
+                value={"Position"}
+                options={[
+                  "All",
+                  "Last Week",
+                  "First Base",
+                  "Second Base",
+                  "Sportstop",
+                  "Third Base",
+                  "Outfield",
+                  "Pitcher",
+                ]}
+                onChange={() => {}}
+              />
+              <PageInput name="Age" width={35} onChange={() => {}} />
+              <DropdownLeaderboard
+                value={"All"}
+                options={["All", "Favorite"]}
+                onChange={() => {}}
+              />
+            </Stl.InputGroup>
           </Stl.Header>
           <Stl.HeaderTabs>
             <Stl.TabsContainer>
@@ -131,6 +161,11 @@ export const LeaderboardPage: React.FC = () => {
                 Pitching
               </Stl.HeaderTab>
             </Stl.TabsContainer>
+            <DropdownLeaderboard
+              value={"Exit Velocity"}
+              options={["Exit Velocity", "Cary Distance"]}
+              onChange={() => {}}
+            />
           </Stl.HeaderTabs>
           <Stl.Content>
             <Stl.TabHead>

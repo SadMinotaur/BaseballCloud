@@ -55,12 +55,12 @@ export const ProfileForms: React.FC = () => {
   function dropdown(options: string[], placeholder: string) {
     return (
       <Dropdown
-        className="main"
-        menuClassName="menu"
+        className="profile-dropdown-main"
+        menuClassName="profile-dropdown-menu"
         options={options}
         placeholder={placeholder}
-        arrowOpen={<span className="arrow-open" />}
-        arrowClosed={<span className="arrow-closed" />}
+        arrowOpen={<span className="profile-dropdown-arrow-open" />}
+        arrowClosed={<span className="profile-dropdown-arrow-closed" />}
       />
     );
   }

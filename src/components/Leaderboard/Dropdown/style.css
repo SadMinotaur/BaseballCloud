@@ -1,0 +1,43 @@
+.leaderboard-dropdown-main {
+  color: #6fc7f2;
+  width: 105px;
+  height: 20px;
+  margin: 0 20px 0 0;
+}
+
+.leaderboard-dropdown-menu {
+  color: #232f35;
+  margin: -15px 0 0 -20px;
+  background-color: white;
+  border-radius: 4px;
+  text-indent: 16px;
+  font-size: 16px;
+  line-height: 38px;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  position: relative;
+  z-index: 1000;
+}
+
+.leaderboard-dropdown-arrow-closed,
+.leaderboard-dropdown-arrow-open {
+  position: relative;
+  display: inline-block;
+  margin-left: 85%;
+  border: solid #6fc7f2;
+  border-width: 0 2px 2px 0;
+  padding: 5px;
+  height: 0;
+}
+
+.leaderboard-dropdown-arrow-closed {
+  top: -25px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.leaderboard-dropdown-arrow-open {
+  top: -20px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
