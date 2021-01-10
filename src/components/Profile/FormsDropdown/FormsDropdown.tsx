@@ -7,6 +7,7 @@ export const FormsDropdown: React.FC<{
   options?: { value: string; label: string }[];
   loadOptions?: Promise<any>;
   multiple?: boolean;
+  input: any;
   placeholder: string;
   onInputChange: () => void;
 }> = ({ options, loadOptions, onInputChange, placeholder, multiple }) => (

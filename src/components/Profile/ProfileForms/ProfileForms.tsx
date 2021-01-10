@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Field, Form } from "react-final-form";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
@@ -12,7 +12,7 @@ import {
   RowEnd,
 } from "./styles";
 import { Queries } from "../graphql/query";
-import { ProfilePic } from "./../common-styles/styles";
+import { Stl } from "./../common-styles/styles";
 import { TextF } from "./../FormsInput";
 import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
@@ -46,7 +46,11 @@ export const ProfileForms: React.FC = () => {
           invalid,
         }) => (
           <form onSubmit={handleSubmit}>
-            <ProfilePic src={PictureProf} />
+            <Stl.ProfileContainer>
+              <Stl.ProfilePic src={PictureProf} />
+              <input style={{ display: "none" }} id="my-file" type="file" />
+              <label htmlFor="my-file">Choose photo</label>
+            </Stl.ProfileContainer>
             <Row>
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
@@ -70,8 +74,11 @@ export const ProfileForms: React.FC = () => {
               </Field>
             </Row>
             <Field name="position_in_game">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
+                  placeholder={"Position in Game*"}
+                  onInputChange={() => {}}
                   options={[
                     { label: "Catcher", value: "Catcher" },
                     { label: "First Base", value: "First Base" },
@@ -81,15 +88,16 @@ export const ProfileForms: React.FC = () => {
                     { label: "Outfield", value: "Outfield" },
                     { label: "Pitcher", value: "Pitcher" },
                   ]}
-                  placeholder={"Position in Game*"}
-                  onInputChange={() => {}}
                 />
               )}
             </Field>
             {/* <WarningText>Position Required</WarningText> */}
             <Field name="secondary_position_in_game">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
+                  placeholder={"Secondary Position in Game"}
+                  onInputChange={() => {}}
                   options={[
                     { value: "-", label: "-" },
                     { value: "Catcher", label: "Catcher" },
@@ -100,8 +108,6 @@ export const ProfileForms: React.FC = () => {
                     { value: "Outfield", label: "Outfield" },
                     { value: "Pitcher", label: "Pitcher" },
                   ]}
-                  placeholder={"Secondary Position in Game"}
-                  onInputChange={() => {}}
                 />
               )}
             </Field>
@@ -150,8 +156,9 @@ export const ProfileForms: React.FC = () => {
             </Field>
             <Row>
               <Field name="throw">
-                {(p) => (
+                {({ input, meta }) => (
                   <FormsDropdown
+                    input={input}
                     options={[
                       { value: "R", label: "R" },
                       { value: "L", label: "L" },
@@ -162,8 +169,9 @@ export const ProfileForms: React.FC = () => {
                 )}
               </Field>
               <Field name="bats">
-                {(p) => (
+                {({ input, meta }) => (
                   <FormsDropdown
+                    input={input}
                     options={[
                       { value: "R", label: "R" },
                       { value: "L", label: "L" },
@@ -178,8 +186,9 @@ export const ProfileForms: React.FC = () => {
             <WarningText>Bats Required</WarningText> */}
             {sectionText("School")}
             <Field name="school">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
                   placeholder="School"
                   onInputChange={() => {}}
                   loadOptions={API.graphqlPost(Queries.getSchools, {
@@ -196,8 +205,9 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Field name="school_year">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
                   options={[
                     { value: "Freshman", label: "Freshman" },
                     { value: "Sophomore", label: "Sophomore" },
@@ -211,8 +221,9 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Field name="team">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
                   placeholder="Team"
                   onInputChange={() => {}}
                   loadOptions={API.graphqlPost(Queries.getTeams, {
@@ -230,8 +241,9 @@ export const ProfileForms: React.FC = () => {
             </Field>
             {sectionText("Facility")}
             <Field name="facility">
-              {(p) => (
+              {({ input, meta }) => (
                 <FormsDropdown
+                  input={input}
                   placeholder="Facility"
                   multiple={true}
                   onInputChange={() => {}}
@@ -254,7 +266,7 @@ export const ProfileForms: React.FC = () => {
             </Field>
             {sectionText("About")}
             <Field name="about" component="textarea">
-              {(p) => (
+              {({ input, meta }) => (
                 <AboutTextarea placeholder="Describe yourself in a few words" />
               )}
             </Field>

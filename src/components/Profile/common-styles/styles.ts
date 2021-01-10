@@ -1,8 +1,15 @@
 import styled from "styled-components";
-// import styledComponentsTS from "styled-components-ts";
 
-export const ProfilePic = styled.img`
-  height: 200px;
-  width: 100%;
-  justify-content: center;
-`;
+export const Stl = {
+  ProfileContainer: styled.div`
+    width: 100%;
+    text-align: center;
+    margin: 0 0 10px 0;
+  `,
+  ProfilePic: styled.img`
+    height: 100px;
+    width: 100%;
+    object-fit: scale-down;
+    justify-content: center;
+  `,
+};

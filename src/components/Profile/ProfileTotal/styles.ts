@@ -8,6 +8,10 @@ export const Styles = {
     padding: 16px 16px 0 16px;
     box-sizing: border-box;
   `,
+  EditBut: styled.img`
+    position: absolute;
+    left: 200px;
+  `,
   ItemsRow: styled.div`
     width: 100%;
     display: flex;

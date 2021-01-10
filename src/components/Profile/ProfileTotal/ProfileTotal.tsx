@@ -1,14 +1,20 @@
 import React from "react";
 import { Styles } from "./styles";
+import { Stl } from "./../common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
 import WeightSvg from "./../../../assets/profile/weight.svg";
 import ThrowSvg from "./../../../assets/profile/throw.svg";
 import BatsSvg from "./../../../assets/profile/bats.svg";
-// import Edit from "./../../../assets/profile/edit.svg";
+import PictureProf from "./../../../assets/profileIcon.png";
+import Edit from "./../../../assets/profile/edit.svg";
 
 export const ProfileTotal: React.FC = () => (
   <Styles.Container>
+    <Stl.ProfileContainer>
+      <Styles.EditBut src={Edit} />
+      <Stl.ProfilePic src={PictureProf} />
+    </Stl.ProfileContainer>
     <Styles.ItemsRow>
       <div>
         <Styles.ItemImage src={AgeSvg} alt="Age" />
