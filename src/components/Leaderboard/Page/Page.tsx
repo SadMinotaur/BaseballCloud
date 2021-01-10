@@ -17,6 +17,14 @@ export const LeaderboardPage: React.FC = () => {
   const [loadingContent, setLoadingContent] = useState(true);
   const [currentSwitch, setCurrentSwitch] = useState(true);
 
+  // const [age, setAge] = useState(-1);
+  // const [date, setDate] = useState("");
+  // const [favorite, setFavorite] = useState(-1);
+  // const [position, setPosition] = useState("");
+  // const [school, setSchool] = useState("");
+  // const [team, setTeam] = useState("");
+  // const [type, setType] = useState("exit_velocity");
+
   const [contentBatting, setBattingContent] = useState(
     [] as {
       batter_name: string;

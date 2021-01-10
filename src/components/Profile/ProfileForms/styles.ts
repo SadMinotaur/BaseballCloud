@@ -16,6 +16,11 @@ export const Row = styled.div`
   width: 100%;
 `;
 
+export const RowEnd = styled.div`
+  text-align: end;
+  width: 100%;
+`;
+
 export const AboutTextarea = styled.textarea`
   width: 100%;
   height: 110px;

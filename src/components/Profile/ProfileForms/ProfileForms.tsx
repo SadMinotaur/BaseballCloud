@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
-import Dropdown from "react-dropdown";
+import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
@@ -9,18 +9,15 @@ import {
   Line,
   ButtonProfile,
   WarningText,
-  MaterialStyles,
+  RowEnd,
 } from "./styles";
 import { Queries } from "../graphql/query";
-import API from "../../../grahql/api";
 import { ProfilePic } from "./../common-styles/styles";
-import "./dropdown.css";
-import { TextField } from "@material-ui/core";
+import { TextF } from "./../FormsInput";
+import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
 
 export const ProfileForms: React.FC = () => {
-  const s = MaterialStyles();
-
   const [schools, setSchools] = useState([] as { id: number; name: string }[]);
   const [teams, setTeams] = useState([] as { id: number; name: string }[]);
   const [facilities, setFacilities] = useState(
@@ -52,37 +49,6 @@ export const ProfileForms: React.FC = () => {
     return value ? undefined : "Required";
   }
 
-  function dropdown(options: string[], placeholder: string) {
-    return (
-      <Dropdown
-        className="profile-dropdown-main"
-        menuClassName="profile-dropdown-menu"
-        options={options}
-        placeholder={placeholder}
-        arrowOpen={<span className="profile-dropdown-arrow-open" />}
-        arrowClosed={<span className="profile-dropdown-arrow-closed" />}
-      />
-    );
-  }
-
-  function TextF(input: any, label: string) {
-    return (
-      <TextField
-        {...input}
-        id="filled-basic"
-        label={label}
-        variant="filled"
-        InputProps={{
-          disableUnderline: true,
-          className: s.input,
-        }}
-        InputLabelProps={{
-          className: s.label,
-        }}
-      />
-    );
-  }
-
   return (
     <FormsDiv>
       <Form
@@ -101,7 +67,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    {TextF(input, "First Name*")}
+                    <TextF input={input} label="First Name*" moved={true} />
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
@@ -110,19 +76,19 @@ export const ProfileForms: React.FC = () => {
               </Field>
               <Field name="lastname" validate={required}>
                 {({ input, meta }) => (
-                  <div>
-                    {TextF(input, "Last Name*")}
+                  <RowEnd>
+                    <TextF input={input} label="Last Name*" moved={true} />
                     {meta.error && meta.touched && (
                       <WarningText>Last Name Required</WarningText>
                     )}
-                  </div>
+                  </RowEnd>
                 )}
               </Field>
             </Row>
             <Field name="position_in_game">
-              {(p) =>
-                dropdown(
-                  [
+              {(p) => (
+                <FormsDropdown
+                  options={[
                     "Catcher",
                     "First Base",
                     "Second Base",
@@ -130,16 +96,16 @@ export const ProfileForms: React.FC = () => {
                     "Third Base",
                     "Outfield",
                     "Pitcher",
-                  ],
-                  "Position in Game"
-                )
-              }
+                  ]}
+                  placeholder={"Position in Game"}
+                />
+              )}
             </Field>
             {/* <WarningText>Position Required</WarningText> */}
             <Field name="secondary_position_in_game">
-              {(p) =>
-                dropdown(
-                  [
+              {(p) => (
+                <FormsDropdown
+                  options={[
                     "-",
                     "Catcher",
                     "First Base",
@@ -148,16 +114,16 @@ export const ProfileForms: React.FC = () => {
                     "Third Base",
                     "Outfield",
                     "Pitcher",
-                  ],
-                  "Secondary Position in Game"
-                )
-              }
+                  ]}
+                  placeholder={"Secondary Position in Game"}
+                />
+              )}
             </Field>
             {sectionText("Personal Info")}
             <Field name="age" validate={required}>
               {({ input, meta }) => (
                 <>
-                  {TextF(input, "Age")}
+                  <TextF input={input} label="Age*" />
                   {meta.error && meta.touched && (
                     <WarningText>Age Required</WarningText>
                   )}
@@ -168,7 +134,7 @@ export const ProfileForms: React.FC = () => {
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
                   <div>
-                    {TextF(input, "Feet")}
+                    <TextF input={input} moved={true} label="Feet*" />
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
@@ -177,19 +143,19 @@ export const ProfileForms: React.FC = () => {
               </Field>
               <Field name="inches">
                 {({ input, meta }) => (
-                  <div>
-                    {TextF(input, "Inches")}
+                  <RowEnd>
+                    <TextF input={input} moved={true} label="Inches" />
                     {meta.error && meta.touched && (
                       <WarningText>Inches Required</WarningText>
                     )}
-                  </div>
+                  </RowEnd>
                 )}
               </Field>
             </Row>
             <Field name="weight" validate={required}>
               {({ input, meta }) => (
                 <>
-                  {TextF(input, "Weight")}
+                  <TextF input={input} label="Weight" />
                   {meta.error && meta.touched && (
                     <WarningText>Weight Required</WarningText>
                   )}
@@ -197,44 +163,58 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Row>
-              <Field name="throw">{(p) => dropdown(["R", "L"], "Throw")}</Field>
-              <Field name="bats">{(p) => dropdown(["R", "L"], "Bats")}</Field>
+              <Field name="throw">
+                {(p) => (
+                  <FormsDropdown options={["R", "L"]} placeholder="Throw" />
+                )}
+              </Field>
+              <Field name="bats">
+                {(p) => (
+                  <FormsDropdown options={["R", "L"]} placeholder="Bats" />
+                )}
+              </Field>
             </Row>
             {/* <WarningText>Throws Required</WarningText>
             <WarningText>Bats Required</WarningText> */}
             {sectionText("School")}
             <Field name="school">
-              {(p) =>
-                dropdown(
-                  schools.map((v) => v.name),
-                  "School"
-                )
-              }
+              {(p) => (
+                <FormsDropdown
+                  options={schools.map((v) => v.name)}
+                  placeholder={"School"}
+                />
+              )}
             </Field>
             <Field name="school_year">
-              {(p) =>
-                dropdown(
-                  ["Freshman", "Sophomore", "Junior", "Senior", "None"],
-                  "School Year"
-                )
-              }
+              {(p) => (
+                <FormsDropdown
+                  options={[
+                    "Freshman",
+                    "Sophomore",
+                    "Junior",
+                    "Senior",
+                    "None",
+                  ]}
+                  placeholder={"School Year"}
+                />
+              )}
             </Field>
             <Field name="team">
-              {(p) =>
-                dropdown(
-                  teams.map((v) => v.name),
-                  "Team"
-                )
-              }
+              {(p) => (
+                <FormsDropdown
+                  options={teams.map((v) => v.name)}
+                  placeholder={"Team"}
+                />
+              )}
             </Field>
             {sectionText("Facility")}
             <Field name="facility">
-              {(p) =>
-                dropdown(
-                  facilities.map((v) => v.u_name),
-                  "Facility"
-                )
-              }
+              {(p) => (
+                <FormsDropdown
+                  options={facilities.map((v) => v.u_name)}
+                  placeholder={"Facility"}
+                />
+              )}
             </Field>
             {sectionText("About")}
             <Field name="about" component="textarea">
