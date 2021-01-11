@@ -7,13 +7,21 @@ export const FormsDropdown: React.FC<{
   options?: { value: string; label: string }[];
   loadOptions?: Promise<any>;
   multiple?: boolean;
-  input: any;
   placeholder: string;
+  input: any;
   onInputChange: () => void;
-}> = ({ options, loadOptions, onInputChange, placeholder, multiple }) => (
-  <>
+}> = ({
+  options,
+  loadOptions,
+  onInputChange,
+  placeholder,
+  multiple,
+  input,
+}) => (
+  <Stl.Margin>
     {options ? (
       <Select
+        {...input}
         theme={Stl.DropdownTheme}
         styles={Stl.Styles}
         onInputChange={onInputChange}
@@ -22,6 +30,7 @@ export const FormsDropdown: React.FC<{
       />
     ) : (
       <AsyncSelect
+        {...input}
         isMulti={multiple}
         theme={Stl.DropdownTheme}
         styles={Stl.Styles}
@@ -33,5 +42,5 @@ export const FormsDropdown: React.FC<{
         placeholder={placeholder}
       />
     )}
-  </>
+  </Stl.Margin>
 );

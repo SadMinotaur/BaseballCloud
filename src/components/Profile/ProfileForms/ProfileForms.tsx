@@ -1,35 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
   AboutTextarea,
-  SectionText,
-  Line,
   ButtonProfile,
   WarningText,
-  RowEnd,
+  DropdownSpacing,
 } from "./styles";
 import { Queries } from "../graphql/query";
 import { Stl } from "./../common-styles/styles";
 import { TextF } from "./../FormsInput";
+import { SectText } from "./../SectionText";
 import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
 
 export const ProfileForms: React.FC = () => {
-  useEffect(() => {}, []);
+  const [picture, setPicture] = useState(PictureProf);
 
-  function sectionText(text: string) {
-    return (
-      <Row>
-        <SectionText>{text}</SectionText>
-        <Line />
-      </Row>
-    );
-  }
-
-  function required(value: string) {
+  function required(value: string): string | undefined {
     return value ? undefined : "Required";
   }
 
@@ -37,66 +27,73 @@ export const ProfileForms: React.FC = () => {
     <FormsDiv>
       <Form
         onSubmit={(values) => {}}
-        render={({
-          submitError,
-          handleSubmit,
-          submitting,
-          pristine,
-          values,
-          invalid,
-        }) => (
+        render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Stl.ProfileContainer>
-              <Stl.ProfilePic src={PictureProf} />
-              <input style={{ display: "none" }} id="my-file" type="file" />
+              <Stl.ProfilePic src={picture} />
+              <div>
+                <input
+                  style={{ display: "none" }}
+                  id="my-file"
+                  type="file"
+                  onChange={(e) =>
+                    e.target.files &&
+                    setPicture(URL.createObjectURL(e.target.files[0]))
+                  }
+                />
+              </div>
               <label htmlFor="my-file">Choose photo</label>
             </Stl.ProfileContainer>
             <Row>
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (
-                  <div>
-                    <TextF input={input} label="First Name*" moved={true} />
+                  <DropdownSpacing>
+                    <TextF input={input} label="First Name*" />
                     {meta.error && meta.touched && (
                       <WarningText>First Name Required</WarningText>
                     )}
-                  </div>
+                  </DropdownSpacing>
                 )}
               </Field>
               <Field name="lastname" validate={required}>
                 {({ input, meta }) => (
-                  <RowEnd>
-                    <TextF input={input} label="Last Name*" moved={true} />
+                  <DropdownSpacing leftMargin={true}>
+                    <TextF input={input} label="Last Name*" />
                     {meta.error && meta.touched && (
                       <WarningText>Last Name Required</WarningText>
                     )}
-                  </RowEnd>
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
-            <Field name="position_in_game">
+            <Field name="position_in_game" validate={required}>
               {({ input, meta }) => (
-                <FormsDropdown
-                  input={input}
-                  placeholder={"Position in Game*"}
-                  onInputChange={() => {}}
-                  options={[
-                    { label: "Catcher", value: "Catcher" },
-                    { label: "First Base", value: "First Base" },
-                    { label: "Second Base", value: "Second Base" },
-                    { label: "Shortstop", value: "Shortstop" },
-                    { label: "Third Base", value: "Third Base" },
-                    { label: "Outfield", value: "Outfield" },
-                    { label: "Pitcher", value: "Pitcher" },
-                  ]}
-                />
+                <>
+                  <FormsDropdown
+                    input={input}
+                    placeholder={"Position in Game*"}
+                    onInputChange={() => {}}
+                    options={[
+                      { label: "Catcher", value: "Catcher" },
+                      { label: "First Base", value: "First Base" },
+                      { label: "Second Base", value: "Second Base" },
+                      { label: "Shortstop", value: "Shortstop" },
+                      { label: "Third Base", value: "Third Base" },
+                      { label: "Outfield", value: "Outfield" },
+                      { label: "Pitcher", value: "Pitcher" },
+                    ]}
+                  />
+                  {meta.error && meta.touched && (
+                    <WarningText>Position Required</WarningText>
+                  )}
+                </>
               )}
             </Field>
-            {/* <WarningText>Position Required</WarningText> */}
             <Field name="secondary_position_in_game">
               {({ input, meta }) => (
                 <FormsDropdown
                   input={input}
-                  placeholder={"Secondary Position in Game"}
+                  placeholder="Secondary Position in Game"
                   onInputChange={() => {}}
                   options={[
                     { value: "-", label: "-" },
@@ -111,7 +108,7 @@ export const ProfileForms: React.FC = () => {
                 />
               )}
             </Field>
-            {sectionText("Personal Info")}
+            <SectText text="Personal Info" />
             <Field name="age" validate={required}>
               {({ input, meta }) => (
                 <>
@@ -125,22 +122,22 @@ export const ProfileForms: React.FC = () => {
             <Row>
               <Field name="feet" validate={required}>
                 {({ input, meta }) => (
-                  <div>
-                    <TextF input={input} moved={true} label="Feet*" />
+                  <DropdownSpacing>
+                    <TextF input={input} label="Feet*" />
                     {meta.error && meta.touched && (
                       <WarningText>Feet Required</WarningText>
                     )}
-                  </div>
+                  </DropdownSpacing>
                 )}
               </Field>
               <Field name="inches">
                 {({ input, meta }) => (
-                  <RowEnd>
-                    <TextF input={input} moved={true} label="Inches" />
+                  <DropdownSpacing leftMargin={true}>
+                    <TextF input={input} label="Inches" />
                     {meta.error && meta.touched && (
                       <WarningText>Inches Required</WarningText>
                     )}
-                  </RowEnd>
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
@@ -155,36 +152,44 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Row>
-              <Field name="throw">
+              <Field name="throw" validate={required}>
                 {({ input, meta }) => (
-                  <FormsDropdown
-                    input={input}
-                    options={[
-                      { value: "R", label: "R" },
-                      { value: "L", label: "L" },
-                    ]}
-                    placeholder="Throw*"
-                    onInputChange={() => {}}
-                  />
+                  <DropdownSpacing>
+                    <FormsDropdown
+                      input={input}
+                      options={[
+                        { value: "R", label: "R" },
+                        { value: "L", label: "L" },
+                      ]}
+                      placeholder="Throw*"
+                      onInputChange={() => {}}
+                    />
+                    {meta.error && meta.touched && (
+                      <WarningText>Throws Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
-              <Field name="bats">
+              <Field name="bats" validate={required}>
                 {({ input, meta }) => (
-                  <FormsDropdown
-                    input={input}
-                    options={[
-                      { value: "R", label: "R" },
-                      { value: "L", label: "L" },
-                    ]}
-                    placeholder="Bats*"
-                    onInputChange={() => {}}
-                  />
+                  <DropdownSpacing leftMargin={true}>
+                    <FormsDropdown
+                      input={input}
+                      options={[
+                        { value: "R", label: "R" },
+                        { value: "L", label: "L" },
+                      ]}
+                      placeholder="Bats*"
+                      onInputChange={() => {}}
+                    />
+                    {meta.error && meta.touched && (
+                      <WarningText>Bats Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
-            {/* <WarningText>Throws Required</WarningText>
-            <WarningText>Bats Required</WarningText> */}
-            {sectionText("School")}
+            <SectText text="School" />
             <Field name="school">
               {({ input, meta }) => (
                 <FormsDropdown
@@ -239,7 +244,7 @@ export const ProfileForms: React.FC = () => {
                 />
               )}
             </Field>
-            {sectionText("Facility")}
+            <SectText text="Facility" />
             <Field name="facility">
               {({ input, meta }) => (
                 <FormsDropdown
@@ -264,15 +269,18 @@ export const ProfileForms: React.FC = () => {
                 />
               )}
             </Field>
-            {sectionText("About")}
+            <SectText text="About" />
             <Field name="about" component="textarea">
               {({ input, meta }) => (
-                <AboutTextarea placeholder="Describe yourself in a few words" />
+                <AboutTextarea
+                  {...input}
+                  placeholder="Describe yourself in a few words"
+                />
               )}
             </Field>
-            {/* <WarningText>* Fill out the required fields</WarningText> */}
+            <WarningText>* Fill out the required fields</WarningText>
             <Row>
-              <ButtonProfile type="submit">Cancel</ButtonProfile>
+              <ButtonProfile type="reset">Cancel</ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">
                 Save
               </ButtonProfile>

@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
-import { makeStyles } from "@material-ui/core/styles";
 
 export const FormsDiv = styled.aside`
-  min-width: 270px;
+  min-width: 300px;
   max-width: 300px;
   overflow-y: scroll;
   padding: 16px 16px 16px 16px;
@@ -16,8 +15,10 @@ export const Row = styled.div`
   width: 100%;
 `;
 
-export const RowEnd = styled.div`
-  text-align: end;
+export const DropdownSpacing = styledComponentsTS<{ leftMargin: boolean }>(
+  styled.div
+)`
+  margin: 0 0 0  ${(p) => p.leftMargin && "10"}px;
   width: 100%;
 `;
 
@@ -76,31 +77,3 @@ export const WarningText = styled.p`
   color: #f05f62;
   font-size: 1.6rem;
 `;
-
-export const MaterialStyles = makeStyles({
-  input: {
-    width: "98%",
-    margin: "0 0 10px 0",
-    padding: "0 0 15px 0",
-    height: 40,
-    borderRadius: 4,
-    backgroundColor: "#eff1f3",
-    color: "#667784",
-    fontWeight: 400,
-    border: "1px solid transparent",
-    fontSize: 14,
-    "&:hover": {
-      backgroundColor: "#fff",
-      border: "1px solid rgba(72, 187, 255, 0.8);",
-    },
-    "&:focus": {
-      backgroundColor: "#fff",
-      border: "1px solid rgba(72, 187, 255, 0.8);",
-    },
-  },
-  label: {
-    color: "#667784",
-    margin: "-3px 0 0 0",
-    fontSize: 10,
-  },
-});

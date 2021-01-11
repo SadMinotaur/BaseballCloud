@@ -14,9 +14,7 @@ export const PageInput: React.FC<{
         width={width}
         placeholder={name}
         onFocus={() => setArrowState(true)}
-        onChange={() => {
-          onChange();
-        }}
+        onChange={() => onChange()}
         onBlur={() => setArrowState(false)}
       />
       <Stl.Arrow state={arrowState} src={arrow} alt="arrow" />

@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 // Works only this way
 export const Stl = {
   DropdownTheme: (theme: any) => ({
@@ -16,4 +18,7 @@ export const Stl = {
       display: "none",
     }),
   },
+  Margin: styled.div`
+    margin: 0 0 10px 0;
+  `,
 };

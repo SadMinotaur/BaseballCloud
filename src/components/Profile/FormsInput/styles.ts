@@ -6,9 +6,6 @@ export const Stl = {
   TextF: styled(TextField)({
     width: "100%",
   }),
-  TextFMarg: styled(TextField)({
-    width: "95%",
-  }),
 };
 
 export const MaterialStyles = makeStyles({
@@ -23,10 +20,6 @@ export const MaterialStyles = makeStyles({
     border: "1px solid transparent",
     fontSize: 14,
     "&:hover": {
-      backgroundColor: "#fff",
-      border: "1px solid rgba(72, 187, 255, 0.8);",
-    },
-    "&:active": {
       backgroundColor: "#fff",
       border: "1px solid rgba(72, 187, 255, 0.8);",
     },

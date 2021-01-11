@@ -17,14 +17,6 @@ export const LeaderboardPage: React.FC = () => {
   const [loadingContent, setLoadingContent] = useState(true);
   const [currentSwitch, setCurrentSwitch] = useState(true);
 
-  // const [age, setAge] = useState(-1);
-  // const [date, setDate] = useState("");
-  // const [favorite, setFavorite] = useState(-1);
-  // const [position, setPosition] = useState("");
-  // const [school, setSchool] = useState("");
-  // const [team, setTeam] = useState("");
-  // const [type, setType] = useState("exit_velocity");
-
   const [contentBatting, setBattingContent] = useState(
     [] as {
       batter_name: string;
@@ -97,10 +89,10 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   useEffect(() => {
-    API.graphqlPost(Profile.getUserInfo, {}).then((v) => {
-      setLoadingProfile(false);
-      getB();
-    });
+    // API.graphqlPost(Profile.getUserInfo, {}).then((v) => {
+    setLoadingProfile(false);
+    getB();
+    // });
     return () => {};
   }, []);
 
@@ -202,6 +194,7 @@ export const LeaderboardPage: React.FC = () => {
                 {currentSwitch
                   ? contentBatting.map((v, i: number) => (
                       <ItemTab
+                        key={i}
                         arr={[
                           (i + 1).toString(),
                           v.batter_name,
@@ -236,6 +229,7 @@ export const LeaderboardPage: React.FC = () => {
                     ))
                   : contentPitching.map((v, i: number) => (
                       <ItemTab
+                        key={i}
                         arr={[
                           (i + 1).toString(),
                           v.pitcher_name,

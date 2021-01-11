@@ -8,8 +8,8 @@ export const Stl = {
   `,
   ProfilePic: styled.img`
     height: 100px;
-    width: 100%;
-    object-fit: scale-down;
-    justify-content: center;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
   `,
 };
