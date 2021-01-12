@@ -4,11 +4,11 @@ import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
-  AboutTextarea,
   ButtonProfile,
   WarningText,
   DropdownSpacing,
 } from "./styles";
+import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
 import { Stl } from "./../common-styles/styles";
 import { TextF } from "./../FormsInput";
@@ -272,8 +272,8 @@ export const ProfileForms: React.FC = () => {
             <SectText text="About" />
             <Field name="about" component="textarea">
               {({ input, meta }) => (
-                <AboutTextarea
-                  {...input}
+                <FormsAbout
+                  input={input}
                   placeholder="Describe yourself in a few words"
                 />
               )}

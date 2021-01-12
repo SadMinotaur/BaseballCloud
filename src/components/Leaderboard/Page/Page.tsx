@@ -6,7 +6,7 @@ import { ItemTab } from "./../ItemTab";
 import { PageInput } from "./../PageInput";
 import { DropdownLeaderboard } from "./../Dropdown";
 import API from "../../../grahql/api";
-import Profile from "../../../grahql/queries/Profile";
+// import Profile from "../../../grahql/queries/Profile";
 import Stl from "./styles";
 
 export const LeaderboardPage: React.FC = () => {

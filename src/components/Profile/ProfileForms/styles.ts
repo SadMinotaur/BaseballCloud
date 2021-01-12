@@ -22,21 +22,6 @@ export const DropdownSpacing = styledComponentsTS<{ leftMargin: boolean }>(
   width: 100%;
 `;
 
-export const AboutTextarea = styled.textarea`
-  width: 100%;
-  height: 110px;
-  resize: none;
-  border-radius: 4px;
-  background-color: #eff1f3;
-  padding: 11px 16px;
-  font-size: 16px;
-  line-height: 1.13;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  margin: 0 0 10px 0;
-`;
-
 export const SectionText = styled.p`
   line-height: 1.25;
   font-size: 18px;

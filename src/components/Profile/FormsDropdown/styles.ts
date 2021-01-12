@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import styledComponentsTS from "styled-components-ts";
 
 // Works only this way
 export const Stl = {
@@ -14,11 +15,23 @@ export const Stl = {
   }),
   Styles: {
     menu: (m: any) => ({ ...m, zIndex: 9999, backgroundColor: "#fff" }),
+    placeholder: () => ({ display: "none" }),
     indicatorSeparator: () => ({
       display: "none",
     }),
   },
   Margin: styled.div`
     margin: 0 0 10px 0;
+  `,
+  Label: styledComponentsTS<{ isFloating?: boolean }>(styled.label)`
+    color: "#667784";
+    font-weight: 400;
+    z-index: 100;
+    left: 10px;
+    pointer-events: none;
+    position: absolute;
+    transition: 0.2s ease all;
+    top: ${(props) => (props.isFloating ? `5px` : `35%`)};
+    font-size: ${(props) => (props.isFloating ? `0.8rem` : `1.3rem`)};
   `,
 };
