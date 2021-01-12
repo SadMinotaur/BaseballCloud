@@ -10,9 +10,9 @@ import {
 } from "./styles";
 import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
-import { Stl } from "./../common-styles/styles";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
+import CommonStyle from "./../../../common-styles/styles";
 import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
 
@@ -27,10 +27,10 @@ export const ProfileForms: React.FC = () => {
     <FormsDiv>
       <Form
         onSubmit={(values) => {}}
-        render={({ handleSubmit }) => (
+        render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
-            <Stl.ProfileContainer>
-              <Stl.ProfilePic src={picture} />
+            <CommonStyle.ProfileContainer>
+              <CommonStyle.ProfilePic src={picture} />
               <div>
                 <input
                   style={{ display: "none" }}
@@ -43,7 +43,7 @@ export const ProfileForms: React.FC = () => {
                 />
               </div>
               <label htmlFor="my-file">Choose photo</label>
-            </Stl.ProfileContainer>
+            </CommonStyle.ProfileContainer>
             <Row>
               <Field name="firstName" validate={required}>
                 {({ input, meta }) => (

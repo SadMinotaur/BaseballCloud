@@ -7,7 +7,7 @@ export const PageInput: React.FC<{
   width: number;
   onChange: () => void;
 }> = ({ name, width, onChange }) => {
-  const [arrowState, setArrowState] = useState(false);
+  const [arrowState, setArrowState] = useState<boolean>(false);
   return (
     <div>
       <Stl.PageInput

@@ -13,9 +13,9 @@ export const LeaderboardPage: React.FC = () => {
   let container: ToastContainer | null;
   const timeout: number = 4000;
 
-  const [loadingProfile, setLoadingProfile] = useState(true);
-  const [loadingContent, setLoadingContent] = useState(true);
-  const [currentSwitch, setCurrentSwitch] = useState(true);
+  const [loadingProfile, setLoadingProfile] = useState<boolean>(true);
+  const [loadingContent, setLoadingContent] = useState<boolean>(true);
+  const [currentSwitch, setCurrentSwitch] = useState<boolean>(true);
 
   const [contentBatting, setBattingContent] = useState(
     [] as {

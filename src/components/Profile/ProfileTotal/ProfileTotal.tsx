@@ -1,6 +1,7 @@
 import React from "react";
 import { Styles } from "./styles";
-import { Stl } from "./../common-styles/styles";
+import { GraphqlProfile } from "./../common-types/Profile";
+import CommonStyle from "./../../../common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
 import WeightSvg from "./../../../assets/profile/weight.svg";
@@ -9,16 +10,17 @@ import BatsSvg from "./../../../assets/profile/bats.svg";
 import PictureProf from "./../../../assets/profileIcon.png";
 import Edit from "./../../../assets/profile/edit.svg";
 
-export const ProfileTotal: React.FC = () => (
+export const ProfileTotal: React.FC<{ info: GraphqlProfile }> = ({ info }) => (
   <Styles.Container>
-    <Stl.ProfileContainer>
+    <CommonStyle.ProfileContainer>
       <Styles.EditBut src={Edit} />
-      <Stl.ProfilePic src={PictureProf} />
-    </Stl.ProfileContainer>
+      <CommonStyle.ProfilePic src={PictureProf} />
+    </CommonStyle.ProfileContainer>
     <Styles.ItemsRow>
       <div>
         <Styles.ItemImage src={AgeSvg} alt="Age" />
         <Styles.ItemText>Age</Styles.ItemText>
+        {/* <Styles.ItemText>{info.age}</Styles.ItemText> */}
       </div>
     </Styles.ItemsRow>
     <Styles.ItemsRow>

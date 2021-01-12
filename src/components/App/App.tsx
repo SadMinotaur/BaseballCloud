@@ -13,7 +13,6 @@ import { NetworkPage } from "./../Network/Page";
 
 export const App: React.FC = () => {
   const history = useHistory();
-
   return (
     <>
       <Header />
@@ -29,7 +28,7 @@ export const App: React.FC = () => {
               <RegForm />
             </LoginPageStyle>
           </Route>
-          <Route path="/profile">
+          <Route path="/profile" exact={true}>
             <ProfilePage />
           </Route>
           <Route path="/leaderboard">
@@ -38,6 +37,7 @@ export const App: React.FC = () => {
           <Route path="/network">
             <NetworkPage />
           </Route>
+          <Route path="/profile/:userId" component={ProfilePage}></Route>
           <Route path="/">
             {() => (API.id ? history.push("/profile") : history.push("/login"))}
           </Route>

@@ -19,7 +19,7 @@ import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const SignInForm: React.FC = () => {
   const history = useHistory();
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState<boolean>(false);
 
   return (
     <FormContainer>

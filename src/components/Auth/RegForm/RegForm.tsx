@@ -20,7 +20,7 @@ import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const RegForm: React.FC = () => {
   const history = useHistory();
-  const [signInState, setSignInState] = useState(true);
+  const [signInState, setSignInState] = useState<boolean>(true);
 
   return (
     <FormContainer>

@@ -6,13 +6,14 @@ import {
   Tabs,
   ProfileIcon,
   DropdownText,
+  DropStyle,
 } from "./styles";
-import Logo from "./../../assets/logo.svg";
-import PictureProf from "./../../assets/profileIcon.png";
 import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+import Logo from "./../../assets/logo.svg";
+import PictureProf from "./../../assets/profileIcon.png";
 // import API from "../../grahql/api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
@@ -55,7 +56,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
         isOpen={dropdownState}
         toggle={() => setDropdownState((ps) => !ps)}
       >
-        <DropdownToggle caret>Profile Name</DropdownToggle>
+        <DropdownToggle style={DropStyle}>Profile Name</DropdownToggle>
         <DropdownMenu>
           <DropdownText
             onClick={(v) => {
@@ -65,7 +66,14 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
           >
             My profile
           </DropdownText>
-          <DropdownText>Log out</DropdownText>
+          <DropdownText
+            onClick={(v) => {
+              nav.push("login");
+              setDropdownState((ps) => !ps);
+            }}
+          >
+            Log out
+          </DropdownText>
         </DropdownMenu>
       </Dropdown>
     </RightSide>

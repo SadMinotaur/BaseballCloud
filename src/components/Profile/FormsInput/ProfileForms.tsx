@@ -6,7 +6,6 @@ export const TextF: React.FC<{
   label: string;
 }> = ({ input, label }) => {
   const mStyles = MaterialStyles();
-  // Ugly solution
   return (
     <Stl.TextF
       {...input}

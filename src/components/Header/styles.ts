@@ -20,18 +20,22 @@ export const Icon = styled.img`
 export const Tabs = styledComponentsTS<{
   state?: boolean;
 }>(styled.div)`
-  padding: 0 8px ${(p) => (p.state ? "12" : "15")}px 8px;
+  display: flex;
+  align-items: center;
+  margin: 0 10px 0 0;
+  width: 100%;
+  height: 100%;
   font-size: 16px;
-  margin: 7px 8px 0 8px;
   ${(p) => p.state && "border-bottom: 3px solid rgb(120, 139, 153);"}
-  ::hover {
-    ${(p) => !p.state && "border-bottom: 3px solid #788b99;"}
+  &:hover {
+    ${(p) => !p.state && "border-bottom: 3px solid lightgrey;"}
 `;
 
 export const RightSide = styled.div`
+  height: 100%;
   display: flex;
-  padding: 0 10px 0 0;
   align-items: center;
+  padding: 0 10px 0 0;
 `;
 
 export const ProfileIcon = styled.img`
@@ -46,3 +50,5 @@ export const DropdownText = styled.div`
     background-color: #48bbff;
   }
 `;
+
+export const DropStyle = { background: "#fff", color: "#788b99", border: 0 };

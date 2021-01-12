@@ -7,19 +7,30 @@ import { ProfileForms } from "./../ProfileForms";
 import { Container } from "./styles";
 import { YourAccount } from "./../YourAccount";
 import { ProfileTotal } from "./../ProfileTotal";
+import { useParams } from "react-router-dom";
+import { GraphqlProfile } from "./../common-types/Profile";
 
 export const ProfilePage: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [profileStatus, setProfileStatus] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [profileStatus, setProfileStatus] = useState<boolean>(false);
+  const [profile, setProfile] = useState<GraphqlProfile>();
+  const [editState, setEditState] = useState<boolean>(false);
+
+  const { userId } = useParams<Record<string, string | undefined>>();
 
   useEffect(() => {
-    API.graphqlPost(Queries.getUserInfo, {}).then((v) => {
-      const profile = v.data.current_profile;
-      if (profile.first_name === null) setProfileStatus(true);
-      setLoading(false);
-    });
+    API.graphqlPost(Queries.getUserInfo, {
+      id: userId ? userId.toString() : API.id.toString(),
+    })
+      .then((v) => {
+        const pr = v.data.profile;
+        setProfile(pr);
+        if (pr.first_name == null) setProfileStatus(true);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
     return () => {};
-  }, []);
+  }, [userId]);
 
   return (
     <>
@@ -34,7 +45,11 @@ export const ProfilePage: React.FC = () => {
             </>
           ) : (
             <>
-              <ProfileTotal />
+              {editState ? (
+                <ProfileForms />
+              ) : (
+                <ProfileTotal info={profile as GraphqlProfile} />
+              )}
               <StatsBlock />
             </>
           )}

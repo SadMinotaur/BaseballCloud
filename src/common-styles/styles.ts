@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Stl = {
+const CommonStyle = {
   ProfileContainer: styled.div`
     width: 100%;
     text-align: center;
@@ -13,3 +13,4 @@ export const Stl = {
     object-fit: cover;
   `,
 };
+export default CommonStyle;
