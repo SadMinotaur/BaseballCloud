@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../../../grahql/api";
-import { Spinner } from "../../../common-components/spinner";
+import { Spinner } from "../../../utils/common-components/spinner";
 import { Queries } from "../graphql/query";
 import { StatsBlock } from "../StatsBlock";
 import { ProfileForms } from "./../ProfileForms";
@@ -8,7 +7,8 @@ import { Container } from "./styles";
 import { YourAccount } from "./../YourAccount";
 import { ProfileTotal } from "./../ProfileTotal";
 import { useParams } from "react-router-dom";
-import { GraphqlProfile } from "./../common-types/Profile";
+import { GraphqlProfile } from "../../../utils/profile-types/Profile";
+import API from "../../../grahql/api";
 
 export const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,7 +25,7 @@ export const ProfilePage: React.FC = () => {
       .then((v) => {
         const pr = v.data.profile;
         setProfile(pr);
-        if (pr.first_name == null) setProfileStatus(true);
+        if (pr.first_name !== null) setProfileStatus(true);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -38,7 +38,7 @@ export const ProfilePage: React.FC = () => {
         <Spinner loading={loading} />
       ) : (
         <Container>
-          {profileStatus ? (
+          {!profileStatus ? (
             <>
               <ProfileForms />
               <YourAccount />

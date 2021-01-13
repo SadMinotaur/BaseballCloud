@@ -12,7 +12,7 @@ import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
-import CommonStyle from "./../../../common-styles/styles";
+import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
 

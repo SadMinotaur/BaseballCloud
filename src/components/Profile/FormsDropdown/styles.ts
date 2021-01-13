@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import styledComponentsTS from "styled-components-ts";
 
 // Works only this way
 export const Stl = {
@@ -23,7 +22,7 @@ export const Stl = {
   Margin: styled.div`
     margin: 0 0 10px 0;
   `,
-  Label: styledComponentsTS<{ isFloating?: boolean }>(styled.label)`
+  Label: styled.label<{ isFloating?: boolean }>`
     color: "#667784";
     font-weight: 400;
     z-index: 100;

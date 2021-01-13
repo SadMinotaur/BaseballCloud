@@ -13,7 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import checkbox from "./../../../assets/checkbox.svg";
 import API from "../../../grahql/api";
-import CommonStyle from "./../../../common-styles/styles";
+import CommonStyle from "../../../utils/common-styles/styles";
 
 export const RegForm: React.FC = () => {
   const history = useHistory();

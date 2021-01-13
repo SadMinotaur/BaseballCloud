@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import styledComponentsTS from "styled-components-ts";
 
 export const Stl = {
   AboutArea: styled.textarea`
@@ -21,8 +20,8 @@ export const Stl = {
       border: 1px solid #48bbff;
     }
   `,
-  Label: styledComponentsTS<{ isFloating?: boolean }>(styled.label)`
-    color: "#667784"; 
+  Label: styled.label<{ isFloating?: boolean }>`
+    color: "#667784";
     font-weight: 400;
     z-index: 100;
     left: 10px;

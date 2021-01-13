@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "../../../common-components/spinner";
+import { Spinner } from "../../../utils/common-components/spinner";
 import { Queries } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { ItemTab } from "./../ItemTab";
 import { PageInput } from "./../PageInput";
 import { DropdownLeaderboard } from "./../Dropdown";
-import { BattingUser, PitchingUser } from "./../leaderboard-types/types";
-import CommonStyle from "../../../common-styles/styles";
+import {
+  BattingUser,
+  PitchingUser,
+} from "../../../utils/leaderboard-types/types";
+import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../grahql/api";
 import Stl from "./styles";
 

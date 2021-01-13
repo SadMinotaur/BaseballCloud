@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
-import faLock from "./../assets/lock-solid.svg";
-import faUser from "./../assets/user-solid.svg";
-import faCheck from "./../assets/check-solid.svg";
+import faLock from "./../../assets/lock-solid.svg";
+import faUser from "./../../assets/user-solid.svg";
+import faCheck from "./../../assets/check-solid.svg";
 
 const CommonStyle = {
   ProfileContainer: styled.div`

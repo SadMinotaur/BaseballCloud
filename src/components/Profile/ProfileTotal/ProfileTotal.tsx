@@ -1,7 +1,7 @@
 import React from "react";
 import { Styles } from "./styles";
-import { GraphqlProfile } from "./../common-types/Profile";
-import CommonStyle from "./../../../common-styles/styles";
+import { GraphqlProfile } from "../../../utils/profile-types/Profile";
+import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
 import WeightSvg from "./../../../assets/profile/weight.svg";
