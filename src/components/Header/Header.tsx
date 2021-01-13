@@ -14,17 +14,21 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import Logo from "./../../assets/logo.svg";
 import PictureProf from "./../../assets/profileIcon.png";
-// import API from "../../grahql/api";
+import API from "../../grahql/api";
+import { Queries } from "./query";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p
 ) => {
   const nav = useHistory();
-  // const [picture, setPicture] = useState();
+  const [picture, setPicture] = useState<string>();
   const [dropdownState, setDropdownState] = useState(false);
 
   useEffect(() => {
-    // API.getPicture().then((v) => {});
+    API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) => {
+      const avatarAdress = v.data.current_profile.avatar;
+      API.getPicture(avatarAdress).then((v) => setPicture(v));
+    });
     return () => {};
   }, []);
   return (
@@ -51,7 +55,10 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
           Network
         </Link>
       </Tabs>
-      <ProfileIcon src={PictureProf} onClick={() => nav.push("/profile")} />
+      <ProfileIcon
+        src={picture ? `data:image/jpeg;base64,${picture}` : PictureProf}
+        onClick={() => nav.push("/profile")}
+      />
       <Dropdown
         isOpen={dropdownState}
         toggle={() => setDropdownState((ps) => !ps)}

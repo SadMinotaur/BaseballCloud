@@ -69,21 +69,13 @@ class Api {
     ).then((v) => v.data);
   }
 
-  public async getPicture() {
-    return Axios.get(
-      "https://baseballcloud-front.herokuapp.com/4625203570ef5f6721fc145b05f790a9.png",
-      {
-        headers: {
-          Accept: "image/webp,*/*",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Accept-Language": "en-US",
-          Connection: "keep-alive",
-          Host: "baseballcloud-front.herokuapp.com",
-          Referer: "https://baseballcloud-front.herokuapp.com/login",
-          ...this.getStandartHeaders(),
-        },
-      }
-    ).then((v) => console.log(v));
+  public async getPicture(url: string) {
+    return Axios.get(url, {
+      responseType: "arraybuffer",
+      headers: {
+        Accept: "image/webp,*/*",
+      },
+    }).then((v) => Buffer.from(v.data, "binary").toString("base64"));
   }
 
   private getStandartHeaders() {

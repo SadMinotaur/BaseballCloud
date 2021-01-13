@@ -5,6 +5,8 @@ import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { ItemTab } from "./../ItemTab";
 import { PageInput } from "./../PageInput";
 import { DropdownLeaderboard } from "./../Dropdown";
+import { BattingUser, PitchingUser } from "./../leaderboard-types/types";
+import CommonStyle from "../../../common-styles/styles";
 import API from "../../../grahql/api";
 import Stl from "./styles";
 
@@ -16,32 +18,8 @@ export const LeaderboardPage: React.FC = () => {
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
   const [currentSwitch, setCurrentSwitch] = useState<boolean>(true);
 
-  const [contentBatting, setBattingContent] = useState(
-    [] as {
-      batter_name: string;
-      exit_velocity: number;
-      launch_angle: number;
-      age: number;
-      batter_datraks_id: number;
-      distance: number;
-      favorite: boolean;
-      school: { id: string; name: string };
-      teams: { id: string; name: string }[];
-    }[]
-  );
-  const [contentPitching, setPitchingContent] = useState(
-    [] as {
-      pitcher_name: string;
-      velocity: number;
-      spin_rate: number;
-      age: number;
-      pitcher_datraks_id: number;
-      pitch_type: string;
-      favorite: boolean;
-      school: { id: string; name: string };
-      teams: { id: string; name: string }[];
-    }[]
-  );
+  const [contentBatting, setBattingContent] = useState([] as BattingUser[]);
+  const [contentPitching, setPitchingContent] = useState([] as PitchingUser[]);
 
   function getB(): void {
     setLoadingContent(true);
@@ -95,12 +73,12 @@ export const LeaderboardPage: React.FC = () => {
 
   return (
     <>
-      <Stl.Toast>
+      <CommonStyle.Toast>
         <ToastContainer
           ref={(ref) => (container = ref)}
           toastMessageFactory={React.createFactory(ToastMessageAnimated)}
         />
-      </Stl.Toast>
+      </CommonStyle.Toast>
       {loadingProfile ? (
         <Spinner loading={loadingProfile} />
       ) : (
@@ -110,7 +88,7 @@ export const LeaderboardPage: React.FC = () => {
             <Stl.InputGroup>
               <DropdownLeaderboard
                 placeholder="Date"
-                width={10}
+                width={100}
                 options={["All", "Catcher", "Last Month"]}
               />
               <PageInput name="School" width={55} onChange={() => {}} />
@@ -192,6 +170,7 @@ export const LeaderboardPage: React.FC = () => {
                   ? contentBatting.map((v, i: number) => (
                       <ItemTab
                         key={i}
+                        idProfile={v.batter_datraks_id}
                         arr={[
                           (i + 1).toString(),
                           v.batter_name,
@@ -227,6 +206,7 @@ export const LeaderboardPage: React.FC = () => {
                   : contentPitching.map((v, i: number) => (
                       <ItemTab
                         key={i}
+                        idProfile={v.pitcher_datraks_id}
                         arr={[
                           (i + 1).toString(),
                           v.pitcher_name,

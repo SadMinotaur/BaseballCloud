@@ -5,11 +5,6 @@ const Stl = {
   Container: styled.div`
     height: 100%;
   `,
-  Toast: styled.div`
-    position: absolute;
-    top: 10px;
-    right: 320px;
-  `,
   Header: styled.div`
     align-items: center;
     padding: 5px 16px 16px 16px;

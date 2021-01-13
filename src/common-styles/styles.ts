@@ -12,5 +12,10 @@ const CommonStyle = {
     border-radius: 50%;
     object-fit: cover;
   `,
+  Toast: styled.div`
+    position: absolute;
+    top: 10px;
+    right: 320px;
+  `,
 };
 export default CommonStyle;

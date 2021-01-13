@@ -42,6 +42,8 @@ export const ProfileIcon = styled.img`
   margin: 0 10px 0 0;
   height: 32px;
   width: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const DropdownText = styled.div`
