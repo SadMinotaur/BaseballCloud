@@ -13,8 +13,8 @@ import { Queries } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
 import CommonStyle from "../../../utils/common-styles/styles";
-import API from "../../../grahql/api";
 import PictureProf from "./../../../assets/profileIcon.png";
+import API from "../../../utils/api";
 
 export const ProfileForms: React.FC = () => {
   const [picture, setPicture] = useState(PictureProf);

@@ -8,7 +8,7 @@ import { YourAccount } from "./../YourAccount";
 import { ProfileTotal } from "./../ProfileTotal";
 import { useParams } from "react-router-dom";
 import { GraphqlProfile } from "../../../utils/profile-types/Profile";
-import API from "../../../grahql/api";
+import API from "../../../utils/api";
 
 export const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,16 +19,18 @@ export const ProfilePage: React.FC = () => {
   const { userId } = useParams<Record<string, string | undefined>>();
 
   useEffect(() => {
-    API.graphqlPost(Queries.getUserInfo, {
-      id: userId ? userId.toString() : API.id.toString(),
-    })
-      .then((v) => {
-        const pr = v.data.profile;
-        setProfile(pr);
-        if (pr.first_name !== null) setProfileStatus(true);
-        setLoading(false);
+    API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) =>
+      API.graphqlPost(Queries.getUserInfo, {
+        id: userId ? userId.toString() : v.data.current_profile.id,
       })
-      .catch(() => setLoading(false));
+        .then((v) => {
+          const pr = v.data.profile;
+          setProfile(pr);
+          if (pr.first_name !== null) setProfileStatus(true);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false))
+    );
     return () => {};
   }, [userId]);
 
@@ -46,18 +48,21 @@ export const ProfilePage: React.FC = () => {
           ) : (
             <>
               {editState ? (
-                <ProfileForms />
-              ) : API.id.toString() === profile?.id ? (
+                <>
+                  <ProfileForms />
+                  <StatsBlock />
+                </>
+              ) : userId ? (
+                <>
+                  <ProfileTotal info={profile as GraphqlProfile} />
+                  <StatsBlock />
+                </>
+              ) : (
                 <>
                   <ProfileTotal
                     info={profile as GraphqlProfile}
                     onEditPress={() => setEditState(true)}
                   />
-                  <StatsBlock />
-                </>
-              ) : (
-                <>
-                  <ProfileTotal info={profile as GraphqlProfile} />
                   <StatsBlock />
                 </>
               )}

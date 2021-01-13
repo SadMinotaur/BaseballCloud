@@ -11,11 +11,11 @@ import {
 import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { Queries } from "./graphql/query";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import Logo from "./../../assets/logo.svg";
 import PictureProf from "./../../assets/profileIcon.png";
-import API from "../../grahql/api";
-import { Queries } from "./query";
+import API from "../../utils/api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p
@@ -67,7 +67,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
         <DropdownMenu>
           <DropdownText
             onClick={(v) => {
-              nav.push("profile");
+              nav.push("/profile");
               setDropdownState((ps) => !ps);
             }}
           >
@@ -75,7 +75,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
           </DropdownText>
           <DropdownText
             onClick={(v) => {
-              nav.push("login");
+              API.logout().then(() => nav.push("/login"));
               setDropdownState((ps) => !ps);
             }}
           >

@@ -2,15 +2,15 @@ import styled from "styled-components";
 
 export const Styles = {
   Container: styled.aside`
-    min-width: 270px;
+    min-width: 300px;
     max-width: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 16px 16px 0 16px;
     box-sizing: border-box;
   `,
   FloatingIcon: styled.img`
     position: absolute;
-    left: 200px;
+    left: 250px;
   `,
   ItemsRow: styled.div`
     width: 100%;

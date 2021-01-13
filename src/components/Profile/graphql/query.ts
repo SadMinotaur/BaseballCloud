@@ -1,4 +1,35 @@
 export const Queries = {
+  getCurrentUserInfo: `{ current_profile ()
+    {
+       id
+       first_name
+       last_name 
+       position 
+       position2
+       avatar
+       throws_hand
+       bats_hand
+       biography
+       school_year
+       feet
+       inches
+       weight
+       age
+       school {
+         id
+         name
+       }
+       teams {
+         id
+         name
+       }
+       facilities {
+         id
+         email
+         u_name
+       }
+     }
+   }`,
   getUserInfo: `query Profile($id:String!) {
     profile(id: $id) {
       id
@@ -101,22 +132,9 @@ export const Queries = {
         }
       }
     }`,
+  favoriteProfile: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+    update_favorite_profile(input: $form) {
+      favorite
+    }
+  }`,
 };
-
-// export interface UpdateProfile {
-//   age: number;
-//   bats_hand: string;
-//   biography: string;
-//   facilities: { id: string; u_name: string }[];
-//   feet: number;
-//   first_name: string;
-//   id: string;
-//   inches: number;
-//   last_name: string;
-//   position: string;
-//   school: { id: number; name: string }[];
-//   school_year: string;
-//   teams: [];
-//   throws_hand: string;
-//   weight: number;
-// }

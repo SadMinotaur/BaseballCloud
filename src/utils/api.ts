@@ -69,13 +69,20 @@ class Api {
     ).then((v) => v.data);
   }
 
-  public async getPicture(url: string) {
+  public async getPicture(url: string): Promise<string> {
     return Axios.get(url, {
       responseType: "arraybuffer",
       headers: {
         Accept: "image/webp,*/*",
       },
     }).then((v) => Buffer.from(v.data, "binary").toString("base64"));
+  }
+
+  public async logout() {
+    return Axios.delete(
+      "https://baseballcloud-back.herokuapp.com/api/v1/auth/sign_out",
+      { headers: this.getStandartHeaders() }
+    );
   }
 
   private getStandartHeaders() {

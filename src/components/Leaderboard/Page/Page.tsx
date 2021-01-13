@@ -10,7 +10,7 @@ import {
   PitchingUser,
 } from "../../../utils/leaderboard-types/types";
 import CommonStyle from "../../../utils/common-styles/styles";
-import API from "../../../grahql/api";
+import API from "../../../utils/api";
 import Stl from "./styles";
 
 export const LeaderboardPage: React.FC = () => {

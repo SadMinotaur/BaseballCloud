@@ -12,7 +12,7 @@ import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
 
 import checkbox from "./../../../assets/checkbox.svg";
-import API from "../../../grahql/api";
+import API from "../../../utils/api";
 import CommonStyle from "../../../utils/common-styles/styles";
 
 export const RegForm: React.FC = () => {
