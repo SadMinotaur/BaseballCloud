@@ -6,7 +6,6 @@ import { ItemTab } from "./../ItemTab";
 import { PageInput } from "./../PageInput";
 import { DropdownLeaderboard } from "./../Dropdown";
 import API from "../../../grahql/api";
-// import Profile from "../../../grahql/queries/Profile";
 import Stl from "./styles";
 
 export const LeaderboardPage: React.FC = () => {
@@ -89,10 +88,8 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   useEffect(() => {
-    // API.graphqlPost(Profile.getUserInfo, {}).then((v) => {
     setLoadingProfile(false);
     getB();
-    // });
     return () => {};
   }, []);
 
@@ -112,14 +109,15 @@ export const LeaderboardPage: React.FC = () => {
             <h3>Leaderboard</h3>
             <Stl.InputGroup>
               <DropdownLeaderboard
-                value={"Date"}
+                placeholder="Date"
+                width={10}
                 options={["All", "Catcher", "Last Month"]}
-                onChange={() => {}}
               />
               <PageInput name="School" width={55} onChange={() => {}} />
               <PageInput name="Team" width={45} onChange={() => {}} />
               <DropdownLeaderboard
-                value={"Position"}
+                placeholder="Position"
+                width={100}
                 options={[
                   "All",
                   "Last Week",
@@ -130,13 +128,12 @@ export const LeaderboardPage: React.FC = () => {
                   "Outfield",
                   "Pitcher",
                 ]}
-                onChange={() => {}}
               />
               <PageInput name="Age" width={35} onChange={() => {}} />
               <DropdownLeaderboard
-                value={"All"}
+                width={80}
+                placeholder="All"
                 options={["All", "Favorite"]}
-                onChange={() => {}}
               />
             </Stl.InputGroup>
           </Stl.Header>
@@ -162,9 +159,9 @@ export const LeaderboardPage: React.FC = () => {
               </Stl.HeaderTab>
             </Stl.TabsContainer>
             <DropdownLeaderboard
-              value={"Exit Velocity"}
+              width={120}
+              placeholder="Exit Velocity"
               options={["Exit Velocity", "Cary Distance"]}
-              onChange={() => {}}
             />
           </Stl.HeaderTabs>
           <Stl.Content>

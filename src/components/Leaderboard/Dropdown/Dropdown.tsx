@@ -3,21 +3,18 @@ import Dropdown from "react-dropdown";
 import "./style.css";
 
 export const DropdownLeaderboard: React.FC<{
-  value: string;
+  placeholder: string;
   options: string[];
-  onChange: () => void;
-}> = ({ onChange, value, options }) => {
-  return (
-    <div>
-      <Dropdown
-        className="leaderboard-dropdown-main"
-        menuClassName="leaderboard-dropdown-menu"
-        options={options}
-        value={value}
-        arrowOpen={<span className="leaderboard-dropdown-arrow-open" />}
-        arrowClosed={<span className="leaderboard-dropdown-arrow-closed" />}
-        onChange={onChange}
-      />
-    </div>
-  );
-};
+  width: number;
+}> = ({ placeholder, options, width }) => (
+  <div style={{ width: width }}>
+    <Dropdown
+      placeholder={placeholder}
+      className="leaderboard-dropdown-main"
+      menuClassName="leaderboard-dropdown-menu"
+      options={options}
+      arrowOpen={<span className="leaderboard-dropdown-arrow-open" />}
+      arrowClosed={<span className="leaderboard-dropdown-arrow-closed" />}
+    />
+  </div>
+);

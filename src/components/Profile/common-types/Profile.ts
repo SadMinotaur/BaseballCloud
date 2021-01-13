@@ -39,7 +39,7 @@ export type GraphqlProfile = {
   sat_score: number;
   school: { id: string; name: string };
   school_year: "Freshman";
-  teams: { id: string; name: string };
+  teams: { id: string; name: string }[];
   throws_hand: string;
   weight: number;
   winsgspan: string;

@@ -47,10 +47,20 @@ export const ProfilePage: React.FC = () => {
             <>
               {editState ? (
                 <ProfileForms />
+              ) : API.id.toString() === profile?.id ? (
+                <>
+                  <ProfileTotal
+                    info={profile as GraphqlProfile}
+                    onEditPress={() => setEditState(true)}
+                  />
+                  <StatsBlock />
+                </>
               ) : (
-                <ProfileTotal info={profile as GraphqlProfile} />
+                <>
+                  <ProfileTotal info={profile as GraphqlProfile} />
+                  <StatsBlock />
+                </>
               )}
-              <StatsBlock />
             </>
           )}
         </Container>

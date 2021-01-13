@@ -8,7 +8,7 @@ export const Styles = {
     padding: 16px 16px 0 16px;
     box-sizing: border-box;
   `,
-  EditBut: styled.img`
+  FloatingIcon: styled.img`
     position: absolute;
     left: 200px;
   `,
