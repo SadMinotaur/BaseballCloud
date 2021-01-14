@@ -3,8 +3,8 @@ import { Spinner } from "../../../utils/common-components/spinner";
 import { Queries } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { ItemTab } from "./../ItemTab";
-import { PageInput } from "./../PageInput";
-import { DropdownLeaderboard } from "./../Dropdown";
+import { InputBlue } from "../../../utils/common-components/input-blue";
+import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import {
   BattingUser,
   PitchingUser,
@@ -89,14 +89,24 @@ export const LeaderboardPage: React.FC = () => {
           <Stl.Header>
             <h3>Leaderboard</h3>
             <Stl.InputGroup>
-              <DropdownLeaderboard
+              <DropdownBlue
                 placeholder="Date"
                 width={100}
                 options={["All", "Catcher", "Last Month"]}
               />
-              <PageInput name="School" width={55} onChange={() => {}} />
-              <PageInput name="Team" width={45} onChange={() => {}} />
-              <DropdownLeaderboard
+              <InputBlue
+                name="School"
+                width={55}
+                widthFocus={180}
+                onChange={() => {}}
+              />
+              <InputBlue
+                name="Team"
+                width={45}
+                widthFocus={180}
+                onChange={() => {}}
+              />
+              <DropdownBlue
                 placeholder="Position"
                 width={100}
                 options={[
@@ -110,8 +120,13 @@ export const LeaderboardPage: React.FC = () => {
                   "Pitcher",
                 ]}
               />
-              <PageInput name="Age" width={35} onChange={() => {}} />
-              <DropdownLeaderboard
+              <InputBlue
+                name="Age"
+                width={35}
+                widthFocus={80}
+                onChange={() => {}}
+              />
+              <DropdownBlue
                 width={80}
                 placeholder="All"
                 options={["All", "Favorite"]}
@@ -120,7 +135,7 @@ export const LeaderboardPage: React.FC = () => {
           </Stl.Header>
           <Stl.HeaderTabs>
             <Stl.TabsContainer>
-              <Stl.HeaderTab
+              <CommonStyle.HeaderTab
                 onClick={() => {
                   getB();
                   setCurrentSwitch(true);
@@ -128,8 +143,8 @@ export const LeaderboardPage: React.FC = () => {
                 active={currentSwitch}
               >
                 Batting
-              </Stl.HeaderTab>
-              <Stl.HeaderTab
+              </CommonStyle.HeaderTab>
+              <CommonStyle.HeaderTab
                 onClick={() => {
                   getP();
                   setCurrentSwitch(false);
@@ -137,34 +152,42 @@ export const LeaderboardPage: React.FC = () => {
                 active={!currentSwitch}
               >
                 Pitching
-              </Stl.HeaderTab>
+              </CommonStyle.HeaderTab>
             </Stl.TabsContainer>
-            <DropdownLeaderboard
+            <DropdownBlue
               width={120}
               placeholder="Exit Velocity"
               options={["Exit Velocity", "Cary Distance"]}
             />
           </Stl.HeaderTabs>
           <Stl.Content>
-            <Stl.TabHead>
-              <Stl.TabHeadText width={6.5}>Rank</Stl.TabHeadText>
-              <Stl.TabHeadText width={14}>
+            <CommonStyle.TabHead>
+              <CommonStyle.TabHeadText width={6.5}>
+                Rank
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={14}>
                 {currentSwitch ? "Batter" : "Pitcher"} Name
-              </Stl.TabHeadText>
-              <Stl.TabHeadText width={5}>Age</Stl.TabHeadText>
-              <Stl.TabHeadText width={14}>School</Stl.TabHeadText>
-              <Stl.TabHeadText width={14.5}>Teams</Stl.TabHeadText>
-              <Stl.TabHeadText width={14.5}>
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={5}>Age</CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={14}>
+                School
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={14.5}>
+                Teams
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={14.5}>
                 {currentSwitch ? "Exit Velocity" : "Pitch Type"}
-              </Stl.TabHeadText>
-              <Stl.TabHeadText width={14.5}>
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={14.5}>
                 {currentSwitch ? "Launch Angle" : "Velocity"}
-              </Stl.TabHeadText>
-              <Stl.TabHeadText width={10}>
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={10}>
                 {currentSwitch ? "Distance" : "Spin Rate"}
-              </Stl.TabHeadText>
-              <Stl.TabHeadText width={5}>Favorite</Stl.TabHeadText>
-            </Stl.TabHead>
+              </CommonStyle.TabHeadText>
+              <CommonStyle.TabHeadText width={5}>
+                Favorite
+              </CommonStyle.TabHeadText>
+            </CommonStyle.TabHead>
             {loadingContent ? (
               <Spinner loading={loadingContent} />
             ) : (

@@ -2,7 +2,7 @@ import React from "react";
 import Dropdown from "react-dropdown";
 import "./style.css";
 
-export const DropdownLeaderboard: React.FC<{
+export const DropdownBlue: React.FC<{
   placeholder: string;
   options: string[];
   width: number;
