@@ -27,7 +27,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   useEffect(() => {
     API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) => {
       const avatarAdress = v.data.current_profile.avatar;
-      API.getPicture(avatarAdress).then((v) => setPicture(v));
+      avatarAdress && API.getPicture(avatarAdress).then((v) => setPicture(v));
     });
     return () => {};
   }, []);

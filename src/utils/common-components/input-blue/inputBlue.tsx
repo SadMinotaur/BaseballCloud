@@ -7,7 +7,8 @@ export const InputBlue: React.FC<{
   name: string;
   width: number;
   widthFocus: number;
-}> = ({ name, width, widthFocus, input }) => {
+  type?: string;
+}> = ({ name, width, type, widthFocus, input }) => {
   const [arrowState, setArrowState] = useState<boolean>(false);
   return (
     <div>
