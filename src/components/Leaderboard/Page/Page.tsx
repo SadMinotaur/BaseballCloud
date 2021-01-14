@@ -12,6 +12,7 @@ import {
 import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../utils/api";
 import Stl from "./styles";
+import { Field, Form, FormSpy } from "react-final-form";
 
 export const LeaderboardPage: React.FC = () => {
   let container: ToastContainer | null;
@@ -86,80 +87,133 @@ export const LeaderboardPage: React.FC = () => {
         <Spinner loading={loadingProfile} />
       ) : (
         <Stl.Container>
-          <Stl.Header>
-            <h3>Leaderboard</h3>
-            <Stl.InputGroup>
-              <DropdownBlue
-                placeholder="Date"
-                width={100}
-                options={["All", "Catcher", "Last Month"]}
-              />
-              <InputBlue
-                name="School"
-                width={55}
-                widthFocus={180}
-                onChange={() => {}}
-              />
-              <InputBlue
-                name="Team"
-                width={45}
-                widthFocus={180}
-                onChange={() => {}}
-              />
-              <DropdownBlue
-                placeholder="Position"
-                width={100}
-                options={[
-                  "All",
-                  "Last Week",
-                  "First Base",
-                  "Second Base",
-                  "Sportstop",
-                  "Third Base",
-                  "Outfield",
-                  "Pitcher",
-                ]}
-              />
-              <InputBlue
-                name="Age"
-                width={35}
-                widthFocus={80}
-                onChange={() => {}}
-              />
-              <DropdownBlue
-                width={80}
-                placeholder="All"
-                options={["All", "Favorite"]}
-              />
-            </Stl.InputGroup>
-          </Stl.Header>
-          <Stl.HeaderTabs>
-            <Stl.TabsContainer>
-              <CommonStyle.HeaderTab
-                onClick={() => {
-                  getB();
-                  setCurrentSwitch(true);
-                }}
-                active={currentSwitch}
-              >
-                Batting
-              </CommonStyle.HeaderTab>
-              <CommonStyle.HeaderTab
-                onClick={() => {
-                  getP();
-                  setCurrentSwitch(false);
-                }}
-                active={!currentSwitch}
-              >
-                Pitching
-              </CommonStyle.HeaderTab>
-            </Stl.TabsContainer>
-            <DropdownBlue
-              width={120}
-              placeholder="Exit Velocity"
-              options={["Exit Velocity", "Cary Distance"]}
-            />
-          </Stl.HeaderTabs>
+          <Form
+            onSubmit={() => {}}
+            render={() => (
+              <>
+                <Stl.Header>
+                  <h3>Leaderboard</h3>
+                  <Stl.InputGroup>
+                    <Field name="date">
+                      {({ input }) => (
+                        <DropdownBlue
+                          input={input}
+                          placeholder="Date"
+                          width={100}
+                          options={[
+                            { label: "All", value: "All" },
+                            { label: "Catcher", value: "Catcher" },
+                            { label: "Last Month", value: "Last Month" },
+                          ]}
+                        />
+                      )}
+                    </Field>
+                    <Field name="school">
+                      {({ input }) => (
+                        <InputBlue
+                          input={input}
+                          name="School"
+                          width={55}
+                          widthFocus={180}
+                        />
+                      )}
+                    </Field>
+                    <Field name="team">
+                      {({ input }) => (
+                        <InputBlue
+                          input={input}
+                          name="Team"
+                          width={45}
+                          widthFocus={180}
+                        />
+                      )}
+                    </Field>
+                    <Field name="position">
+                      {({ input }) => (
+                        <DropdownBlue
+                          input={input}
+                          placeholder="Position"
+                          width={100}
+                          options={[
+                            { label: "All", value: "All" },
+                            { label: "Last Week", value: "Last Week" },
+                            { label: "First Base", value: "First Base" },
+                            { label: "Second Base", value: "Second Base" },
+                            { label: "Sportstop", value: "Sportstop" },
+                            { label: "Third Base", value: "Third Base" },
+                            { label: "Outfield", value: "Outfield" },
+                            { label: "Pitcher", value: "Pitcher" },
+                          ]}
+                        />
+                      )}
+                    </Field>
+                    <Field name="age">
+                      {({ input }) => (
+                        <InputBlue
+                          input={input}
+                          name="Age"
+                          width={35}
+                          widthFocus={80}
+                        />
+                      )}
+                    </Field>
+                    <Field name="favorite">
+                      {({ input }) => (
+                        <DropdownBlue
+                          input={input}
+                          width={80}
+                          placeholder="All"
+                          options={[
+                            { label: "All", value: "All" },
+                            { label: "Favorite", value: "Favorite" },
+                          ]}
+                        />
+                      )}
+                    </Field>
+                  </Stl.InputGroup>
+                </Stl.Header>
+                <Stl.HeaderTabs>
+                  <Stl.TabsContainer>
+                    <CommonStyle.HeaderTab
+                      onClick={() => {
+                        getB();
+                        setCurrentSwitch(true);
+                      }}
+                      active={currentSwitch}
+                    >
+                      Batting
+                    </CommonStyle.HeaderTab>
+                    <CommonStyle.HeaderTab
+                      onClick={() => {
+                        getP();
+                        setCurrentSwitch(false);
+                      }}
+                      active={!currentSwitch}
+                    >
+                      Pitching
+                    </CommonStyle.HeaderTab>
+                  </Stl.TabsContainer>
+                  <Field name="type">
+                    {({ input }) => (
+                      <DropdownBlue
+                        input={input}
+                        width={120}
+                        placeholder="Exit Velocity"
+                        options={[
+                          { label: "Exit Velocity", value: "Exit Velocity" },
+                          { label: "Cary Distance", value: "Cary Distance" },
+                        ]}
+                      />
+                    )}
+                  </Field>
+                </Stl.HeaderTabs>
+                <FormSpy
+                  subscription={{ values: true }}
+                  onChange={(v) => console.log(v)}
+                />
+              </>
+            )}
+          />
           <Stl.Content>
             <CommonStyle.TabHead>
               <CommonStyle.TabHeadText width={6.5}>

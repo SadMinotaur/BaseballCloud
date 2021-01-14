@@ -7,7 +7,7 @@ import Stl from "./styles";
 export const NetworkPage: React.FC = () => {
   return (
     <Stl.Container>
-      <Stl.HeaderInputsContainer>
+      {/* <Stl.HeaderInputsContainer>
         <h3>Network</h3>
         <Stl.HeaderInputs>
           <InputBlue
@@ -72,7 +72,7 @@ export const NetworkPage: React.FC = () => {
         <CommonStyle.TabHeadText width={23}>Teams</CommonStyle.TabHeadText>
         <CommonStyle.TabHeadText width={15}>Age</CommonStyle.TabHeadText>
         <CommonStyle.TabHeadText width={8}>Favorite</CommonStyle.TabHeadText>
-      </CommonStyle.TabHead>
+      </CommonStyle.TabHead> */}
     </Stl.Container>
   );
 };

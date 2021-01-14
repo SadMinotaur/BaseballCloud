@@ -3,20 +3,20 @@ import Stl from "./styles";
 import arrow from "./../../../assets/arrow.svg";
 
 export const InputBlue: React.FC<{
+  input: any;
   name: string;
   width: number;
   widthFocus: number;
-  onChange: () => void;
-}> = ({ name, width, onChange, widthFocus }) => {
+}> = ({ name, width, widthFocus, input }) => {
   const [arrowState, setArrowState] = useState<boolean>(false);
   return (
     <div>
       <Stl.PageInput
+        {...input}
         width={width}
         widthFocus={widthFocus}
         placeholder={name}
         onFocus={() => setArrowState(true)}
-        onChange={() => onChange()}
         onBlur={() => setArrowState(false)}
       />
       <Stl.Arrow state={arrowState} src={arrow} alt="arrow" />
