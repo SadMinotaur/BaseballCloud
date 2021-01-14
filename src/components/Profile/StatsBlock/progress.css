@@ -1,0 +1,6 @@
+.progressBar {
+  max-height: 5px;
+  border-radius: 5px;
+  /* Not working color */
+  color: #f5d142;
+}

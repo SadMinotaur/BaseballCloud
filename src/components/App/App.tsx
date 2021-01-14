@@ -6,12 +6,13 @@ import { Header } from "../Header";
 import "./../../css/global.css";
 import { SignInForm } from "../Auth/SignInForm";
 import { RegForm } from "../Auth/RegForm";
-import API from "../../Api/api";
-import { Page } from "./../Profile/Page";
+import API from "../../utils/api";
+import { ProfilePage } from "./../Profile/Page";
+import { LeaderboardPage } from "./../Leaderboard/Page";
+import { NetworkPage } from "./../Network/Page";
 
 export const App: React.FC = () => {
   const history = useHistory();
-
   return (
     <>
       <Header />
@@ -27,11 +28,16 @@ export const App: React.FC = () => {
               <RegForm />
             </LoginPageStyle>
           </Route>
-          <Route path="/profile">
-            <Page />
+          <Route path="/profile" exact={true}>
+            <ProfilePage />
           </Route>
-          <Route path="/leaderboard"></Route>
-          <Route path="/network"></Route>
+          <Route path="/leaderboard">
+            <LeaderboardPage />
+          </Route>
+          <Route path="/network">
+            <NetworkPage />
+          </Route>
+          <Route path="/profile/:userId" component={ProfilePage}></Route>
           <Route path="/">
             {() => (API.id ? history.push("/profile") : history.push("/login"))}
           </Route>

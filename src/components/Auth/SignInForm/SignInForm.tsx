@@ -6,20 +6,20 @@ import {
   FormContainer,
   FormText,
   FormTextSign,
-  InputForm,
-  InputFormIcon,
-  InputFormInput,
   SignIn,
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
-import API from "../../../Api/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import API from "../../../utils/api";
+import CommonStyle from "../../../utils/common-styles/styles";
 
 export const SignInForm: React.FC = () => {
   const history = useHistory();
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState<boolean>(false);
+
+  function required(value: string): string | undefined {
+    return value ? undefined : "Required";
+  }
 
   return (
     <FormContainer>
@@ -33,44 +33,26 @@ export const SignInForm: React.FC = () => {
             .then(() => history.push("/profile", "test"))
             .catch(() => setShowError(true));
         }}
-        render={({
-          submitError,
-          handleSubmit,
-          submitting,
-          pristine,
-          values,
-          invalid,
-        }) => (
+        render={({ handleSubmit, submitting, invalid }) => (
           <form onSubmit={handleSubmit}>
-            <Field name="email" validate={(v) => (v ? undefined : "Required")}>
-              {(p) => (
-                <InputForm>
-                  <InputFormIcon>
-                    <FontAwesomeIcon icon={faUser} />
-                  </InputFormIcon>
-                  <InputFormInput
-                    type="email"
-                    onChange={p.input.onChange}
-                    placeholder="Email"
-                  />
-                </InputForm>
+            <Field name="email" validate={required}>
+              {({ input }) => (
+                <CommonStyle.InputFormInput
+                  {...input}
+                  imageLock={true}
+                  type="email"
+                  placeholder="Email"
+                />
               )}
             </Field>
-            <Field
-              name="password"
-              validate={(v) => (v ? undefined : "Required")}
-            >
-              {(p) => (
-                <InputForm>
-                  <InputFormIcon>
-                    <FontAwesomeIcon icon={faLock} />
-                  </InputFormIcon>
-                  <InputFormInput
-                    type="password"
-                    onChange={p.input.onChange}
-                    placeholder="Password"
-                  />
-                </InputForm>
+            <Field name="password" validate={required}>
+              {({ input }) => (
+                <CommonStyle.InputFormInput
+                  {...input}
+                  imageLock={false}
+                  type="password"
+                  placeholder="Password"
+                />
               )}
             </Field>
             {showError && (
@@ -88,8 +70,8 @@ export const SignInForm: React.FC = () => {
         )}
       />
       <SignIn>
-        <div>Don’t have an account? </div>
-        <Link to="registration"> Sign Up</Link>
+        <p>Don’t have an account?</p>
+        <Link to="registration">Sign Up</Link>
       </SignIn>
     </FormContainer>
   );

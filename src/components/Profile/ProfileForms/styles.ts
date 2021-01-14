@@ -2,62 +2,24 @@ import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
 
 export const FormsDiv = styled.aside`
-  width: 300px;
-  height: 100%;
+  min-width: 300px;
+  max-width: 300px;
   overflow-y: scroll;
-  padding: 16px 16px 0 16px;
+  padding: 16px 16px 16px 16px;
   box-sizing: border-box;
 `;
 
 export const Row = styled.div`
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  align-items: center;
-`;
-
-export const Input = styledComponentsTS<{ width: number }>(styled.input)`
-  height: 40px;
-  padding: 0 16px;
-  transition: all 0.2s;
-  width: ${(p) => (p.width ? p.width : 100)}%;
-  touch-action: manipulation;
-  border-radius: 4px;
-  background-color: #eff1f3;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-`;
-
-export const Select = styledComponentsTS<{ width: number }>(styled.select)`
-  height: 40px;
-  width: ${(p) => (p.width ? p.width : 100)}%;
-  margin-bottom: 10px;
-  padding-left: 16px;
-  font-size: 16px;
-  line-height: 38px;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  background-color: #eff1f3;
-  border-radius: 4px;
-`;
-
-export const AboutTextarea = styled.textarea`
   width: 100%;
-  height: 110px;
-  resize: none;
-  border-radius: 4px;
-  background-color: #eff1f3;
-  padding: 11px 16px;
-  font-size: 16px;
-  line-height: 1.13;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  margin: 0 0 10px 0;
+`;
+
+export const DropdownSpacing = styledComponentsTS<{ leftMargin: boolean }>(
+  styled.div
+)`
+  margin: 0 0 0  ${(p) => p.leftMargin && "10"}px;
+  width: 100%;
 `;
 
 export const SectionText = styled.p`
@@ -68,8 +30,11 @@ export const SectionText = styled.p`
   padding-right: 12px;
 `;
 
-export const Hr = styled.hr`
+export const Line = styled.div`
+  margin: 12px 0 0 0;
+  height: 0.5px;
   width: 100%;
+  border: 1px solid #e7ebef;
 `;
 
 export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
@@ -93,8 +58,7 @@ export const ButtonProfile = styledComponentsTS<{ borderBlue: boolean }>(
   }
 `;
 
-export const ProfilePic = styled.div`
-  height: 200px;
-  width: 100%;
-  justify-content: center;
+export const WarningText = styled.p`
+  color: #f05f62;
+  font-size: 1.6rem;
 `;

@@ -1,194 +1,286 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
+import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
-  Input,
-  Select,
-  AboutTextarea,
-  SectionText,
-  Hr,
   ButtonProfile,
-  ProfilePic,
+  WarningText,
+  DropdownSpacing,
 } from "./styles";
-import API from "../../../Api/api";
+import { FormsAbout } from "./../FormsAbout";
+import { Queries } from "../graphql/query";
+import { TextF } from "./../FormsInput";
+import { SectText } from "./../SectionText";
+import CommonStyle from "../../../utils/common-styles/styles";
+import PictureProf from "./../../../assets/profileIcon.png";
+import API from "../../../utils/api";
 
 export const ProfileForms: React.FC = () => {
-  const smallInputSize: number = 48;
+  const [picture, setPicture] = useState(PictureProf);
 
-  const [schools, setSchools] = useState([] as { id: number; name: string }[]);
-  const [teams, setTeams] = useState([] as { id: number; name: string }[]);
-  const [facilities, setFacilities] = useState(
-    [] as { id: number; u_name: string; email: string }[]
-  );
-
-  useEffect(() => {
-    API.getSchools().then((v) => setSchools(v));
-    API.getTeams().then((v) => setTeams(v));
-    API.getFacilities().then((v) => setFacilities(v));
-  }, []);
-
-  function sectionText(text: string) {
-    return (
-      <Row>
-        <SectionText>{text}</SectionText>
-        <Hr />
-      </Row>
-    );
+  function required(value: string): string | undefined {
+    return value ? undefined : "Required";
   }
 
   return (
     <FormsDiv>
       <Form
         onSubmit={(values) => {}}
-        render={({
-          submitError,
-          handleSubmit,
-          submitting,
-          pristine,
-          values,
-          invalid,
-        }) => (
+        render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
-            <ProfilePic />
+            <CommonStyle.ProfileContainer>
+              <CommonStyle.ProfilePic src={picture} />
+              <div>
+                <input
+                  style={{ display: "none" }}
+                  id="my-file"
+                  type="file"
+                  onChange={(e) =>
+                    e.target.files &&
+                    setPicture(URL.createObjectURL(e.target.files[0]))
+                  }
+                />
+              </div>
+              <label htmlFor="my-file">Choose photo</label>
+            </CommonStyle.ProfileContainer>
             <Row>
-              <Field name="firstName">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="First Name"
-                  />
+              <Field name="firstName" validate={required}>
+                {({ input, meta }) => (
+                  <DropdownSpacing>
+                    <TextF input={input} label="First Name*" />
+                    {meta.error && meta.touched && (
+                      <WarningText>First Name Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
-              <Field name="lastname">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Last Name"
-                  />
+              <Field name="lastname" validate={required}>
+                {({ input, meta }) => (
+                  <DropdownSpacing leftMargin={true}>
+                    <TextF input={input} label="Last Name*" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Last Name Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
-            <Field name="position_in_game">
-              {(p) => (
-                <Select>
-                  <option>Catcher</option>
-                  <option>First Base</option>
-                  <option>Second Base</option>
-                  <option>Shortstop</option>
-                  <option>Third Base</option>
-                  <option>Outfield</option>
-                  <option>Pitcher</option>
-                </Select>
+            <Field name="position_in_game" validate={required}>
+              {({ input, meta }) => (
+                <>
+                  <FormsDropdown
+                    input={input}
+                    placeholder={"Position in Game*"}
+                    onInputChange={() => {}}
+                    options={[
+                      { label: "Catcher", value: "Catcher" },
+                      { label: "First Base", value: "First Base" },
+                      { label: "Second Base", value: "Second Base" },
+                      { label: "Shortstop", value: "Shortstop" },
+                      { label: "Third Base", value: "Third Base" },
+                      { label: "Outfield", value: "Outfield" },
+                      { label: "Pitcher", value: "Pitcher" },
+                    ]}
+                  />
+                  {meta.error && meta.touched && (
+                    <WarningText>Position Required</WarningText>
+                  )}
+                </>
               )}
             </Field>
             <Field name="secondary_position_in_game">
-              {(p) => (
-                <Select>
-                  <option>-</option>
-                  <option>Catcher</option>
-                  <option>First Base</option>
-                  <option>Second Base</option>
-                  <option>Shortstop</option>
-                  <option>Third Base</option>
-                  <option>Outfield</option>
-                  <option>Pitcher</option>
-                </Select>
+              {({ input, meta }) => (
+                <FormsDropdown
+                  input={input}
+                  placeholder="Secondary Position in Game"
+                  onInputChange={() => {}}
+                  options={[
+                    { value: "-", label: "-" },
+                    { value: "Catcher", label: "Catcher" },
+                    { value: "First Base", label: "First Base" },
+                    { value: "Second Base", label: "Second Base" },
+                    { value: "Shortstop", label: "Shortstop" },
+                    { value: "Third Base", label: "Third Base" },
+                    { value: "Outfield", label: "Outfield" },
+                    { value: "Pitcher", label: "Pitcher" },
+                  ]}
+                />
               )}
             </Field>
-            {sectionText("Personal Info")}
-            <Field name="age">
-              {(p) => <Input type="input" placeholder="Age" />}
+            <SectText text="Personal Info" />
+            <Field name="age" validate={required}>
+              {({ input, meta }) => (
+                <>
+                  <TextF input={input} label="Age*" />
+                  {meta.error && meta.touched && (
+                    <WarningText>Age Required</WarningText>
+                  )}
+                </>
+              )}
             </Field>
             <Row>
-              <Field name="feet">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Feet"
-                  />
+              <Field name="feet" validate={required}>
+                {({ input, meta }) => (
+                  <DropdownSpacing>
+                    <TextF input={input} label="Feet*" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Feet Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
               <Field name="inches">
-                {(p) => (
-                  <Input
-                    type="input"
-                    width={smallInputSize}
-                    placeholder="Inches"
-                  />
+                {({ input, meta }) => (
+                  <DropdownSpacing leftMargin={true}>
+                    <TextF input={input} label="Inches" />
+                    {meta.error && meta.touched && (
+                      <WarningText>Inches Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
-            <Field name="weight">
-              {(p) => <Input type="input" placeholder="Weight" />}
+            <Field name="weight" validate={required}>
+              {({ input, meta }) => (
+                <>
+                  <TextF input={input} label="Weight*" />
+                  {meta.error && meta.touched && (
+                    <WarningText>Weight Required</WarningText>
+                  )}
+                </>
+              )}
             </Field>
             <Row>
-              <Field name="throw">
-                {(p) => (
-                  <Select width={smallInputSize}>
-                    <option>R</option>
-                    <option>L</option>
-                  </Select>
+              <Field name="throw" validate={required}>
+                {({ input, meta }) => (
+                  <DropdownSpacing>
+                    <FormsDropdown
+                      input={input}
+                      options={[
+                        { value: "R", label: "R" },
+                        { value: "L", label: "L" },
+                      ]}
+                      placeholder="Throw*"
+                      onInputChange={() => {}}
+                    />
+                    {meta.error && meta.touched && (
+                      <WarningText>Throws Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
-              <Field name="bats">
-                {(p) => (
-                  <Select width={smallInputSize}>
-                    <option>R</option>
-                    <option>L</option>
-                  </Select>
+              <Field name="bats" validate={required}>
+                {({ input, meta }) => (
+                  <DropdownSpacing leftMargin={true}>
+                    <FormsDropdown
+                      input={input}
+                      options={[
+                        { value: "R", label: "R" },
+                        { value: "L", label: "L" },
+                      ]}
+                      placeholder="Bats*"
+                      onInputChange={() => {}}
+                    />
+                    {meta.error && meta.touched && (
+                      <WarningText>Bats Required</WarningText>
+                    )}
+                  </DropdownSpacing>
                 )}
               </Field>
             </Row>
-            {sectionText("School")}
+            <SectText text="School" />
             <Field name="school">
-              {(p) => (
-                <Select placeholder="School">
-                  {schools.map((v) => (
-                    <option key={v.id}>{v.name}</option>
-                  ))}
-                </Select>
+              {({ input, meta }) => (
+                <FormsDropdown
+                  input={input}
+                  placeholder="School"
+                  onInputChange={() => {}}
+                  loadOptions={API.graphqlPost(Queries.getSchools, {
+                    search: "",
+                  }).then((v) =>
+                    v.data.schools.schools.map(
+                      (resp: { id: number; name: string }) => ({
+                        value: resp.id,
+                        label: resp.name,
+                      })
+                    )
+                  )}
+                />
               )}
             </Field>
             <Field name="school_year">
-              {(p) => (
-                <Select>
-                  <option>Freshman</option>
-                  <option>Sophmore</option>
-                  <option>Junior</option>
-                  <option>Senior</option>
-                  <option>None</option>
-                </Select>
+              {({ input, meta }) => (
+                <FormsDropdown
+                  input={input}
+                  options={[
+                    { value: "Freshman", label: "Freshman" },
+                    { value: "Sophomore", label: "Sophomore" },
+                    { value: "Junior", label: "Junior" },
+                    { value: "Senior", label: "Senior" },
+                    { value: "None", label: "None" },
+                  ]}
+                  placeholder={"School Year"}
+                  onInputChange={() => {}}
+                />
               )}
             </Field>
             <Field name="team">
-              {(p) => (
-                <Select>
-                  {teams.map((v) => (
-                    <option key={v.id}>{v.name}</option>
-                  ))}
-                </Select>
+              {({ input, meta }) => (
+                <FormsDropdown
+                  input={input}
+                  placeholder="Team"
+                  onInputChange={() => {}}
+                  loadOptions={API.graphqlPost(Queries.getTeams, {
+                    search: "",
+                  }).then((v) =>
+                    v.data.teams.teams.map(
+                      (resp: { id: number; name: string }) => ({
+                        value: resp.id,
+                        label: resp.name,
+                      })
+                    )
+                  )}
+                />
               )}
             </Field>
-            {sectionText("Facility")}
+            <SectText text="Facility" />
             <Field name="facility">
-              {(p) => (
-                <Select>
-                  {facilities.map((v) => (
-                    <option key={v.id}>{v.u_name}</option>
-                  ))}
-                </Select>
+              {({ input, meta }) => (
+                <FormsDropdown
+                  input={input}
+                  placeholder="Facility"
+                  multiple={true}
+                  onInputChange={() => {}}
+                  loadOptions={API.graphqlPost(Queries.getFacilities, {
+                    search: "",
+                  }).then((v) =>
+                    v.data.facilities.facilities.map(
+                      (resp: {
+                        id: number;
+                        u_name: string;
+                        email: string;
+                      }) => ({
+                        value: resp.id,
+                        label: resp.u_name,
+                      })
+                    )
+                  )}
+                />
               )}
             </Field>
-            {sectionText("About")}
+            <SectText text="About" />
             <Field name="about" component="textarea">
-              {(p) => <AboutTextarea placeholder="About" />}
+              {({ input, meta }) => (
+                <FormsAbout
+                  input={input}
+                  placeholder="Describe yourself in a few words"
+                />
+              )}
             </Field>
+            <WarningText>* Fill out the required fields</WarningText>
             <Row>
-              <ButtonProfile type="submit">Cancel</ButtonProfile>
+              <ButtonProfile type="reset">Cancel</ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">
                 Save
               </ButtonProfile>

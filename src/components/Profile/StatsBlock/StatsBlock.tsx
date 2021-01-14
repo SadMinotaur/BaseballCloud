@@ -1,10 +1,57 @@
 import React from "react";
-import { Stats, StBlock, Text } from "./styles";
+import {
+  Stats,
+  StatsContainer,
+  StatsInfo,
+  StatsItem,
+  StBlock,
+  Text,
+} from "./styles";
+import { Progress } from "reactstrap";
+import "./progress.css";
 
-export const StatsBlock: React.FC = () => (
+export const StatsBlock: React.FC<{ id?: number }> = ({ id }) => (
   <StBlock>
     <Stats>
       <Text>Top Batting Values</Text>
+      <StatsContainer>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress
+            style={{ background: "#f5d142" }}
+            bar
+            barClassName="progressBar"
+            value={1}
+          />
+        </StatsItem>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress
+            style={{ background: "#f5d142" }}
+            bar
+            barClassName="progressBar"
+            value={1}
+          />
+        </StatsItem>
+        <StatsItem>
+          <StatsInfo>
+            <p>Exit Velocity</p>
+            <p>N/A</p>
+          </StatsInfo>
+          <Progress
+            style={{ background: "#f5d142" }}
+            bar
+            barClassName="progressBar"
+            value={1}
+          />
+        </StatsItem>
+      </StatsContainer>
     </Stats>
     <Stats>
       <Text>Recent Session Reports</Text>

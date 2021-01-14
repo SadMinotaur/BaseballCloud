@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { HeaderStyle, Icon, RightSide, Tabs, ProfileIcon } from "./styles";
-import Logo from "./../../assets/logo.svg";
-import Switch from "react-bootstrap/esm/Switch";
-import { Route } from "react-router-dom";
+import {
+  HeaderStyle,
+  Icon,
+  RightSide,
+  Tabs,
+  ProfileIcon,
+  DropdownText,
+  DropStyle,
+} from "./styles";
+import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import API from "../../Api/api";
+import { Queries } from "./graphql/query";
+import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+import Logo from "./../../assets/logo.svg";
+import PictureProf from "./../../assets/profileIcon.png";
+import API from "../../utils/api";
 
 const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   p
 ) => {
   const nav = useHistory();
-  const [picture, setPicture] = useState("");
+  const [picture, setPicture] = useState<string>();
+  const [dropdownState, setDropdownState] = useState(false);
 
   useEffect(() => {
-    // API.getPicture().then((v) => {
-    //   // setPicture(v);
-    // });
+    API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) => {
+      const avatarAdress = v.data.current_profile.avatar;
+      API.getPicture(avatarAdress).then((v) => setPicture(v));
+    });
     return () => {};
   }, []);
   return (
@@ -43,25 +55,55 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
           Network
         </Link>
       </Tabs>
-      <ProfileIcon src={picture} onClick={() => nav.push("/profile")} />
+      <ProfileIcon
+        src={picture ? `data:image/jpeg;base64,${picture}` : PictureProf}
+        onClick={() => nav.push("/profile")}
+      />
+      <Dropdown
+        isOpen={dropdownState}
+        toggle={() => setDropdownState((ps) => !ps)}
+      >
+        <DropdownToggle style={DropStyle}>Profile Name</DropdownToggle>
+        <DropdownMenu>
+          <DropdownText
+            onClick={(v) => {
+              nav.push("/profile");
+              setDropdownState((ps) => !ps);
+            }}
+          >
+            My profile
+          </DropdownText>
+          <DropdownText
+            onClick={(v) => {
+              API.logout().then(() => nav.push("/login"));
+              setDropdownState((ps) => !ps);
+            }}
+          >
+            Log out
+          </DropdownText>
+        </DropdownMenu>
+      </Dropdown>
     </RightSide>
   );
 };
 
-export const Header: React.FC = () => (
-  <HeaderStyle>
-    <Icon src={Logo} alt="Logo" />
-    <Switch>
-      <Route path="/login"></Route>
-      <Route path="/profile">
-        <LinksComp />
-      </Route>
-      <Route path="/network">
-        <LinksComp network={true} />
-      </Route>
-      <Route path="/leaderboard">
-        <LinksComp leaderboard={true} />
-      </Route>
-    </Switch>
-  </HeaderStyle>
-);
+export const Header: React.FC = () => {
+  const nav = useHistory();
+  return (
+    <HeaderStyle>
+      <Icon src={Logo} alt="Logo" onClick={() => nav.push("/")} />
+      <Switch>
+        <Route path="/login" />
+        <Route path="/profile">
+          <LinksComp />
+        </Route>
+        <Route path="/network">
+          <LinksComp network={true} />
+        </Route>
+        <Route path="/leaderboard">
+          <LinksComp leaderboard={true} />
+        </Route>
+      </Switch>
+    </HeaderStyle>
+  );
+};

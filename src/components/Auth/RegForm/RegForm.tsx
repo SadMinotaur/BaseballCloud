@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import {
+  SignUpSwitch,
   Button,
   ButtonContainer,
   ButtonInCont,
   FormContainer,
-  InputForm,
-  InputFormIcon,
-  InputFormInput,
   TextRect,
   TextRectMain,
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
+
 import checkbox from "./../../../assets/checkbox.svg";
-import API from "../../../Api/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import API from "../../../utils/api";
+import CommonStyle from "../../../utils/common-styles/styles";
 
 export const RegForm: React.FC = () => {
   const history = useHistory();
-  const [signInState, setSignInState] = useState(true);
+  const [signInState, setSignInState] = useState<boolean>(true);
 
   return (
     <FormContainer>
@@ -57,45 +55,32 @@ export const RegForm: React.FC = () => {
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Field name="email">
-              {(p) => (
-                <InputForm>
-                  <InputFormIcon>
-                    <FontAwesomeIcon icon={faUser} />
-                  </InputFormIcon>
-                  <InputFormInput
-                    type="email"
-                    onChange={p.input.onChange}
-                    placeholder="Email"
-                  />
-                </InputForm>
+              {({ input }) => (
+                <CommonStyle.InputFormInput
+                  imageLock={false}
+                  {...input}
+                  type="email"
+                  placeholder="Email"
+                />
               )}
             </Field>
             <Field name="password">
-              {(p) => (
-                <InputForm>
-                  <InputFormIcon>
-                    <FontAwesomeIcon icon={faLock} />
-                  </InputFormIcon>
-                  <InputFormInput
-                    type="password"
-                    onChange={p.input.onChange}
-                    placeholder="Password"
-                  />
-                </InputForm>
+              {({ input }) => (
+                <CommonStyle.InputFormInput
+                  imageLock={true}
+                  {...input}
+                  type="password"
+                  placeholder="Password"
+                />
               )}
             </Field>
             <Field name="confirm_password">
-              {(p) => (
-                <InputForm>
-                  <InputFormIcon>
-                    <FontAwesomeIcon icon={faCheck} />
-                  </InputFormIcon>
-                  <InputFormInput
-                    type="password"
-                    onChange={p.input.onChange}
-                    placeholder="Confirm Password"
-                  />
-                </InputForm>
+              {({ input }) => (
+                <CommonStyle.InputFormInput
+                  {...input}
+                  type="password"
+                  placeholder="Confirm Password"
+                />
               )}
             </Field>
             <p>
@@ -106,8 +91,10 @@ export const RegForm: React.FC = () => {
           </form>
         )}
       />
-      <p>Already registered?</p>
-      <Link to="/login">Sign In</Link>
+      <SignUpSwitch>
+        <p>Already registered?</p>
+        <Link to="/login">Sign In</Link>
+      </SignUpSwitch>
     </FormContainer>
   );
 };

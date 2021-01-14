@@ -2,6 +2,8 @@ import styled from "styled-components";
 import styledComponentsTS from "styled-components-ts";
 
 export const HeaderStyle = styled.header`
+  grid-area: hd;
+  grid-column-end: span 2;
   height: 45px;
   display: flex;
   align-items: center;
@@ -18,20 +20,37 @@ export const Icon = styled.img`
 export const Tabs = styledComponentsTS<{
   state?: boolean;
 }>(styled.div)`
-  padding: 0 8px ${(p) => (p.state ? "12" : "15")}px 8px;
+  display: flex;
+  align-items: center;
+  margin: 0 10px 0 0;
+  width: 100%;
+  height: 100%;
   font-size: 16px;
-  margin: 7px 8px 0 8px;
   ${(p) => p.state && "border-bottom: 3px solid rgb(120, 139, 153);"}
-  ::hover {
-    ${(p) => !p.state && "border-bottom: 3px solid #788b99;"}
+  &:hover {
+    ${(p) => !p.state && "border-bottom: 3px solid lightgrey;"}
 `;
 
 export const RightSide = styled.div`
+  height: 100%;
   display: flex;
+  align-items: center;
+  padding: 0 10px 0 0;
 `;
 
 export const ProfileIcon = styled.img`
-  margin: 5px 0 0 0;
+  margin: 0 10px 0 0;
   height: 32px;
   width: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 `;
+
+export const DropdownText = styled.div`
+  padding: 5px 0 5px 10px;
+  :hover {
+    background-color: #48bbff;
+  }
+`;
+
+export const DropStyle = { background: "#fff", color: "#788b99", border: 0 };
