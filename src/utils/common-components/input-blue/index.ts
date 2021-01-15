@@ -1,1 +1,1 @@
-export { InputBlue } from "./inputBlue";
+export { InputBlue } from "./InputBlue";

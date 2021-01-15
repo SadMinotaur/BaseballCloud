@@ -10,6 +10,10 @@ import {
   BattingUser,
   PitchingUser,
 } from "../../../utils/leaderboard-types/types";
+import {
+  ShowSuccessToast,
+  ShowErrorToast,
+} from "./../../../utils/common-components/toast/toast";
 
 export const LeaderboardContent: React.FC<{
   currentSwitch: boolean;
@@ -28,28 +32,44 @@ export const LeaderboardContent: React.FC<{
   setBattingContent,
   setPitchingContent,
 }) => {
-  function showSuccessToast(fav: boolean): void {
-    container &&
-      container.success(
-        `This profile ${
-          fav ? "removed from favorite" : "added to favorite"
-        }  list successfully.`,
-        "Success",
-        {
-          closeButton: true,
-          tapToDismiss: true,
-          timeOut: 4000,
-        }
-      );
+  function onClickB(v: BattingUser) {
+    API.graphqlPost(Queries.favorite, {
+      form: {
+        favorite: !v.favorite,
+        profile_id: v.batter_datraks_id,
+      },
+    })
+      .then(() => {
+        ShowSuccessToast(v.favorite, container as ToastContainer);
+        setBattingContent((ps) =>
+          ps.map((item) =>
+            item.batter_datraks_id !== v.batter_datraks_id
+              ? item
+              : { ...v, favorite: !v.favorite }
+          )
+        );
+      })
+      .catch(() => ShowErrorToast(container as ToastContainer));
   }
 
-  function showErrorToast(): void {
-    container &&
-      container.error("Error", {
-        closeButton: true,
-        tapToDismiss: true,
-        timeOut: 4000,
-      });
+  function onClickP(v: PitchingUser) {
+    API.graphqlPost(Queries.favorite, {
+      form: {
+        favorite: !v.favorite,
+        profile_id: v.pitcher_datraks_id,
+      },
+    })
+      .then(() => {
+        ShowSuccessToast(v.favorite, container as ToastContainer);
+        setPitchingContent((ps) =>
+          ps.map((item) =>
+            item.pitcher_datraks_id !== v.pitcher_datraks_id
+              ? item
+              : { ...v, favorite: !v.favorite }
+          )
+        );
+      })
+      .catch(() => ShowErrorToast(container as ToastContainer));
   }
 
   return (
@@ -78,7 +98,7 @@ export const LeaderboardContent: React.FC<{
       ) : (
         <>
           {currentSwitch
-            ? contentBatting.map((v, i: number) => (
+            ? contentBatting.map((v: BattingUser, i: number) => (
                 <ItemTab
                   key={i}
                   idProfile={v.batter_datraks_id}
@@ -92,25 +112,7 @@ export const LeaderboardContent: React.FC<{
                     v.launch_angle ? v.launch_angle.toString() : "-",
                     v.distance.toString(),
                   ]}
-                  onC={() =>
-                    API.graphqlPost(Queries.favorite, {
-                      form: {
-                        favorite: !v.favorite,
-                        profile_id: v.batter_datraks_id,
-                      },
-                    })
-                      .then(() => {
-                        showSuccessToast(v.favorite);
-                        setBattingContent((ps) =>
-                          ps.map((item) =>
-                            item.batter_datraks_id !== v.batter_datraks_id
-                              ? item
-                              : { ...v, favorite: !v.favorite }
-                          )
-                        );
-                      })
-                      .catch(() => showErrorToast())
-                  }
+                  onC={() => onClickB(v)}
                   fav={v.favorite}
                 />
               ))
@@ -128,25 +130,7 @@ export const LeaderboardContent: React.FC<{
                     v.velocity.toString(),
                     v.spin_rate.toString(),
                   ]}
-                  onC={() =>
-                    API.graphqlPost(Queries.favorite, {
-                      form: {
-                        favorite: !v.favorite,
-                        profile_id: v.pitcher_datraks_id,
-                      },
-                    })
-                      .then(() => {
-                        showSuccessToast(v.favorite);
-                        setPitchingContent((ps) =>
-                          ps.map((item) =>
-                            item.pitcher_datraks_id !== v.pitcher_datraks_id
-                              ? item
-                              : { ...v, favorite: !v.favorite }
-                          )
-                        );
-                      })
-                      .catch(() => showErrorToast())
-                  }
+                  onC={() => onClickP(v)}
                   fav={v.favorite}
                 />
               ))}

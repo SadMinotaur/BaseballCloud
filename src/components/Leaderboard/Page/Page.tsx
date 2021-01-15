@@ -8,12 +8,12 @@ import {
   BattingUser,
   PitchingUser,
 } from "../../../utils/leaderboard-types/types";
-import CommonStyle from "../../../utils/common-styles/styles";
-import API from "../../../utils/api";
-import Stl from "./styles";
 import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
+import CommonStyle from "../../../utils/common-styles/styles";
+import API from "../../../utils/api";
+import Stl from "./styles";
 
 export const LeaderboardPage: React.FC = () => {
   let container: ToastContainer | null = null;

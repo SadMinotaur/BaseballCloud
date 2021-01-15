@@ -11,7 +11,7 @@ const Stl = {
     font-size: 16px;
     line-height: 19px;
     font-weight: 500;
-    color: #6fc7f2;
+    color: #48bbff;
     :focus {
       border-bottom: 1px solid #6fc7f2;
       color: #788b99;
