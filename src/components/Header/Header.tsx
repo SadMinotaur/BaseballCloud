@@ -22,7 +22,8 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
 ) => {
   const nav = useHistory();
   const [picture, setPicture] = useState<string>();
-  const [dropdownState, setDropdownState] = useState(false);
+  const [dropdownState, setDropdownState] = useState<boolean>(false);
+  const [profileName, setProfileName] = useState<string>();
 
   useEffect(() => {
     API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) => {
@@ -63,7 +64,9 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
         isOpen={dropdownState}
         toggle={() => setDropdownState((ps) => !ps)}
       >
-        <DropdownToggle style={DropStyle}>Profile Name</DropdownToggle>
+        <DropdownToggle style={DropStyle}>
+          {profileName ? profileName : "Profile Name"}
+        </DropdownToggle>
         <DropdownMenu>
           <DropdownText
             onClick={(v) => {

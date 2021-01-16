@@ -1,10 +1,11 @@
 import React from "react";
 import Dropdown from "react-dropdown";
+import { Options } from "../../common-types/req-types";
 import "./style.css";
 
 export const DropdownBlue: React.FC<{
   input: any;
-  options: { value: string; label: string }[];
+  options: Options[];
   width: number;
 }> = ({ options, width, input }) => (
   <div style={{ width: width }}>

@@ -12,10 +12,14 @@ import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
+import {
+  Facilities,
+  School,
+  Team,
+} from "../../../utils/common-types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
-import { School, Team } from "../../../utils/common-types/req-types";
 
 export const ProfileForms: React.FC = () => {
   const [picture, setPicture] = useState(PictureProf);
@@ -252,16 +256,10 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getFacilities, {
                     search: "",
                   }).then((v) =>
-                    v.data.facilities.facilities.map(
-                      (resp: {
-                        id: number;
-                        u_name: string;
-                        email: string;
-                      }) => ({
-                        value: resp.id,
-                        label: resp.u_name,
-                      })
-                    )
+                    v.data.facilities.facilities.map((resp: Facilities) => ({
+                      value: resp.id,
+                      label: resp.u_name,
+                    }))
                   )}
                 />
               )}

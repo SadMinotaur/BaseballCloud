@@ -5,6 +5,7 @@ const Stl = {
     width: 100%;
     height: 100%;
     padding: 15px;
+    overflow-y: auto;
   `,
   HeaderInputsContainer: styled.div`
     display: flex;

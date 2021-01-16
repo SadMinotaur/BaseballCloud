@@ -61,49 +61,45 @@ export const LeaderboardPage: React.FC = () => {
     });
   }, []);
 
-  const onClickFavB = useCallback(
-    (v: BattingUser) =>
-      API.graphqlPost(Queries.favorite, {
-        form: {
-          favorite: !v.favorite,
-          profile_id: v.batter_datraks_id,
-        },
+  function onClickFavB(v: BattingUser): void {
+    API.graphqlPost(Queries.favorite, {
+      form: {
+        favorite: !v.favorite,
+        profile_id: v.batter_datraks_id,
+      },
+    })
+      .then(() => {
+        ShowSuccessToast(v.favorite, container as ToastContainer);
+        setBattingContent((ps) =>
+          ps.map((item) =>
+            item.batter_datraks_id !== v.batter_datraks_id
+              ? item
+              : { ...v, favorite: !v.favorite }
+          )
+        );
       })
-        .then(() => {
-          ShowSuccessToast(v.favorite, container as ToastContainer);
-          setBattingContent((ps) =>
-            ps.map((item) =>
-              item.batter_datraks_id !== v.batter_datraks_id
-                ? item
-                : { ...v, favorite: !v.favorite }
-            )
-          );
-        })
-        .catch(() => ShowErrorToast(container as ToastContainer)),
-    [container]
-  );
+      .catch(() => ShowErrorToast(container as ToastContainer));
+  }
 
-  const onClickFavP = useCallback(
-    (v: PitchingUser) =>
-      API.graphqlPost(Queries.favorite, {
-        form: {
-          favorite: !v.favorite,
-          profile_id: v.pitcher_datraks_id,
-        },
+  function onClickFavP(v: PitchingUser): void {
+    API.graphqlPost(Queries.favorite, {
+      form: {
+        favorite: !v.favorite,
+        profile_id: v.pitcher_datraks_id,
+      },
+    })
+      .then(() => {
+        ShowSuccessToast(v.favorite, container as ToastContainer);
+        setPitchingContent((ps) =>
+          ps.map((item) =>
+            item.pitcher_datraks_id !== v.pitcher_datraks_id
+              ? item
+              : { ...v, favorite: !v.favorite }
+          )
+        );
       })
-        .then(() => {
-          ShowSuccessToast(v.favorite, container as ToastContainer);
-          setPitchingContent((ps) =>
-            ps.map((item) =>
-              item.pitcher_datraks_id !== v.pitcher_datraks_id
-                ? item
-                : { ...v, favorite: !v.favorite }
-            )
-          );
-        })
-        .catch(() => ShowErrorToast(container as ToastContainer)),
-    [container]
-  );
+      .catch(() => ShowErrorToast(container as ToastContainer));
+  }
 
   function updateContent(fields: FormState<Record<string, any>>): void {
     const v = fields.values;

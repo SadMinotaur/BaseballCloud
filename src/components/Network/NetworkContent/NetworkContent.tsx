@@ -38,7 +38,7 @@ export const NetworkContent: React.FC<{
           <CommonStyle.TabText width={15}>{v.age}</CommonStyle.TabText>
           <CommonStyle.TabText width={8}>
             <FontAwesomeIcon
-              onClick={() => {}}
+              onClick={() => onClickHeart(v)}
               style={{ color: "#4abdff" }}
               icon={v.favorite ? heartSol : heartReg}
             />

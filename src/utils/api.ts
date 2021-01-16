@@ -1,4 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
+import { SignInResp } from "./common-types/req-types";
 
 class Api {
   public id: number = localStorage.getItem("id")
@@ -85,6 +86,23 @@ class Api {
     );
   }
 
+  public async favProfile(variables: any) {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
+      {
+        query: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+          update_favorite_profile(input: $form) {
+            favorite
+          }
+        }`,
+        variables: variables,
+      },
+      {
+        headers: this.getStandartHeaders(),
+      }
+    ).then((v) => v.data);
+  }
+
   private getStandartHeaders() {
     return {
       "access-token": this.token,
@@ -96,9 +114,3 @@ class Api {
 
 const API = new Api();
 export default API;
-
-interface SignInResp {
-  id: number;
-  email: string;
-  role: string;
-}

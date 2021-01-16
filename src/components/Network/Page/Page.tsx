@@ -17,7 +17,7 @@ import API from "../../../utils/api";
 import { FormState } from "final-form";
 
 export const NetworkPage: React.FC = () => {
-  let container: ToastContainer | null = null;
+  let container: ToastContainer | null;
 
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
   const [totalNumber, setTotalNumber] = useState<number>();
@@ -45,6 +45,24 @@ export const NetworkPage: React.FC = () => {
       setLoadingContent(false);
     });
   }, []);
+
+  function onClickFav(v: ProfilesInfo): void {
+    API.favProfile({
+      form: {
+        favorite: !v.favorite,
+        profile_id: v.id,
+      },
+    })
+      .then(() => {
+        ShowSuccessToast(v.favorite, container as ToastContainer);
+        setProfiles((ps: ProfilesInfo[]) =>
+          ps.map((item: ProfilesInfo) =>
+            item.id !== v.id ? item : { ...v, favorite: !v.favorite }
+          )
+        );
+      })
+      .catch(() => ShowErrorToast(container as ToastContainer));
+  }
 
   useEffect(() => {
     getProfiles();
@@ -160,7 +178,7 @@ export const NetworkPage: React.FC = () => {
       <NetworkContent
         loadingContent={loadingContent}
         content={profiles}
-        onClickHeart={() => {}}
+        onClickHeart={onClickFav}
       />
     </Stl.Container>
   );
