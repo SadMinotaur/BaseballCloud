@@ -8,9 +8,9 @@ const Stl = {
   `,
   HeaderInputsContainer: styled.div`
     display: flex;
-    align-items: center;
+    height: 70px;
     width: 100%;
-    padding: 0 0 0 0;
+    align-items: center;
     justify-content: space-between;
   `,
   HeaderInputs: styled.div`

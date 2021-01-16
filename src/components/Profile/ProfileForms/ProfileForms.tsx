@@ -15,6 +15,7 @@ import { SectText } from "./../SectionText";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
+import { School, Team } from "../../../utils/common-types/req-types";
 
 export const ProfileForms: React.FC = () => {
   const [picture, setPicture] = useState(PictureProf);
@@ -199,18 +200,16 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getSchools, {
                     search: "",
                   }).then((v) =>
-                    v.data.schools.schools.map(
-                      (resp: { id: number; name: string }) => ({
-                        value: resp.id,
-                        label: resp.name,
-                      })
-                    )
+                    v.data.schools.schools.map((resp: School) => ({
+                      value: resp.id,
+                      label: resp.name,
+                    }))
                   )}
                 />
               )}
             </Field>
             <Field name="school_year">
-              {({ input, meta }) => (
+              {({ input }) => (
                 <FormsDropdown
                   input={input}
                   options={[
@@ -226,7 +225,7 @@ export const ProfileForms: React.FC = () => {
               )}
             </Field>
             <Field name="team">
-              {({ input, meta }) => (
+              {({ input }) => (
                 <FormsDropdown
                   input={input}
                   placeholder="Team"
@@ -234,19 +233,17 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getTeams, {
                     search: "",
                   }).then((v) =>
-                    v.data.teams.teams.map(
-                      (resp: { id: number; name: string }) => ({
-                        value: resp.id,
-                        label: resp.name,
-                      })
-                    )
+                    v.data.teams.teams.map((resp: Team) => ({
+                      value: resp.id,
+                      label: resp.name,
+                    }))
                   )}
                 />
               )}
             </Field>
             <SectText text="Facility" />
             <Field name="facility">
-              {({ input, meta }) => (
+              {({ input }) => (
                 <FormsDropdown
                   input={input}
                   placeholder="Facility"

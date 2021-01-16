@@ -1,3 +1,5 @@
+import { School, Team } from "../common-types/req-types";
+
 export type PitchingUser = {
   pitcher_name: string;
   velocity: number;
@@ -6,8 +8,8 @@ export type PitchingUser = {
   pitcher_datraks_id: number;
   pitch_type: string;
   favorite: boolean;
-  school: { id: string; name: string };
-  teams: { id: string; name: string }[];
+  school: School;
+  teams: Team[];
 };
 
 export type BattingUser = {
@@ -18,6 +20,6 @@ export type BattingUser = {
   batter_datraks_id: number;
   distance: number;
   favorite: boolean;
-  school: { id: string; name: string };
-  teams: { id: string; name: string }[];
+  school: School;
+  teams: Team[];
 };

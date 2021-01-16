@@ -8,7 +8,7 @@ const Stl = {
     font-size: 16px;
     line-height: 19px;
     font-weight: 500;
-    color: #6fc7f2;
+    color: #b6c1c8;
   `,
   Border: styled.div`
     border-bottom: 1px #48bbff solid;

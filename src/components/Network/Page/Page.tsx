@@ -1,14 +1,49 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { ToastContainer, ToastMessageAnimated } from "react-toastr";
+import { Spinner } from "../../../utils/common-components/spinner";
 import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
+import { Profiles } from "./../../../utils/network-types/types";
+import { Queries } from "./../graphql/query";
+import {
+  ShowSuccessToast,
+  ShowErrorToast,
+} from "./../../../utils/common-components/toast/toast";
 import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
+import API from "../../../utils/api";
 
 export const NetworkPage: React.FC = () => {
+  let container: ToastContainer | null = null;
+
+  const [loadingContent, setLoadingContent] = useState<boolean>(true);
+  const [profiles, setProfiles] = useState<Profiles>();
+
+  const getProfiles = useCallback(() => {
+    setLoadingContent(true);
+    API.graphqlPost(Queries.getProfiles, {
+      input: { profiles_count: 10, offset: 0 },
+    }).then((v) => {
+      setProfiles(v.data.profiles);
+      setLoadingContent(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    getProfiles();
+    return () => {};
+  }, [getProfiles]);
+
   return (
     <Stl.Container>
+      <CommonStyle.Toast>
+        <ToastContainer
+          ref={(ref) => (container = ref)}
+          toastMessageFactory={React.createFactory(ToastMessageAnimated)}
+        />
+      </CommonStyle.Toast>
       <Form
         onSubmit={() => {}}
         render={() => (
@@ -76,7 +111,7 @@ export const NetworkPage: React.FC = () => {
                     />
                   )}
                 </Field>
-                <Field name="favorite">
+                <Field name="profiles_count">
                   {({ input }) => (
                     <DropdownBlue
                       input={input}
@@ -92,23 +127,31 @@ export const NetworkPage: React.FC = () => {
               </Stl.HeaderInputs>
             </Stl.HeaderInputsContainer>
             <Stl.HeaderInputsContainer>
-              <p>Available Players (.)</p>
+              <p>
+                Available Players (
+                {profiles?.total_count && profiles?.total_count.toString()})
+              </p>
               <Field name="player_name" type="input">
                 {({ input }) => (
                   <SearchInput
                     input={input}
                     placeholder="Player Name"
-                    width={100}
+                    width={120}
                   />
                 )}
               </Field>
             </Stl.HeaderInputsContainer>
-            <FormSpy subscription={{ values: true }} onChange={() => {}} />
+            <FormSpy
+              subscription={{ values: true }}
+              onChange={(v) => {
+                console.log(v);
+              }}
+            />
           </>
         )}
       />
       <CommonStyle.TabHead>
-        <CommonStyle.TabHeadText width={19.5}>
+        <CommonStyle.TabHeadText width={19}>
           Player Name
         </CommonStyle.TabHeadText>
         <CommonStyle.TabHeadText width={10}>Sessions</CommonStyle.TabHeadText>
@@ -117,6 +160,20 @@ export const NetworkPage: React.FC = () => {
         <CommonStyle.TabHeadText width={15}>Age</CommonStyle.TabHeadText>
         <CommonStyle.TabHeadText width={8}>Favorite</CommonStyle.TabHeadText>
       </CommonStyle.TabHead>
+      {loadingContent ? (
+        <Spinner loading={loadingContent} />
+      ) : (
+        <>
+          <CommonStyle.Tab>
+            <CommonStyle.TabText width={19}>Player Name</CommonStyle.TabText>
+            <CommonStyle.TabText width={10}>Sessions</CommonStyle.TabText>
+            <CommonStyle.TabText width={23}>School</CommonStyle.TabText>
+            <CommonStyle.TabText width={23}>Teams</CommonStyle.TabText>
+            <CommonStyle.TabText width={15}>Age</CommonStyle.TabText>
+            <CommonStyle.TabText width={8}>Favorite</CommonStyle.TabText>
+          </CommonStyle.Tab>
+        </>
+      )}
     </Stl.Container>
   );
 };

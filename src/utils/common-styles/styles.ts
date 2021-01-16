@@ -41,8 +41,10 @@ const CommonStyle = {
     margin-bottom: 15px;
   `,
   TabHead: styled.div`
+    padding: 10px 0 10px 6px;
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
   `,
@@ -53,7 +55,7 @@ const CommonStyle = {
     color: #667784;
   `,
   Tab: styled.div`
-    padding: 5px;
+    padding: 10px 0 10px 6px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -68,7 +70,6 @@ const CommonStyle = {
     line-height: 1.13;
     font-weight: 400;
     color: #414f5a;
-    padding: 10px 0 10px 0;
   `,
   HeaderTab: styledComponentsTS<{ active: boolean }>(styled.button)`
     padding: 8px;
