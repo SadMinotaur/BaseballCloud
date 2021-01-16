@@ -1,32 +1,47 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
-import { Spinner } from "../../../utils/common-components/spinner";
 import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { Profiles } from "./../../../utils/network-types/types";
+import { Profiles, ProfilesInfo } from "./../../../utils/network-types/types";
 import { Queries } from "./../graphql/query";
 import {
   ShowSuccessToast,
   ShowErrorToast,
 } from "./../../../utils/common-components/toast/toast";
+import { NetworkContent } from "./../NetworkContent";
 import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
 import API from "../../../utils/api";
+import { FormState } from "final-form";
 
 export const NetworkPage: React.FC = () => {
   let container: ToastContainer | null = null;
 
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
-  const [profiles, setProfiles] = useState<Profiles>();
+  const [totalNumber, setTotalNumber] = useState<number>();
+  const [profiles, setProfiles] = useState<ProfilesInfo[]>([]);
 
-  const getProfiles = useCallback(() => {
+  function updateContent(fields: FormState<Record<string, any>>): void {
+    const v = fields.values;
+    const req = {
+      ...v,
+      age: v.age && parseInt(v.age),
+      favorite: v.favorite && parseInt(v.favorite),
+      profiles_count: parseInt(v.profiles_count),
+    };
+    getProfiles(req);
+  }
+
+  const getProfiles = useCallback((req?: any) => {
     setLoadingContent(true);
     API.graphqlPost(Queries.getProfiles, {
-      input: { profiles_count: 10, offset: 0 },
+      input: req ? { ...req, offset: 0 } : { profiles_count: 10, offset: 0 },
     }).then((v) => {
-      setProfiles(v.data.profiles);
+      const prof: Profiles = v.data.profiles;
+      setProfiles(prof.profiles);
+      setTotalNumber(prof.total_count);
       setLoadingContent(false);
     });
   }, []);
@@ -111,7 +126,7 @@ export const NetworkPage: React.FC = () => {
                     />
                   )}
                 </Field>
-                <Field name="profiles_count">
+                <Field name="profiles_count" defaultValue={"10"}>
                   {({ input }) => (
                     <DropdownBlue
                       input={input}
@@ -127,10 +142,7 @@ export const NetworkPage: React.FC = () => {
               </Stl.HeaderInputs>
             </Stl.HeaderInputsContainer>
             <Stl.HeaderInputsContainer>
-              <p>
-                Available Players (
-                {profiles?.total_count && profiles?.total_count.toString()})
-              </p>
+              <p>Available Players ({totalNumber && totalNumber.toString()})</p>
               <Field name="player_name" type="input">
                 {({ input }) => (
                   <SearchInput
@@ -141,39 +153,15 @@ export const NetworkPage: React.FC = () => {
                 )}
               </Field>
             </Stl.HeaderInputsContainer>
-            <FormSpy
-              subscription={{ values: true }}
-              onChange={(v) => {
-                console.log(v);
-              }}
-            />
+            <FormSpy subscription={{ values: true }} onChange={updateContent} />
           </>
         )}
       />
-      <CommonStyle.TabHead>
-        <CommonStyle.TabHeadText width={19}>
-          Player Name
-        </CommonStyle.TabHeadText>
-        <CommonStyle.TabHeadText width={10}>Sessions</CommonStyle.TabHeadText>
-        <CommonStyle.TabHeadText width={23}>School</CommonStyle.TabHeadText>
-        <CommonStyle.TabHeadText width={23}>Teams</CommonStyle.TabHeadText>
-        <CommonStyle.TabHeadText width={15}>Age</CommonStyle.TabHeadText>
-        <CommonStyle.TabHeadText width={8}>Favorite</CommonStyle.TabHeadText>
-      </CommonStyle.TabHead>
-      {loadingContent ? (
-        <Spinner loading={loadingContent} />
-      ) : (
-        <>
-          <CommonStyle.Tab>
-            <CommonStyle.TabText width={19}>Player Name</CommonStyle.TabText>
-            <CommonStyle.TabText width={10}>Sessions</CommonStyle.TabText>
-            <CommonStyle.TabText width={23}>School</CommonStyle.TabText>
-            <CommonStyle.TabText width={23}>Teams</CommonStyle.TabText>
-            <CommonStyle.TabText width={15}>Age</CommonStyle.TabText>
-            <CommonStyle.TabText width={8}>Favorite</CommonStyle.TabText>
-          </CommonStyle.Tab>
-        </>
-      )}
+      <NetworkContent
+        loadingContent={loadingContent}
+        content={profiles}
+        onClickHeart={() => {}}
+      />
     </Stl.Container>
   );
 };

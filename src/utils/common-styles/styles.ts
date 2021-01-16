@@ -63,6 +63,9 @@ const CommonStyle = {
     border-radius: 4px;
     background-color: #f7f8f9;
     margin: 0 0 5px 0;
+    :hover {
+      background-color: #ecf8ff;
+    }
   `,
   TabText: styled.div<{ width?: number }>`
     width: ${(p) => p.width && p.width}%;

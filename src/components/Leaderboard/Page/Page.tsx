@@ -61,8 +61,8 @@ export const LeaderboardPage: React.FC = () => {
     });
   }, []);
 
-  const onClickB = useCallback(
-    (v: BattingUser) => {
+  const onClickFavB = useCallback(
+    (v: BattingUser) =>
       API.graphqlPost(Queries.favorite, {
         form: {
           favorite: !v.favorite,
@@ -79,13 +79,12 @@ export const LeaderboardPage: React.FC = () => {
             )
           );
         })
-        .catch(() => ShowErrorToast(container as ToastContainer));
-    },
+        .catch(() => ShowErrorToast(container as ToastContainer)),
     [container]
   );
 
-  const onClickP = useCallback(
-    (v: PitchingUser) => {
+  const onClickFavP = useCallback(
+    (v: PitchingUser) =>
       API.graphqlPost(Queries.favorite, {
         form: {
           favorite: !v.favorite,
@@ -102,22 +101,16 @@ export const LeaderboardPage: React.FC = () => {
             )
           );
         })
-        .catch(() => ShowErrorToast(container as ToastContainer));
-    },
+        .catch(() => ShowErrorToast(container as ToastContainer)),
     [container]
   );
 
-  function updateContent(v: FormState<Record<string, any>>): void {
-    const val = v.values;
+  function updateContent(fields: FormState<Record<string, any>>): void {
+    const v = fields.values;
     const req = {
-      ...val,
-      age: val.age && parseInt(val.age),
-      favorite: val.favorite && parseInt(val.favorite),
-      type: val.type
-        ? val.type
-        : currentSwitch
-        ? "exit_velocity"
-        : "pitch_velocity",
+      ...v,
+      age: v.age && parseInt(v.age),
+      favorite: v.favorite && parseInt(v.favorite),
     };
     currentSwitch ? getB(req) : getP(req);
   }
@@ -283,8 +276,8 @@ export const LeaderboardPage: React.FC = () => {
         )}
       />
       <LeaderboardContent
-        onClickP={onClickP}
-        onClickB={onClickB}
+        onClickFavP={onClickFavP}
+        onClickFavB={onClickFavB}
         currentSwitch={currentSwitch}
         loadingContent={loadingContent}
         contentBatting={contentBatting}

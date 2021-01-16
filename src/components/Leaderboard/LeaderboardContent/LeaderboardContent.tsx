@@ -1,27 +1,27 @@
 import React from "react";
 import { Spinner } from "../../../utils/common-components/spinner";
 import { ItemTab } from "../ItemTab";
-import CommonStyle from "../../../utils/common-styles/styles";
-import Stl from "./styles";
 import {
   BattingUser,
   PitchingUser,
 } from "../../../utils/leaderboard-types/types";
+import CommonStyle from "../../../utils/common-styles/styles";
+import Stl from "./styles";
 
 export const LeaderboardContent: React.FC<{
   currentSwitch: boolean;
   loadingContent: boolean;
   contentBatting: BattingUser[];
   contentPitching: PitchingUser[];
-  onClickP: (v: PitchingUser) => void;
-  onClickB: (v: BattingUser) => void;
+  onClickFavP: (v: PitchingUser) => void;
+  onClickFavB: (v: BattingUser) => void;
 }> = ({
   currentSwitch,
   contentPitching,
   contentBatting,
   loadingContent,
-  onClickB,
-  onClickP,
+  onClickFavB,
+  onClickFavP,
 }) => (
   <Stl.Content>
     <CommonStyle.TabHead>
@@ -62,7 +62,7 @@ export const LeaderboardContent: React.FC<{
                   v.launch_angle ? v.launch_angle.toString() : "-",
                   v.distance.toString(),
                 ]}
-                onC={() => onClickB(v)}
+                onC={() => onClickFavB(v)}
                 fav={v.favorite}
               />
             ))
@@ -80,7 +80,7 @@ export const LeaderboardContent: React.FC<{
                   v.velocity.toString(),
                   v.spin_rate.toString(),
                 ]}
-                onC={() => onClickP(v)}
+                onC={() => onClickFavP(v)}
                 fav={v.favorite}
               />
             ))}

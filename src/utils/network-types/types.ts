@@ -16,7 +16,7 @@ export type ProfilesInfo = {
   feet: number;
   inches: number;
   weight: number;
-  agr: number;
+  age: number;
   events: [];
   teams: Team[];
   favorite: boolean;
