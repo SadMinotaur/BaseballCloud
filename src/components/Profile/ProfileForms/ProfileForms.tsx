@@ -18,7 +18,7 @@ import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
 export const ProfileForms: React.FC = () => {
-  const [picture, setPicture] = useState(PictureProf);
+  const [pictureInfo, setPictireInfo] = useState<File>();
 
   function required(value: string): string | undefined {
     return value ? undefined : "Required";
@@ -31,19 +31,30 @@ export const ProfileForms: React.FC = () => {
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             <CommonStyle.ProfileContainer>
-              <CommonStyle.ProfilePic src={picture} />
+              <CommonStyle.ProfilePic
+                src={
+                  pictureInfo ? URL.createObjectURL(pictureInfo) : PictureProf
+                }
+              />
               <div>
                 <input
                   style={{ display: "none" }}
                   id="my-file"
                   type="file"
                   onChange={(e) =>
-                    e.target.files &&
-                    setPicture(URL.createObjectURL(e.target.files[0]))
+                    e.target.files && setPictireInfo(e.target.files[0])
                   }
                 />
               </div>
-              <label htmlFor="my-file">Choose photo</label>
+              <label htmlFor="my-file">
+                {pictureInfo ? pictureInfo.name : "Choose photo"}
+              </label>
+              {pictureInfo && (
+                <>
+                  <label>Upload photo</label>
+                  <label>Cancel</label>
+                </>
+              )}
             </CommonStyle.ProfileContainer>
             <Row>
               <Field name="firstName" validate={required}>

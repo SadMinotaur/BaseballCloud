@@ -25,11 +25,11 @@ export const StatsBlock: React.FC<{ id?: string }> = ({ id }) => {
   useEffect(() => {
     API.graphqlPost(Queries.profileEvents, {
       input: { count: 10, offset: 0, profile_id: id },
-    }).then((v: ProfileEvents) => setEvents(v.profile_events.events));
+    }).then((v: ProfileEvents) => setEvents(v && v.profile_events.events));
     API.graphqlPost(Queries.battingSummary, {
       id: id,
     }).then((v: BattingSummary) => {
-      setBattingSummary(v.batting_summary);
+      setBattingSummary(v && v.batting_summary);
     });
   }, [id]);
 

@@ -41,7 +41,7 @@ export const ProfileTotal: React.FC<{
         variables: { form: { profile_id: info.id, favorite: !favorite } },
       })
         .then(() => {
-          ShowSuccessToast(!favorite, container as ToastContainer);
+          ShowSuccessToast(favorite, container as ToastContainer);
           setFavorite(!favorite);
         })
         .catch(() => ShowErrorToast(container as ToastContainer)),
