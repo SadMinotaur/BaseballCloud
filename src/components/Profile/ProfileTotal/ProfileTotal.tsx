@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Styles } from "./styles";
 import { Queries } from "./../graphql/query";
-import { GraphqlProfile } from "../../../utils/profile-types/Profile";
+import { GraphqlProfile } from "../../../utils/types/profile";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";

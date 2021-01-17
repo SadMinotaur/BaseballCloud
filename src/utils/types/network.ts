@@ -1,4 +1,4 @@
-import { School, Team } from "../common-types/req-types";
+import { School, Team } from "./req-types";
 
 export type Profiles = {
   total_count: number;

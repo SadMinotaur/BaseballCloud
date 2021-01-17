@@ -4,7 +4,7 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { Profiles, ProfilesInfo } from "./../../../utils/network-types/types";
+import { Profiles, ProfilesInfo } from "../../../utils/types/network";
 import { Queries } from "./../graphql/query";
 import {
   ShowSuccessToast,
@@ -38,8 +38,8 @@ export const NetworkPage: React.FC = () => {
     setLoadingContent(true);
     API.graphqlPost(Queries.getProfiles, {
       input: req ? { ...req, offset: 0 } : { profiles_count: 10, offset: 0 },
-    }).then((v) => {
-      const prof: Profiles = v.data.profiles;
+    }).then((v: { profiles: Profiles }) => {
+      const prof: Profiles = v.profiles;
       setProfiles(prof.profiles);
       setTotalNumber(prof.total_count);
       setLoadingContent(false);
@@ -66,7 +66,6 @@ export const NetworkPage: React.FC = () => {
 
   useEffect(() => {
     getProfiles();
-    return () => {};
   }, [getProfiles]);
 
   return (

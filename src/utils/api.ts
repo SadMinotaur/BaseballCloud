@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import { SignInResp } from "./common-types/req-types";
+import { SignInResp } from "./types/req-types";
 
 class Api {
   public id: number = localStorage.getItem("id")
@@ -67,7 +67,7 @@ class Api {
       {
         headers: this.getStandartHeaders(),
       }
-    ).then((v) => v.data);
+    ).then((v) => v.data.data);
   }
 
   public async getPicture(url: string): Promise<string> {

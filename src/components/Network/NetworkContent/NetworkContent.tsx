@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfilesInfo } from "./../../../utils/network-types/types";
+import { ProfilesInfo } from "../../../utils/types/network";
 import { Spinner } from "../../../utils/common-components/spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";

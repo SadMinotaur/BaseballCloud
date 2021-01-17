@@ -7,31 +7,31 @@ import { Container } from "./styles";
 import { YourAccount } from "./../YourAccount";
 import { ProfileTotal } from "./../ProfileTotal";
 import { useParams } from "react-router-dom";
-import { GraphqlProfile } from "../../../utils/profile-types/Profile";
+import { GraphqlProfile } from "../../../utils/types/profile";
 import API from "../../../utils/api";
 
 export const ProfilePage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const [profileStatus, setProfileStatus] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<GraphqlProfile>();
   const [editState, setEditState] = useState<boolean>(false);
 
   const { userId } = useParams<Record<string, string | undefined>>();
 
   useEffect(() => {
-    API.graphqlPost(Queries.getCurrentUserInfo, {}).then((v) =>
-      API.graphqlPost(Queries.getUserInfo, {
-        id: userId ? userId.toString() : v.data.current_profile.id,
-      })
-        .then((v) => {
-          const pr = v.data.profile;
-          setProfile(pr);
-          if (pr.first_name !== null) setProfileStatus(true);
-          setLoading(false);
+    API.graphqlPost(Queries.getCurrentUserInfo, {}).then(
+      (v: { current_profile: { id: number } }) =>
+        API.graphqlPost(Queries.getUserInfo, {
+          id: userId ? userId.toString() : v.current_profile.id,
         })
-        .catch(() => setLoading(false))
+          .then((v: { profile: GraphqlProfile }) => {
+            const pr = v.profile;
+            setProfile(pr);
+            if (pr.first_name !== null) setProfileStatus(true);
+            setLoading(false);
+          })
+          .catch(() => setLoading(false))
     );
-    return () => {};
   }, [userId]);
 
   return (
@@ -52,9 +52,9 @@ export const ProfilePage: React.FC = () => {
                   <ProfileForms />
                   <StatsBlock />
                 </>
-              ) : userId ? (
+              ) : userId && profile ? (
                 <>
-                  <ProfileTotal info={profile as GraphqlProfile} />
+                  <ProfileTotal info={profile} />
                   <StatsBlock />
                 </>
               ) : (

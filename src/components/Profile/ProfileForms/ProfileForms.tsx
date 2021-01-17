@@ -12,11 +12,7 @@ import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
-import {
-  Facilities,
-  School,
-  Team,
-} from "../../../utils/common-types/req-types";
+import { Facilities, School, Team } from "../../../utils/types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
@@ -204,7 +200,7 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getSchools, {
                     search: "",
                   }).then((v) =>
-                    v.data.schools.schools.map((resp: School) => ({
+                    v.schools.schools.map((resp: School) => ({
                       value: resp.id,
                       label: resp.name,
                     }))
@@ -237,7 +233,7 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getTeams, {
                     search: "",
                   }).then((v) =>
-                    v.data.teams.teams.map((resp: Team) => ({
+                    v.teams.teams.map((resp: Team) => ({
                       value: resp.id,
                       label: resp.name,
                     }))
@@ -256,7 +252,7 @@ export const ProfileForms: React.FC = () => {
                   loadOptions={API.graphqlPost(Queries.getFacilities, {
                     search: "",
                   }).then((v) =>
-                    v.data.facilities.facilities.map((resp: Facilities) => ({
+                    v.facilities.facilities.map((resp: Facilities) => ({
                       value: resp.id,
                       label: resp.u_name,
                     }))

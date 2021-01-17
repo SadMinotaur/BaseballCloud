@@ -1,10 +1,7 @@
 import React from "react";
 import { Spinner } from "../../../utils/common-components/spinner";
 import { ItemTab } from "../ItemTab";
-import {
-  BattingUser,
-  PitchingUser,
-} from "../../../utils/leaderboard-types/types";
+import { BattingUser, PitchingUser } from "../../../utils/types/leaderboard";
 import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
 

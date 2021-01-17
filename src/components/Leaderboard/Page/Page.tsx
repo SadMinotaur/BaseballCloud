@@ -6,7 +6,9 @@ import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import {
   BattingUser,
   PitchingUser,
-} from "../../../utils/leaderboard-types/types";
+  GetBatting,
+  GetPitching,
+} from "../../../utils/types/leaderboard";
 import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
@@ -38,8 +40,8 @@ export const LeaderboardPage: React.FC = () => {
         : {
             input: { type: "exit_velocity" },
           }
-    ).then((v) => {
-      setBattingContent(v.data.leaderboard_batting.leaderboard_batting);
+    ).then((v: GetBatting) => {
+      setBattingContent(v.leaderboard_batting.leaderboard_batting);
       setLoadingContent(false);
     });
   }, []);
@@ -55,8 +57,8 @@ export const LeaderboardPage: React.FC = () => {
         : {
             input: { type: "pitch_velocity" },
           }
-    ).then((v) => {
-      setPitchingContent(v.data.leaderboard_pitching.leaderboard_pitching);
+    ).then((v: GetPitching) => {
+      setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
       setLoadingContent(false);
     });
   }, []);
@@ -70,8 +72,8 @@ export const LeaderboardPage: React.FC = () => {
     })
       .then(() => {
         ShowSuccessToast(v.favorite, container as ToastContainer);
-        setBattingContent((ps) =>
-          ps.map((item) =>
+        setBattingContent((ps: BattingUser[]) =>
+          ps.map((item: BattingUser) =>
             item.batter_datraks_id !== v.batter_datraks_id
               ? item
               : { ...v, favorite: !v.favorite }
@@ -90,8 +92,8 @@ export const LeaderboardPage: React.FC = () => {
     })
       .then(() => {
         ShowSuccessToast(v.favorite, container as ToastContainer);
-        setPitchingContent((ps) =>
-          ps.map((item) =>
+        setPitchingContent((ps: PitchingUser[]) =>
+          ps.map((item: PitchingUser) =>
             item.pitcher_datraks_id !== v.pitcher_datraks_id
               ? item
               : { ...v, favorite: !v.favorite }
@@ -113,7 +115,6 @@ export const LeaderboardPage: React.FC = () => {
 
   useEffect(() => {
     getB();
-    return () => {};
   }, [getB]);
 
   return (

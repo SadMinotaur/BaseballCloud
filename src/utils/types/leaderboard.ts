@@ -1,4 +1,4 @@
-import { School, Team } from "../common-types/req-types";
+import { School, Team } from "./req-types";
 
 export type PitchingUser = {
   pitcher_name: string;
@@ -22,4 +22,12 @@ export type BattingUser = {
   favorite: boolean;
   school: School;
   teams: Team[];
+};
+
+export type GetBatting = {
+  leaderboard_batting: { leaderboard_batting: BattingUser[] };
+};
+
+export type GetPitching = {
+  leaderboard_pitching: { leaderboard_pitching: PitchingUser[] };
 };
