@@ -30,4 +30,8 @@ export const Styles = {
     height: 24px;
     margin: 0 20px 0 0;
   `,
+  NameContainer: styled.div`
+    text-align: center;
+    width: 100%;
+  `,
 };

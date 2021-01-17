@@ -132,9 +132,33 @@ export const Queries = {
         }
       }
     }`,
-  favoriteProfile: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
-    update_favorite_profile(input: $form) {
-      favorite
+  profileEvents: `query ProfileEvents($input:FilterProfileEventsInput!) { 
+    profile_events(input: $input) {
+    events {
+      id
+      date
+      event_type
+      event_name
+    }
+    total_count
+    }
+  }`,
+  battingSummary: `query BattingSummary($id:ID!) { 
+    batting_summary(id: $id) {
+    top_values {
+      id
+      distance
+      pitch_type
+      launch_angle
+      exit_velocity
+    }
+    average_values{
+      id
+      distance
+      pitch_type
+      launch_angle
+      exit_velocity
+      }
     }
   }`,
 };

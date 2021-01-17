@@ -46,7 +46,7 @@ export type GraphqlProfile = {
   wrist_to_elbow: string;
 };
 
-export interface UpdateProfile {
+export type UpdateProfile = {
   age: number;
   bats_hand: string;
   biography: string;
@@ -62,4 +62,38 @@ export interface UpdateProfile {
   teams: [];
   throws_hand: string;
   weight: number;
+};
+
+export type Event = {
+  date: string;
+  event_name: string;
+  event_type: string;
+  id: string;
+};
+
+export type ProfileEvents = {
+  profile_events: {
+    events: Event[];
+  };
+};
+
+export type Summary = {
+  top_values: {
+    id: string | null;
+    distance: number;
+    pitch_type: string;
+    launch_angle: number;
+    exit_velocity: number;
+  }[];
+  average_values: {
+    id: string | null;
+    distance: number;
+    pitch_type: string;
+    launch_angle: number;
+    exit_velocity: number;
+  }[];
+};
+
+export interface BattingSummary {
+  batting_summary: Summary;
 }

@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Styles } from "./styles";
-import { Queries } from "./../graphql/query";
-import { GraphqlProfile } from "../../../utils/profile-types/Profile";
+// import { Queries } from "./../graphql/query";
+import { GraphqlProfile } from "../../../utils/types/profile";
+import { ToastContainer, ToastMessageAnimated } from "react-toastr";
+import {
+  ShowSuccessToast,
+  ShowErrorToast,
+} from "./../../../utils/common-components/toast/toast";
+import { CommonQueries } from "./../../../utils/graphql";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
@@ -18,38 +24,59 @@ export const ProfileTotal: React.FC<{
   info: GraphqlProfile;
   onEditPress?: () => void;
 }> = ({ info, onEditPress }) => {
+  let container: ToastContainer | null = null;
+
   const [picture, setPicture] = useState<string>();
+  const [favorite, setFavorite] = useState<boolean>(info.favorite);
 
   useEffect(() => {
     if (info.avatar) {
       API.getPicture(info.avatar).then((v) => setPicture(v));
     }
-    return () => {};
   }, [info.avatar]);
 
-  function makeFavorite(): void {
-    API.graphqlPost(Queries.favoriteProfile, {
-      variables: { form: { profile_id: info.id, favorite: info.favorite } },
-    });
-  }
+  const makeFavorite = useCallback(
+    () =>
+      API.graphqlPost(CommonQueries.favoriteProfile, {
+        variables: { form: { profile_id: info.id, favorite: !favorite } },
+      })
+        .then(() => {
+          ShowSuccessToast(!favorite, container as ToastContainer);
+          setFavorite(!favorite);
+        })
+        .catch(() => ShowErrorToast(container as ToastContainer)),
+    [container, favorite, info.id]
+  );
 
   return (
     <>
       {info && (
         <Styles.Container>
+          <CommonStyle.Toast>
+            <ToastContainer
+              ref={(ref) => (container = ref)}
+              toastMessageFactory={React.createFactory(ToastMessageAnimated)}
+            />
+          </CommonStyle.Toast>
           <CommonStyle.ProfileContainer>
             {onEditPress ? (
               <Styles.FloatingIcon src={Edit} onClick={onEditPress} />
             ) : (
               <Styles.FloatingIcon
                 onClick={makeFavorite}
-                src={info.favorite ? BlueHeart : Heart}
+                src={favorite ? BlueHeart : Heart}
               />
             )}
             <CommonStyle.ProfilePic
               src={picture ? `data:image/jpeg;base64,${picture}` : PictureProf}
             />
           </CommonStyle.ProfileContainer>
+          <Styles.NameContainer>
+            <h3>
+              {info.first_name} {info.last_name}
+            </h3>
+            <h4>{info.position}</h4>
+          </Styles.NameContainer>
           <Styles.ItemsRow>
             <div>
               <Styles.ItemImage src={AgeSvg} alt="Age" />
@@ -91,18 +118,27 @@ export const ProfileTotal: React.FC<{
               {info.bats_hand.toLocaleUpperCase()}
             </Styles.ItemText>
           </Styles.ItemsRow>
-          <p>School</p>
-          <h4>{info.school.name}</h4>
-          <p>School Year</p>
-          <h4>{info.school_year}</h4>
+
+          {info.school && (
+            <>
+              <p>School</p>
+              <h4>{info.school.name}</h4>
+              <p>School Year</p>
+              <h4>{info.school_year}</h4>
+            </>
+          )}
           {info.teams.length !== 0 ? (
             <>
               <p>Team</p>
               <h4>{info.teams[0].name}</h4>
             </>
           ) : null}
-          <p>Facility</p>
-          <h4>{info.facilities[0].u_name}</h4>
+          {info.facilities.length > 0 && (
+            <>
+              <p>Facility</p>
+              <h4>{info.facilities[0].u_name}</h4>
+            </>
+          )}
         </Styles.Container>
       )}
     </>

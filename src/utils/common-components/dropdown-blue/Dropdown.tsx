@@ -1,20 +1,23 @@
 import React from "react";
 import Dropdown from "react-dropdown";
+import { Options } from "../../types/req-types";
 import "./style.css";
 
-export const DropdownLeaderboard: React.FC<{
-  placeholder: string;
-  options: string[];
+export const DropdownBlue: React.FC<{
+  input: any;
+  options: Options[];
   width: number;
-}> = ({ placeholder, options, width }) => (
+}> = ({ options, width, input }) => (
   <div style={{ width: width }}>
     <Dropdown
-      placeholder={placeholder}
+      {...input}
+      onChange={(p) => input.onChange(p.value)}
       className="leaderboard-dropdown-main"
       menuClassName="leaderboard-dropdown-menu"
-      options={options}
       arrowOpen={<span className="leaderboard-dropdown-arrow-open" />}
       arrowClosed={<span className="leaderboard-dropdown-arrow-closed" />}
+      options={options}
+      placeholder={options[0].label}
     />
   </div>
 );
