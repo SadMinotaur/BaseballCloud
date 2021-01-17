@@ -21,7 +21,91 @@ export const NetworkPage: React.FC = () => {
 
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
   const [totalNumber, setTotalNumber] = useState<number>();
+  const [offset, setOffset] = useState<number>(0);
+  const [showNum, setShowNum] = useState<number>(10);
   const [profiles, setProfiles] = useState<ProfilesInfo[]>([]);
+
+  type ButtonState = { button: string; state: string };
+
+  function usePagination(
+    totalNumber: number,
+    offset: number,
+    showNum: number
+  ): ButtonState[] {
+    let pageButtons: ButtonState[] = [];
+    const totalPageNumber: number =
+      totalNumber % showNum === 0
+        ? totalNumber / showNum
+        : Math.floor(totalNumber / showNum) + 1;
+    switch (totalPageNumber) {
+      case 1:
+        break;
+      case 2: {
+        const stateB: boolean = offset / showNum > 1;
+        pageButtons.push({ button: "1", state: !stateB ? "cur" : "act" });
+        pageButtons.push({ button: "2", state: stateB ? "cur" : "act" });
+        break;
+      }
+      default: {
+        const current: number = Math.floor(offset / showNum) + 1;
+        let j = current - 1;
+        for (let i = 0; i < 3; i++, j++) {
+          if (j === 0) j++;
+          pageButtons.push({
+            button: j.toString(),
+            state: current === j ? "cur" : "act",
+          });
+        }
+        const leftSide = j - 2;
+        if (leftSide > 0 && leftSide === 1) {
+          const oneButton = {
+            button: "1",
+            state: "act",
+          };
+          pageButtons =
+            leftSide > 1
+              ? [
+                  oneButton,
+                  {
+                    button: "...",
+                    state: "dis",
+                  },
+                  ...pageButtons,
+                ]
+              : [oneButton, ...pageButtons];
+        }
+        if (j < totalPageNumber) {
+          const lastButton = {
+            button: totalPageNumber.toString(),
+            state: "act",
+          };
+          pageButtons =
+            j + 1 === totalPageNumber
+              ? [...pageButtons, lastButton]
+              : [
+                  ...pageButtons,
+                  {
+                    button: "...",
+                    state: "dis",
+                  },
+                  lastButton,
+                ];
+        }
+        break;
+      }
+    }
+    console.log(pageButtons);
+    return pageButtons;
+  }
+
+  // { button: "«", state: offset === 0 ? "dis" : "act" },
+  // { button: "»", state: offset + showNum === totalNumber ? "dis" : "act" },
+
+  const buttonsArray = usePagination(
+    totalNumber ? totalNumber : 0,
+    offset,
+    showNum
+  );
 
   function updateContent(fields: FormState<Record<string, any>>): void {
     const v = fields.values;
@@ -31,14 +115,15 @@ export const NetworkPage: React.FC = () => {
       favorite: v.favorite && parseInt(v.favorite),
       profiles_count: parseInt(v.profiles_count),
     };
+    req.profiles_count && setShowNum(req.profiles_count);
     getProfiles(req);
   }
 
   const getProfiles = useCallback(
-    (req: any = { profiles_count: 10, offset: 0 }) => {
+    (req: any = { profiles_count: 10, offset: offset }) => {
       setLoadingContent(true);
       API.graphqlPost(Queries.getProfiles, {
-        input: { ...req, offset: 0 },
+        input: { ...req, offset: offset },
       }).then((v: { profiles: Profiles }) => {
         const prof: Profiles = v.profiles;
         setProfiles(prof.profiles);
@@ -46,7 +131,7 @@ export const NetworkPage: React.FC = () => {
         setLoadingContent(false);
       });
     },
-    []
+    [offset]
   );
 
   function onClickFav(v: ProfilesInfo): void {
@@ -154,7 +239,7 @@ export const NetworkPage: React.FC = () => {
                       options={[
                         { label: "Show: 10", value: "10" },
                         { label: "Show: 15", value: "15" },
-                        { label: "Show: 20", value: "20" },
+                        { label: "Show: 25", value: "25" },
                       ]}
                     />
                   )}

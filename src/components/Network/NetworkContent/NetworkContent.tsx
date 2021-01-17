@@ -23,8 +23,8 @@ export const NetworkContent: React.FC<{
     {loadingContent ? (
       <Spinner loading={loadingContent} />
     ) : (
-      content.map((v) => (
-        <CommonStyle.Tab key={v.id}>
+      content.map((v, i: number) => (
+        <CommonStyle.Tab key={i}>
           <CommonStyle.TabText width={19}>
             {v.first_name} {v.last_name}
           </CommonStyle.TabText>
