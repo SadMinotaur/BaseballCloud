@@ -29,35 +29,21 @@ export const LeaderboardPage: React.FC = () => {
   const [contentBatting, setBattingContent] = useState<BattingUser[]>([]);
   const [contentPitching, setPitchingContent] = useState<PitchingUser[]>([]);
 
-  const getB = useCallback((req?: object) => {
+  const getB = useCallback((req: object = { type: "exit_velocity" }) => {
     setLoadingContent(true);
-    API.graphqlPost(
-      Queries.getBatting,
-      req
-        ? {
-            input: req,
-          }
-        : {
-            input: { type: "exit_velocity" },
-          }
-    ).then((v: GetBatting) => {
+    API.graphqlPost(Queries.getBatting, {
+      input: req,
+    }).then((v: GetBatting) => {
       setBattingContent(v.leaderboard_batting.leaderboard_batting);
       setLoadingContent(false);
     });
   }, []);
 
-  const getP = useCallback((req?: object) => {
+  const getP = useCallback((req: object = { type: "pitch_velocity" }) => {
     setLoadingContent(true);
-    API.graphqlPost(
-      Queries.getPitching,
-      req
-        ? {
-            input: req,
-          }
-        : {
-            input: { type: "pitch_velocity" },
-          }
-    ).then((v: GetPitching) => {
+    API.graphqlPost(Queries.getPitching, {
+      input: req,
+    }).then((v: GetPitching) => {
       setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
       setLoadingContent(false);
     });

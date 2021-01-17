@@ -90,5 +90,47 @@ const CommonStyle = {
       background: rgba(120,139,153,.4);
     }
   `,
+  Pagination: styled.ul`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 34px;
+    margin: 16px 0;
+    position: sticky;
+    bottom: 0;
+  `,
+  PaginationButDis: styled.li`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 4px;
+  `,
+  PaginationButAct: styled.li`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 100%;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #48bbff;
+    margin-right: 4px;
+  `,
+  PaginationBut: styled.li`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 100%;
+    color: #414f5a;
+    border-radius: 4px;
+    background-color: #f7f8f9;
+    margin-right: 4px;
+  `,
 };
 export default CommonStyle;

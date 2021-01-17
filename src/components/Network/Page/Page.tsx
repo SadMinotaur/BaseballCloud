@@ -34,17 +34,20 @@ export const NetworkPage: React.FC = () => {
     getProfiles(req);
   }
 
-  const getProfiles = useCallback((req?: any) => {
-    setLoadingContent(true);
-    API.graphqlPost(Queries.getProfiles, {
-      input: req ? { ...req, offset: 0 } : { profiles_count: 10, offset: 0 },
-    }).then((v: { profiles: Profiles }) => {
-      const prof: Profiles = v.profiles;
-      setProfiles(prof.profiles);
-      setTotalNumber(prof.total_count);
-      setLoadingContent(false);
-    });
-  }, []);
+  const getProfiles = useCallback(
+    (req: any = { profiles_count: 10, offset: 0 }) => {
+      setLoadingContent(true);
+      API.graphqlPost(Queries.getProfiles, {
+        input: { ...req, offset: 0 },
+      }).then((v: { profiles: Profiles }) => {
+        const prof: Profiles = v.profiles;
+        setProfiles(prof.profiles);
+        setTotalNumber(prof.total_count);
+        setLoadingContent(false);
+      });
+    },
+    []
+  );
 
   function onClickFav(v: ProfilesInfo): void {
     API.favProfile({
@@ -179,6 +182,14 @@ export const NetworkPage: React.FC = () => {
         content={profiles}
         onClickHeart={onClickFav}
       />
+      <CommonStyle.Pagination>
+        <CommonStyle.PaginationButDis>«</CommonStyle.PaginationButDis>
+        <CommonStyle.PaginationButAct>1</CommonStyle.PaginationButAct>
+        <CommonStyle.PaginationBut>2</CommonStyle.PaginationBut>
+        <CommonStyle.PaginationBut>3</CommonStyle.PaginationBut>
+        <CommonStyle.PaginationButDis>...</CommonStyle.PaginationButDis>
+        <CommonStyle.PaginationBut>»</CommonStyle.PaginationBut>
+      </CommonStyle.Pagination>
     </Stl.Container>
   );
 };
