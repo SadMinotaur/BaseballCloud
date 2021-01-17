@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as heartReg } from "@fortawesome/free-regular-svg-icons";
 import CommonStyle from "../../../utils/common-styles/styles";
+import { Link } from "react-router-dom";
 
 export const NetworkContent: React.FC<{
   loadingContent: boolean;
@@ -26,7 +27,9 @@ export const NetworkContent: React.FC<{
       content.map((v, i: number) => (
         <CommonStyle.Tab key={i}>
           <CommonStyle.TabText width={19}>
-            {v.first_name} {v.last_name}
+            <Link style={{ color: "#56636D" }} to={"/profile/" + v.id}>
+              {v.first_name} {v.last_name}
+            </Link>
           </CommonStyle.TabText>
           <CommonStyle.TabText width={10}>-</CommonStyle.TabText>
           <CommonStyle.TabText width={23}>

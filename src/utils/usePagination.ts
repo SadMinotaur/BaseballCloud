@@ -17,8 +17,11 @@ export default function usePagination(
       break;
     case 2: {
       const stateB: boolean = offset / showNum > 1;
-      pageButtons.push({ button: "1", state: !stateB ? "cur" : "act" });
-      pageButtons.push({ button: "2", state: stateB ? "cur" : "act" });
+      pageButtons = [
+        { button: "1", state: !stateB ? "cur" : "act" },
+        { button: "2", state: stateB ? "cur" : "act" },
+      ];
+
       break;
     }
     default: {

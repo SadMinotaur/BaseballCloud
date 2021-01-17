@@ -55,16 +55,18 @@ export const ProfilePage: React.FC = () => {
               ) : userId && profile ? (
                 <>
                   <ProfileTotal info={profile} />
-                  <StatsBlock />
+                  <StatsBlock id={profile.id} />
                 </>
               ) : (
-                <>
-                  <ProfileTotal
-                    info={profile as GraphqlProfile}
-                    onEditPress={() => setEditState(true)}
-                  />
-                  <StatsBlock />
-                </>
+                profile && (
+                  <>
+                    <ProfileTotal
+                      info={profile}
+                      onEditPress={() => setEditState(true)}
+                    />
+                    <StatsBlock id={profile.id} />
+                  </>
+                )
               )}
             </>
           )}

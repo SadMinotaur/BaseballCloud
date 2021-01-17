@@ -86,23 +86,6 @@ class Api {
     );
   }
 
-  public async favProfile(variables: any) {
-    return Axios.post(
-      "https://baseballcloud-back.herokuapp.com/api/v1/graphql",
-      {
-        query: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
-          update_favorite_profile(input: $form) {
-            favorite
-          }
-        }`,
-        variables: variables,
-      },
-      {
-        headers: this.getStandartHeaders(),
-      }
-    ).then((v) => v.data);
-  }
-
   private getStandartHeaders() {
     return {
       "access-token": this.token,

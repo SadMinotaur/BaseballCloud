@@ -3,6 +3,7 @@ import { Queries } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
+import { CommonQueries } from "./../../../utils/graphql";
 import {
   BattingUser,
   PitchingUser,
@@ -50,7 +51,7 @@ export const LeaderboardPage: React.FC = () => {
   }, []);
 
   function onClickFavB(v: BattingUser): void {
-    API.graphqlPost(Queries.favorite, {
+    API.graphqlPost(CommonQueries.favoriteProfile, {
       form: {
         favorite: !v.favorite,
         profile_id: v.batter_datraks_id,
@@ -70,7 +71,7 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   function onClickFavP(v: PitchingUser): void {
-    API.graphqlPost(Queries.favorite, {
+    API.graphqlPost(CommonQueries.favoriteProfile, {
       form: {
         favorite: !v.favorite,
         profile_id: v.pitcher_datraks_id,
