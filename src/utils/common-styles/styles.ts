@@ -99,37 +99,27 @@ const CommonStyle = {
     margin: 16px 0;
     position: sticky;
     bottom: 0;
+    user-select: none;
   `,
-  PaginationButDis: styled.li`
+  PaginationBut: styledComponentsTS<{ state: string }>(styled.li)`
+    ${(p) => {
+      switch (p.state) {
+        case "dis": {
+          return "background-color: #fff;";
+        }
+        case "cur": {
+          return "color: #fff;background-color: #48bbff;";
+        }
+        default:
+          return "color: #414f5a; background-color: #f7f8f9;cursor: pointer;";
+      }
+    }}
     display: flex;
     justify-content: center;
     align-items: center;
     width: 34px;
     height: 100%;
     border-radius: 4px;
-    background-color: #fff;
-    margin-right: 4px;
-  `,
-  PaginationButAct: styled.li`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 34px;
-    height: 100%;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #48bbff;
-    margin-right: 4px;
-  `,
-  PaginationBut: styled.li`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 34px;
-    height: 100%;
-    color: #414f5a;
-    border-radius: 4px;
-    background-color: #f7f8f9;
     margin-right: 4px;
   `,
 };

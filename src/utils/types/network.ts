@@ -21,3 +21,5 @@ export type ProfilesInfo = {
   teams: Team[];
   favorite: boolean;
 };
+
+export type ButtonState = { button: string; state: string };

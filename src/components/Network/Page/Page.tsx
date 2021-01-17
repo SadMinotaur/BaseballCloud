@@ -4,126 +4,51 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { Profiles, ProfilesInfo } from "../../../utils/types/network";
+import {
+  ButtonState,
+  Profiles,
+  ProfilesInfo,
+} from "../../../utils/types/network";
 import { Queries } from "./../graphql/query";
 import {
   ShowSuccessToast,
   ShowErrorToast,
 } from "./../../../utils/common-components/toast/toast";
 import { NetworkContent } from "./../NetworkContent";
+import { FormState } from "final-form";
+import usePagination from "./../../../utils/usePagination";
 import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
 import API from "../../../utils/api";
-import { FormState } from "final-form";
 
 export const NetworkPage: React.FC = () => {
   let container: ToastContainer | null;
 
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
-  const [totalNumber, setTotalNumber] = useState<number>();
+  const [totalNumber, setTotalNumber] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
   const [showNum, setShowNum] = useState<number>(10);
   const [profiles, setProfiles] = useState<ProfilesInfo[]>([]);
 
-  type ButtonState = { button: string; state: string };
-
-  function usePagination(
-    totalNumber: number,
-    offset: number,
-    showNum: number
-  ): ButtonState[] {
-    let pageButtons: ButtonState[] = [];
-    const totalPageNumber: number =
-      totalNumber % showNum === 0
-        ? totalNumber / showNum
-        : Math.floor(totalNumber / showNum) + 1;
-    switch (totalPageNumber) {
-      case 1:
-        break;
-      case 2: {
-        const stateB: boolean = offset / showNum > 1;
-        pageButtons.push({ button: "1", state: !stateB ? "cur" : "act" });
-        pageButtons.push({ button: "2", state: stateB ? "cur" : "act" });
-        break;
-      }
-      default: {
-        const current: number = Math.floor(offset / showNum) + 1;
-        let j = current - 1;
-        for (let i = 0; i < 3; i++, j++) {
-          if (j === 0) j++;
-          pageButtons.push({
-            button: j.toString(),
-            state: current === j ? "cur" : "act",
-          });
-        }
-        const leftSide = j - 2;
-        if (leftSide > 0 && leftSide === 1) {
-          const oneButton = {
-            button: "1",
-            state: "act",
-          };
-          pageButtons =
-            leftSide > 1
-              ? [
-                  oneButton,
-                  {
-                    button: "...",
-                    state: "dis",
-                  },
-                  ...pageButtons,
-                ]
-              : [oneButton, ...pageButtons];
-        }
-        if (j < totalPageNumber) {
-          const lastButton = {
-            button: totalPageNumber.toString(),
-            state: "act",
-          };
-          pageButtons =
-            j + 1 === totalPageNumber
-              ? [...pageButtons, lastButton]
-              : [
-                  ...pageButtons,
-                  {
-                    button: "...",
-                    state: "dis",
-                  },
-                  lastButton,
-                ];
-        }
-        break;
-      }
-    }
-    console.log(pageButtons);
-    return pageButtons;
-  }
-
-  // { button: "«", state: offset === 0 ? "dis" : "act" },
-  // { button: "»", state: offset + showNum === totalNumber ? "dis" : "act" },
-
-  const buttonsArray = usePagination(
-    totalNumber ? totalNumber : 0,
-    offset,
-    showNum
-  );
+  const buttonsArray = usePagination(totalNumber, offset, showNum);
 
   function updateContent(fields: FormState<Record<string, any>>): void {
     const v = fields.values;
     const req = {
       ...v,
+      offset: offset,
       age: v.age && parseInt(v.age),
       favorite: v.favorite && parseInt(v.favorite),
-      profiles_count: parseInt(v.profiles_count),
     };
-    req.profiles_count && setShowNum(req.profiles_count);
+    setShowNum(parseInt(v.profiles_count));
     getProfiles(req);
   }
 
   const getProfiles = useCallback(
-    (req: any = { profiles_count: 10, offset: offset }) => {
+    (req: any = { profiles_count: showNum, offset: offset }) => {
       setLoadingContent(true);
       API.graphqlPost(Queries.getProfiles, {
-        input: { ...req, offset: offset },
+        input: { ...req, profiles_count: showNum, offset: offset },
       }).then((v: { profiles: Profiles }) => {
         const prof: Profiles = v.profiles;
         setProfiles(prof.profiles);
@@ -131,7 +56,7 @@ export const NetworkPage: React.FC = () => {
         setLoadingContent(false);
       });
     },
-    [offset]
+    [offset, showNum]
   );
 
   function onClickFav(v: ProfilesInfo): void {
@@ -267,14 +192,37 @@ export const NetworkPage: React.FC = () => {
         content={profiles}
         onClickHeart={onClickFav}
       />
-      <CommonStyle.Pagination>
-        <CommonStyle.PaginationButDis>«</CommonStyle.PaginationButDis>
-        <CommonStyle.PaginationButAct>1</CommonStyle.PaginationButAct>
-        <CommonStyle.PaginationBut>2</CommonStyle.PaginationBut>
-        <CommonStyle.PaginationBut>3</CommonStyle.PaginationBut>
-        <CommonStyle.PaginationButDis>...</CommonStyle.PaginationButDis>
-        <CommonStyle.PaginationBut>»</CommonStyle.PaginationBut>
-      </CommonStyle.Pagination>
+      {buttonsArray.length !== 0 && (
+        <CommonStyle.Pagination>
+          <CommonStyle.PaginationBut
+            key={"«"}
+            state={offset === 0 ? "dis" : "act"}
+            onClick={() => setOffset((ps) => (ps !== 0 ? ps - showNum : 0))}
+          >
+            «
+          </CommonStyle.PaginationBut>
+          {buttonsArray.map((v: ButtonState) => (
+            <CommonStyle.PaginationBut
+              key={v.button}
+              onClick={() => setOffset((parseInt(v.button) - 1) * showNum)}
+              state={v.state}
+            >
+              {v.button}
+            </CommonStyle.PaginationBut>
+          ))}
+          <CommonStyle.PaginationBut
+            key={"»"}
+            state={totalNumber - showNum <= offset ? "dis" : "act"}
+            onClick={() =>
+              setOffset((ps) =>
+                ps + showNum !== totalNumber ? ps + showNum : ps
+              )
+            }
+          >
+            »
+          </CommonStyle.PaginationBut>
+        </CommonStyle.Pagination>
+      )}
     </Stl.Container>
   );
 };
