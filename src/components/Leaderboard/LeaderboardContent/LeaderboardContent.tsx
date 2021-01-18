@@ -1,6 +1,6 @@
 import React from "react";
 import { Spinner } from "../../../utils/common-components/spinner";
-import { ItemTab } from "../ItemTab";
+import { Item } from "../Item";
 import { BattingUser, PitchingUser } from "../../../utils/types/leaderboard";
 import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
@@ -21,32 +21,32 @@ export const LeaderboardContent: React.FC<{
   onClickFavP,
 }) => (
   <Stl.Content>
-    <CommonStyle.TabHead>
-      <CommonStyle.TabHeadText width={6.5}>Rank</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={14}>
+    <CommonStyle.ItemHead>
+      <CommonStyle.ItemHeadText width={6.5}>Rank</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={14}>
         {currentSwitch ? "Batter" : "Pitcher"} Name
-      </CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={5}>Age</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={14}>School</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={14.5}>Teams</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={14.5}>
+      </CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={5}>Age</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={14}>School</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={14.5}>Teams</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={14.5}>
         {currentSwitch ? "Exit Velocity" : "Pitch Type"}
-      </CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={14.5}>
+      </CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={14.5}>
         {currentSwitch ? "Launch Angle" : "Velocity"}
-      </CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={10}>
+      </CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={10}>
         {currentSwitch ? "Distance" : "Spin Rate"}
-      </CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={5}>Favorite</CommonStyle.TabHeadText>
-    </CommonStyle.TabHead>
+      </CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={5}>Favorite</CommonStyle.ItemHeadText>
+    </CommonStyle.ItemHead>
     {loadingContent ? (
       <Spinner loading={loadingContent} />
     ) : (
       <>
         {currentSwitch
           ? contentBatting.map((v: BattingUser, i: number) => (
-              <ItemTab
+              <Item
                 key={i}
                 idProfile={v.batter_datraks_id}
                 arr={[
@@ -64,7 +64,7 @@ export const LeaderboardContent: React.FC<{
               />
             ))
           : contentPitching.map((v, i: number) => (
-              <ItemTab
+              <Item
                 key={i}
                 idProfile={v.pitcher_datraks_id}
                 arr={[

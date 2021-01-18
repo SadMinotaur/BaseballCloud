@@ -13,6 +13,9 @@ const Stl = {
     width: 100%;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
   `,
   HeaderInputs: styled.div`
     display: flex;

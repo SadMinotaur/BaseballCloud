@@ -10,11 +10,21 @@ export const Stl = {
       ...theme.colors,
       neutral0: "#EFF1F3",
       primary: "#48BBFF",
+      // neutral20: "#fff",
+      // neutral40: "#fff",
     },
   }),
   Styles: {
+    control: (b: any) => ({
+      ...b,
+      border: 0,
+      "&:hover": {
+        backgroundColor: "#fff",
+      },
+    }),
     menu: (m: any) => ({ ...m, zIndex: 9999, backgroundColor: "#fff" }),
     placeholder: () => ({ display: "none" }),
+    clearIndicator: () => ({ display: "none" }),
     indicatorSeparator: () => ({
       display: "none",
     }),

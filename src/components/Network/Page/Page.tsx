@@ -195,23 +195,23 @@ export const NetworkPage: React.FC = () => {
       />
       {buttonsArray.length !== 0 && (
         <CommonStyle.Pagination>
-          <CommonStyle.PaginationBut
+          <CommonStyle.PaginationButton
             key={"«"}
             state={offset === 0 ? "dis" : "act"}
             onClick={() => setOffset((ps) => (ps !== 0 ? ps - showNum : 0))}
           >
             «
-          </CommonStyle.PaginationBut>
-          {buttonsArray.map((v: ButtonState) => (
-            <CommonStyle.PaginationBut
-              key={v.button}
+          </CommonStyle.PaginationButton>
+          {buttonsArray.map((v: ButtonState, i: number) => (
+            <CommonStyle.PaginationButton
+              key={v.button + i}
               onClick={() => setOffset((parseInt(v.button) - 1) * showNum)}
               state={v.state}
             >
               {v.button}
-            </CommonStyle.PaginationBut>
+            </CommonStyle.PaginationButton>
           ))}
-          <CommonStyle.PaginationBut
+          <CommonStyle.PaginationButton
             key={"»"}
             state={totalNumber - showNum <= offset ? "dis" : "act"}
             onClick={() =>
@@ -221,7 +221,7 @@ export const NetworkPage: React.FC = () => {
             }
           >
             »
-          </CommonStyle.PaginationBut>
+          </CommonStyle.PaginationButton>
         </CommonStyle.Pagination>
       )}
     </Stl.Container>

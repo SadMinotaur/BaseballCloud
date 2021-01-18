@@ -9,8 +9,7 @@ export const Styles = {
     box-sizing: border-box;
   `,
   FloatingIcon: styled.img`
-    position: absolute;
-    left: 250px;
+    margin: 0 0 0 200px;
   `,
   ItemsRow: styled.div`
     width: 100%;

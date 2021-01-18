@@ -23,15 +23,18 @@ export const FormsDropdown: React.FC<{
   <Stl.Margin>
     {options ? (
       <Select
+        key={input.name}
         {...input}
         theme={Stl.DropdownTheme}
         styles={Stl.Styles}
         options={options}
         placeholder={placeholder}
+        defaultValue={{ label: input?.value, value: input?.value }}
         components={{ Control }}
       />
     ) : (
       <AsyncSelect
+        key={input.name}
         {...input}
         isMulti={multiple}
         theme={Stl.DropdownTheme}

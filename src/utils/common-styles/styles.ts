@@ -40,21 +40,26 @@ const CommonStyle = {
     border: 1px solid transparent;
     margin-bottom: 15px;
   `,
-  TabHead: styled.div`
+  ItemHead: styled.div`
     padding: 10px 0 10px 6px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    @media (max-width: 700px) {
+      flex-direction: column;
+      align-items: flex-start;
+      height: fit-content;
+    }
   `,
-  TabHeadText: styled.div<{ width?: number }>`
+  ItemHeadText: styled.div<{ width?: number }>`
     width: ${(p) => p.width && p.width}%;
     font-size: 14px;
     font-weight: 300;
     color: #667784;
   `,
-  Tab: styled.div`
+  Item: styled.div`
     padding: 10px 0 10px 6px;
     width: 100%;
     display: flex;
@@ -66,8 +71,13 @@ const CommonStyle = {
     :hover {
       background-color: #ecf8ff;
     }
+    @media (max-width: 700px) {
+      flex-direction: column;
+      align-items: flex-start;
+      height: fit-content;
+    }
   `,
-  TabText: styled.div<{ width?: number }>`
+  ItemText: styled.div<{ width?: number }>`
     width: ${(p) => p.width && p.width}%;
     font-size: 14px;
     line-height: 1.13;
@@ -101,7 +111,7 @@ const CommonStyle = {
     bottom: 0;
     user-select: none;
   `,
-  PaginationBut: styledComponentsTS<{ state: string }>(styled.li)`
+  PaginationButton: styledComponentsTS<{ state: string }>(styled.li)`
     ${(p) => {
       switch (p.state) {
         case "dis": {

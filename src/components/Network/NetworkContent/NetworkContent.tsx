@@ -13,40 +13,42 @@ export const NetworkContent: React.FC<{
   onClickHeart: (v: ProfilesInfo) => void;
 }> = ({ content, loadingContent, onClickHeart }) => (
   <>
-    <CommonStyle.TabHead>
-      <CommonStyle.TabHeadText width={19}>Player Name</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={10}>Sessions</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={23}>School</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={23}>Teams</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={15}>Age</CommonStyle.TabHeadText>
-      <CommonStyle.TabHeadText width={8}>Favorite</CommonStyle.TabHeadText>
-    </CommonStyle.TabHead>
+    <CommonStyle.ItemHead>
+      <CommonStyle.ItemHeadText width={19}>
+        Player Name
+      </CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={10}>Sessions</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={23}>School</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={23}>Teams</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={15}>Age</CommonStyle.ItemHeadText>
+      <CommonStyle.ItemHeadText width={8}>Favorite</CommonStyle.ItemHeadText>
+    </CommonStyle.ItemHead>
     {loadingContent ? (
       <Spinner loading={loadingContent} />
     ) : (
       content.map((v, i: number) => (
-        <CommonStyle.Tab key={i}>
-          <CommonStyle.TabText width={19}>
+        <CommonStyle.Item key={i}>
+          <CommonStyle.ItemText width={19}>
             <Link style={{ color: "#56636D" }} to={"/profile/" + v.id}>
               {v.first_name} {v.last_name}
             </Link>
-          </CommonStyle.TabText>
-          <CommonStyle.TabText width={10}>-</CommonStyle.TabText>
-          <CommonStyle.TabText width={23}>
+          </CommonStyle.ItemText>
+          <CommonStyle.ItemText width={10}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={23}>
             {v.school ? v.school.name : "-"}
-          </CommonStyle.TabText>
-          <CommonStyle.TabText width={23}>
+          </CommonStyle.ItemText>
+          <CommonStyle.ItemText width={23}>
             {v.teams.length > 0 ? v.teams[0].name : "-"}
-          </CommonStyle.TabText>
-          <CommonStyle.TabText width={15}>{v.age}</CommonStyle.TabText>
-          <CommonStyle.TabText width={8}>
+          </CommonStyle.ItemText>
+          <CommonStyle.ItemText width={15}>{v.age}</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={8}>
             <FontAwesomeIcon
               onClick={() => onClickHeart(v)}
               style={{ color: "#4abdff" }}
               icon={v.favorite ? heartSol : heartReg}
             />
-          </CommonStyle.TabText>
-        </CommonStyle.Tab>
+          </CommonStyle.ItemText>
+        </CommonStyle.Item>
       ))
     )}
   </>

@@ -23,6 +23,10 @@ export const MaterialStyles = makeStyles({
       backgroundColor: "#fff",
       border: "1px solid rgba(72, 187, 255, 0.8);",
     },
+    "&:focus": {
+      backgroundColor: "#fff",
+      border: "1px solid rgba(72, 187, 255, 0.8);",
+    },
   },
   label: {
     color: "#667784",

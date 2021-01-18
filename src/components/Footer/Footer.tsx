@@ -1,10 +1,10 @@
 import React from "react";
-import { FooterStyle, Legal, Links, Social } from "./styles";
+import { FooterStyle, Legal, Links, Social, Span } from "./styles";
 
 export const Footer: React.FC = () => (
   <FooterStyle>
+    <Span>© 2018 BaseballCloud</Span>
     <Legal>
-      <span>© 2018 BaseballCloud</span>
       <Links href="/legal/terms">Terms of Service</Links>
       <Links href="/legal/privacy">Privacy Policy</Links>
     </Legal>

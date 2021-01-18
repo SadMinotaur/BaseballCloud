@@ -3,12 +3,16 @@ import styled from "styled-components";
 const Stl = {
   Container: styled.div`
     height: 100%;
+    overflow-y: auto;
   `,
   Header: styled.div`
     align-items: center;
     padding: 5px 16px 16px 16px;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
   `,
   InputGroup: styled.div`
     display: flex;
