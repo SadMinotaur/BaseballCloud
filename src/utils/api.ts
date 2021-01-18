@@ -65,7 +65,7 @@ class Api {
         variables: variables,
       },
       {
-        headers: this.getStandartHeaders(),
+        headers: this.getStandardHeaders(),
       }
     ).then((v) => v.data.data);
   }
@@ -82,11 +82,21 @@ class Api {
   public async logout() {
     return Axios.delete(
       "https://baseballcloud-back.herokuapp.com/api/v1/auth/sign_out",
-      { headers: this.getStandartHeaders() }
+      { headers: this.getStandardHeaders() }
     );
   }
 
-  private getStandartHeaders() {
+  public async uploadAws(picture: File) {
+    return Axios.post(
+      "https://baseballcloud-back.herokuapp.com/api/v1/s3/signed_url",
+      { name: picture.name },
+      {
+        headers: this.getStandardHeaders(),
+      }
+    ).then((v) => v.data.signedUrl);
+  }
+
+  private getStandardHeaders() {
     return {
       "access-token": this.token,
       client: this.client,

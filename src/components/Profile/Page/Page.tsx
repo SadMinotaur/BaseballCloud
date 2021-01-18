@@ -42,15 +42,18 @@ export const ProfilePage: React.FC = () => {
         <Container>
           {!profileStatus ? (
             <>
-              <ProfileForms />
+              <ProfileForms onEditEnd={() => setEditState(false)} />
               <YourAccount />
             </>
           ) : (
             <>
               {editState ? (
                 <>
-                  <ProfileForms />
-                  <StatsBlock />
+                  <ProfileForms
+                    info={profile}
+                    onEditEnd={() => setEditState(false)}
+                  />
+                  <StatsBlock id={profile && profile.id} />
                 </>
               ) : userId && profile ? (
                 <>

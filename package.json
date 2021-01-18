@@ -14,6 +14,7 @@
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "@types/styled-components": "^5.1.6",
+    "aws-sdk": "^2.828.0",
     "axios": "^0.21.0",
     "bootstrap": "^3.4.1",
     "final-form": "^4.20.1",

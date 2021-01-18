@@ -1,5 +1,7 @@
 import { ToastContainer } from "react-toastr";
 
+const timeout: number = 4000;
+
 export function ShowSuccessToast(
   fav: boolean,
   container: ToastContainer
@@ -13,7 +15,7 @@ export function ShowSuccessToast(
       {
         closeButton: true,
         tapToDismiss: true,
-        timeOut: 4000,
+        timeOut: timeout,
       }
     );
 }
@@ -23,6 +25,26 @@ export function ShowErrorToast(container: ToastContainer): void {
     container.error("Error", {
       closeButton: true,
       tapToDismiss: true,
-      timeOut: 4000,
+      timeOut: timeout,
+    });
+}
+
+export function ShowSuccessUProfileToast(container: ToastContainer): void {
+  console.log(container);
+
+  container &&
+    container.error("Profile has been updated successfully.", {
+      closeButton: true,
+      tapToDismiss: true,
+      timeOut: timeout,
+    });
+}
+
+export function ShowErrorUProfileToast(container: ToastContainer): void {
+  container &&
+    container.error("Error updating profile", {
+      closeButton: true,
+      tapToDismiss: true,
+      timeOut: timeout,
     });
 }
