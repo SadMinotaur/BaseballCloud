@@ -14,27 +14,18 @@ const Control: React.FC = (props: any) => (
 );
 
 export const FormsDropdown: React.FC<{
-  options?: { value: string; label: string }[];
   loadOptions?: Promise<any>;
+  options?: { value: string; label: string }[];
   multiple?: boolean;
   placeholder: string;
   input: any;
-  onInputChange: () => void;
-}> = ({
-  options,
-  loadOptions,
-  onInputChange,
-  placeholder,
-  multiple,
-  input,
-}) => (
+}> = ({ options, loadOptions, placeholder, multiple, input }) => (
   <Stl.Margin>
     {options ? (
       <Select
         {...input}
         theme={Stl.DropdownTheme}
         styles={Stl.Styles}
-        onInputChange={onInputChange}
         options={options}
         placeholder={placeholder}
         components={{ Control }}
@@ -48,7 +39,6 @@ export const FormsDropdown: React.FC<{
         defaultOptions
         cacheOptions
         loadOptions={async () => loadOptions && loadOptions.then((v) => v)}
-        onInputChange={onInputChange}
         options={options}
         placeholder={placeholder}
         components={{ Control }}

@@ -62,3 +62,10 @@ export const WarningText = styled.p`
   color: #f05f62;
   font-size: 1.6rem;
 `;
+
+export const UploadPhoto = styled.label`
+  color: #48bbff;
+  margin-right: 10px;
+`;
+
+export const CancelPhoto = styled.label``;
