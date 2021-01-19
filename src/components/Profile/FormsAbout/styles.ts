@@ -31,4 +31,8 @@ export const Stl = {
     top: ${(props) => (props.isFloating ? `5px` : `10px`)};
     font-size: ${(props) => (props.isFloating ? `0.8rem` : `1.3rem`)};
   `,
+  WarningText: styled.p`
+    color: #f05f62;
+    font-size: 1.6rem;
+  `,
 };
