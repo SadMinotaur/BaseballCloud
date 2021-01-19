@@ -23,7 +23,7 @@ export const FormsDropdown: React.FC<{
   <Stl.Margin>
     {options ? (
       <Select
-        key={input.name}
+        key={placeholder}
         {...input}
         theme={Stl.DropdownTheme}
         styles={Stl.Styles}
@@ -34,7 +34,7 @@ export const FormsDropdown: React.FC<{
       />
     ) : (
       <AsyncSelect
-        key={input.name}
+        key={placeholder}
         {...input}
         isMulti={multiple}
         theme={Stl.DropdownTheme}
@@ -49,4 +49,3 @@ export const FormsDropdown: React.FC<{
     )}
   </Stl.Margin>
 );
-// https://github.com/JedWatson/react-select/issues/4221#issuecomment-700617916
