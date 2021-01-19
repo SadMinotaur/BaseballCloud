@@ -48,6 +48,8 @@ export const ProfileForms: React.FC<{
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
         weight: parseInt(v.weight),
+        facilities: [v.facilities],
+        teams: [v.teams],
       },
     })
       .then(() => {
@@ -334,7 +336,7 @@ export const ProfileForms: React.FC<{
                 />
               )}
             </Field>
-            <Field name="team" defaultValue={info?.teams[0]}>
+            <Field name="teams" defaultValue={info?.teams[0]}>
               {({ input }) => (
                 <FormsDropdown
                   input={input}
@@ -351,7 +353,7 @@ export const ProfileForms: React.FC<{
               )}
             </Field>
             <SectText text="Facility" />
-            <Field name="facility" defaultValue={info?.facilities[0]}>
+            <Field name="facilities" defaultValue={info?.facilities[0]}>
               {({ input }) => (
                 <FormsDropdown
                   input={input}

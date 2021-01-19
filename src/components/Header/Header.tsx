@@ -29,12 +29,13 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   useEffect(() => {
     API.graphqlPost(Queries.getCurrentUserInfo, {}).then(
       (v: GetCurrentUserInfo) => {
-        const avatarAddress = v.current_profile.avatar;
+        const { avatar, first_name, last_name } = v.current_profile;
         setProfileName(
-          `${v.current_profile.first_name} ${v.current_profile.last_name}`
+          `${first_name ? first_name : "Profile"} ${
+            last_name ? last_name : "Name"
+          }`
         );
-        avatarAddress &&
-          API.getPicture(avatarAddress).then((v) => setPicture(v));
+        avatar && API.getPicture(avatar).then((v) => setPicture(v));
       }
     );
     return () => {};

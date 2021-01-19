@@ -82,3 +82,8 @@ export const TextRectMain = styled.div`
 export const SignUpSwitch = styled.div`
   display: flex;
 `;
+
+export const Warning = styled.p`
+  margin-left: 10px;
+  color: #f05f62;
+`;
