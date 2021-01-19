@@ -11,7 +11,7 @@ import {
   DropdownSpacing,
 } from "./styles";
 import { FormsAbout } from "./../FormsAbout";
-import { Queries } from "../graphql/query";
+import { Graphql } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
 import { GraphqlProfile } from "../../../utils/types/profile";
@@ -36,7 +36,7 @@ export const ProfileForms: React.FC<{
   const [pictureInfo, setPictureInfo] = useState<File>();
 
   function onSubmitForm(v: any): void {
-    API.graphqlPost(Queries.updateProfile, {
+    API.graphqlPost(Graphql.updateProfile, {
       form: {
         ...v,
         avatar: pictureUrl ? pictureUrl : info?.avatar,
@@ -50,20 +50,20 @@ export const ProfileForms: React.FC<{
     })
       .then(() => {
         onEditEnd();
-        // ShowSuccessUProfileToast(container as ToastContainer);
+        ShowSuccessUProfileToast(container as ToastContainer);
       })
       .catch(() => {
-        // ShowErrorUProfileToast(container as ToastContainer);
+        ShowErrorUProfileToast(container as ToastContainer);
       });
   }
 
   const getSchools = useCallback(
     () =>
-      API.graphqlPost(Queries.getSchools, {
+      API.graphqlPost(Graphql.getSchools, {
         search: "",
       }).then((v) =>
         v.schools.schools.map((resp: School) => ({
-          value: resp.id,
+          value: resp,
           label: resp.name,
         }))
       ),
@@ -72,11 +72,11 @@ export const ProfileForms: React.FC<{
 
   const getTeams = useCallback(
     () =>
-      API.graphqlPost(Queries.getTeams, {
+      API.graphqlPost(Graphql.getTeams, {
         search: "",
       }).then((v) =>
         v.teams.teams.map((resp: Team) => ({
-          value: resp.id,
+          value: resp,
           label: resp.name,
         }))
       ),
@@ -85,11 +85,11 @@ export const ProfileForms: React.FC<{
 
   const getFacilities = useCallback(
     () =>
-      API.graphqlPost(Queries.getFacilities, {
+      API.graphqlPost(Graphql.getFacilities, {
         search: "",
       }).then((v) =>
         v.facilities.facilities.map((resp: Facilities) => ({
-          value: resp.id,
+          value: resp,
           label: resp.u_name,
         }))
       ),
@@ -153,7 +153,7 @@ export const ProfileForms: React.FC<{
             </CommonStyle.ProfileContainer>
             <Row>
               <TextF
-                name="firstName"
+                name="first_name"
                 label="First Name*"
                 defaultValue={info?.first_name}
                 validate={(v: string) =>
@@ -161,7 +161,7 @@ export const ProfileForms: React.FC<{
                 }
               />
               <TextF
-                name="lastname"
+                name="last_name"
                 label="Last Name*"
                 space={true}
                 defaultValue={info?.last_name}
@@ -174,13 +174,13 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => (v ? undefined : "Position Required")}
               defaultValue={info?.position}
               options={[
-                { label: "Catcher", value: "Catcher" },
-                { label: "First Base", value: "First Base" },
-                { label: "Second Base", value: "Second Base" },
-                { label: "Shortstop", value: "Shortstop" },
-                { label: "Third Base", value: "Third Base" },
-                { label: "Outfield", value: "Outfield" },
-                { label: "Pitcher", value: "Pitcher" },
+                { label: "Catcher", value: "catcher" },
+                { label: "First Base", value: "first_base" },
+                { label: "Second Base", value: "second_base" },
+                { label: "Shortstop", value: "shortstop" },
+                { label: "Third Base", value: "third_base" },
+                { label: "Outfield", value: "outfield" },
+                { label: "Pitcher", value: "pitcher" },
               ]}
             />
             <FormsDropdown
@@ -189,14 +189,14 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => undefined}
               defaultValue={info?.position2}
               options={[
-                { value: "-", label: "-" },
-                { value: "Catcher", label: "Catcher" },
-                { value: "First Base", label: "First Base" },
-                { value: "Second Base", label: "Second Base" },
-                { value: "Shortstop", label: "Shortstop" },
-                { value: "Third Base", label: "Third Base" },
-                { value: "Outfield", label: "Outfield" },
-                { value: "Pitcher", label: "Pitcher" },
+                { label: "-", value: "" },
+                { label: "Catcher", value: "catcher" },
+                { label: "First Base", value: "first_base" },
+                { label: "Second Base", value: "second_base" },
+                { label: "Shortstop", value: "shortstop" },
+                { label: "Third Base", value: "third_base" },
+                { label: "Outfield", value: "outfield" },
+                { label: "Pitcher", value: "pitcher" },
               ]}
             />
             <SectText text="Personal Info" />

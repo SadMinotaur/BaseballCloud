@@ -36,27 +36,29 @@ export const FormsDropdown: React.FC<{
       <Stl.Margin>
         {options ? (
           <Select
-            key={placeholder}
             {...input}
+            key={placeholder}
             theme={Stl.DropdownTheme}
             styles={Stl.Styles}
             options={options}
             placeholder={placeholder}
-            defaultValue={{ label: input?.value, value: input?.value }}
+            onChange={(v) => {
+              input.onChange(v?.value);
+            }}
             components={{ Control }}
           />
         ) : (
           <AsyncSelect
-            key={placeholder}
             {...input}
+            key={placeholder}
             isMulti={multiple}
+            placeholder={placeholder}
             theme={Stl.DropdownTheme}
             styles={Stl.Styles}
-            defaultOptions
-            cacheOptions
             loadOptions={async () => loadOptions && loadOptions.then((v) => v)}
-            options={options}
-            placeholder={placeholder}
+            onChange={(v) => {
+              input.onChange(v?.value);
+            }}
             components={{ Control }}
           />
         )}

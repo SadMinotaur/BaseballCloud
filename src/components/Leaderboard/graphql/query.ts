@@ -1,4 +1,4 @@
-export const Queries = {
+export const Graphql = {
   getBatting: `query LeaderboardBatting($input:FilterLeaderboardInput!) { 
     leaderboard_batting(input: $input) { 
       leaderboard_batting {

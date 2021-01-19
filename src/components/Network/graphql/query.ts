@@ -1,4 +1,4 @@
-export const Queries = {
+export const Graphql = {
   getProfiles: `query Profiles($input:FilterProfilesInput!)
   { profiles(input: $input)
     { profiles

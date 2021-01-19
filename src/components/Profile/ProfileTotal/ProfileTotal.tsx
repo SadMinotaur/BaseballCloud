@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Styles } from "./styles";
-// import { Queries } from "./../graphql/query";
 import { GraphqlProfile } from "../../../utils/types/profile";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import {
   ShowSuccessToast,
   ShowErrorToast,
 } from "./../../../utils/common-components/toast/toast";
-import { CommonQueries } from "./../../../utils/graphql";
+import { GraphqlCom } from "./../../../utils/graphql";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
@@ -37,7 +36,7 @@ export const ProfileTotal: React.FC<{
 
   const makeFavorite = useCallback(
     () =>
-      API.graphqlPost(CommonQueries.favoriteProfile, {
+      API.graphqlPost(GraphqlCom.favoriteProfile, {
         variables: { form: { profile_id: info.id, favorite: !favorite } },
       })
         .then(() => {

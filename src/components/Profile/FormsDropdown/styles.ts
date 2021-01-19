@@ -18,7 +18,7 @@ export const Stl = {
     control: (b: any) => ({
       ...b,
       border: 0,
-      "&:hover": {
+      ":hover": {
         backgroundColor: "#fff",
       },
     }),

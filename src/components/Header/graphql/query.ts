@@ -1,4 +1,4 @@
-export const Queries = {
+export const Graphql = {
   getCurrentUserInfo: `{ current_profile ()
        {
           avatar

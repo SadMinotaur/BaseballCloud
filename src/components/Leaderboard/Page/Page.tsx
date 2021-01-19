@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Queries } from "./../graphql/query";
+import { Graphql } from "./../graphql/query";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
-import { CommonQueries } from "./../../../utils/graphql";
+import { GraphqlCom } from "./../../../utils/graphql";
 import {
   BattingUser,
   PitchingUser,
@@ -32,7 +32,7 @@ export const LeaderboardPage: React.FC = () => {
 
   const getB = useCallback((req: object = { type: "exit_velocity" }) => {
     setLoadingContent(true);
-    API.graphqlPost(Queries.getBatting, {
+    API.graphqlPost(Graphql.getBatting, {
       input: req,
     }).then((v: GetBatting) => {
       setBattingContent(v.leaderboard_batting.leaderboard_batting);
@@ -42,7 +42,7 @@ export const LeaderboardPage: React.FC = () => {
 
   const getP = useCallback((req: object = { type: "pitch_velocity" }) => {
     setLoadingContent(true);
-    API.graphqlPost(Queries.getPitching, {
+    API.graphqlPost(Graphql.getPitching, {
       input: req,
     }).then((v: GetPitching) => {
       setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
@@ -51,7 +51,7 @@ export const LeaderboardPage: React.FC = () => {
   }, []);
 
   function onClickFavB(v: BattingUser): void {
-    API.graphqlPost(CommonQueries.favoriteProfile, {
+    API.graphqlPost(GraphqlCom.favoriteProfile, {
       form: {
         favorite: !v.favorite,
         profile_id: v.batter_datraks_id,
@@ -71,7 +71,7 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   function onClickFavP(v: PitchingUser): void {
-    API.graphqlPost(CommonQueries.favoriteProfile, {
+    API.graphqlPost(GraphqlCom.favoriteProfile, {
       form: {
         favorite: !v.favorite,
         profile_id: v.pitcher_datraks_id,

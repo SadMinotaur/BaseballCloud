@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "../../../utils/common-components/spinner";
-import { Queries } from "../graphql/query";
+import { Graphql } from "../graphql/query";
 import { StatsBlock } from "../StatsBlock";
 import { ProfileForms } from "./../ProfileForms";
 import { Container } from "./styles";
@@ -19,9 +19,9 @@ export const ProfilePage: React.FC = () => {
   const { userId } = useParams<Record<string, string | undefined>>();
 
   useEffect(() => {
-    API.graphqlPost(Queries.getCurrentUserInfo, {}).then(
+    API.graphqlPost(Graphql.getCurrentUserInfo, {}).then(
       (v: { current_profile: { id: number } }) =>
-        API.graphqlPost(Queries.getUserInfo, {
+        API.graphqlPost(Graphql.getUserInfo, {
           id: userId ? userId.toString() : v.current_profile.id,
         })
           .then((v: { profile: GraphqlProfile }) => {

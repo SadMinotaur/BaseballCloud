@@ -16,7 +16,7 @@
   border: solid 1px #ebebeb;
   position: absolute;
   z-index: 100;
-  padding: 8px;
+
   border-radius: 5px;
 }
 
@@ -54,4 +54,12 @@
   top: -20px;
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
+}
+
+.Dropdown-option {
+  padding: 0 8px 0 8px;
+}
+
+.Dropdown-option:hover {
+  background-color: #6fc7f2;
 }

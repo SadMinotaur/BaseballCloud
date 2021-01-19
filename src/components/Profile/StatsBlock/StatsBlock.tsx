@@ -8,7 +8,7 @@ import {
   Text,
 } from "./styles";
 import { Progress } from "reactstrap";
-import { Queries } from "../graphql/query";
+import { Graphql } from "../graphql/query";
 import {
   ProfileEvents,
   BattingSummary,
@@ -23,10 +23,10 @@ export const StatsBlock: React.FC<{ id?: string }> = ({ id }) => {
   const [battingSummary, setBattingSummary] = useState<Summary>();
 
   useEffect(() => {
-    API.graphqlPost(Queries.profileEvents, {
+    API.graphqlPost(Graphql.profileEvents, {
       input: { count: 10, offset: 0, profile_id: id },
     }).then((v: ProfileEvents) => setEvents(v && v.profile_events.events));
-    API.graphqlPost(Queries.battingSummary, {
+    API.graphqlPost(Graphql.battingSummary, {
       id: id,
     }).then((v: BattingSummary) => {
       setBattingSummary(v && v.batting_summary);
