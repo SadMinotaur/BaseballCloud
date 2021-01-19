@@ -6,9 +6,9 @@ import {
   Row,
   ButtonProfile,
   WarningText,
-  DropdownSpacing,
   CancelPhoto,
   UploadPhoto,
+  DropdownSpacing,
 } from "./styles";
 import { FormsAbout } from "./../FormsAbout";
 import { Queries } from "../graphql/query";
@@ -117,34 +117,21 @@ export const ProfileForms: React.FC<{
               )}
             </CommonStyle.ProfileContainer>
             <Row>
-              <Field
+              <TextF
                 name="firstName"
-                validate={required}
+                label="First Name*"
                 defaultValue={info?.first_name}
-              >
-                {({ input, meta }) => (
-                  <DropdownSpacing>
-                    <TextF input={input} label="First Name*" />
-                    {meta.error && meta.touched && (
-                      <WarningText>First Name Required</WarningText>
-                    )}
-                  </DropdownSpacing>
-                )}
-              </Field>
-              <Field
+                validate={(v: string) =>
+                  v ? undefined : "First Name Required"
+                }
+              />
+              <TextF
                 name="lastname"
-                validate={required}
+                label="Last Name*"
+                space={true}
                 defaultValue={info?.last_name}
-              >
-                {({ input, meta }) => (
-                  <DropdownSpacing leftMargin={true}>
-                    <TextF input={input} label="Last Name*" />
-                    {meta.error && meta.touched && (
-                      <WarningText>Last Name Required</WarningText>
-                    )}
-                  </DropdownSpacing>
-                )}
-              </Field>
+                validate={(v: string) => (v ? undefined : "Last Name Required")}
+              />
             </Row>
             <Field
               name="position_in_game"
@@ -194,72 +181,45 @@ export const ProfileForms: React.FC<{
               )}
             </Field>
             <SectText text="Personal Info" />
-            <Field
+            <TextF
               name="age"
-              validate={required}
+              label="Age*"
               defaultValue={info?.age.toString()}
-            >
-              {({ input, meta }) => (
-                <>
-                  <TextF input={input} label="Age*" />
-                  {meta.error && meta.touched && (
-                    <WarningText>Age Required</WarningText>
-                  )}
-                </>
-              )}
-            </Field>
+              validate={(v: string) => (v ? undefined : "Age Required")}
+            />
             <Row>
-              <Field
+              <TextF
                 name="feet"
-                validate={(v) =>
+                label="Feet*"
+                defaultValue={info?.feet.toString()}
+                validate={(v: string) =>
                   v
                     ? parseInt(v) > 3
                       ? undefined
                       : "Minimum height is 4"
                     : "Feet Required"
                 }
-                defaultValue={info?.feet.toString()}
-              >
-                {({ input, meta }) => (
-                  <DropdownSpacing>
-                    <TextF input={input} label="Feet*" />
-                    {meta.error && meta.touched && (
-                      <WarningText>{meta.error}</WarningText>
-                    )}
-                  </DropdownSpacing>
-                )}
-              </Field>
-              <Field name="inches" defaultValue={info?.inches.toString()}>
-                {({ input, meta }) => (
-                  <DropdownSpacing leftMargin={true}>
-                    <TextF input={input} label="Inches" />
-                    {meta.error && meta.touched && (
-                      <WarningText>Inches Required</WarningText>
-                    )}
-                  </DropdownSpacing>
-                )}
-              </Field>
+              />
+              <TextF
+                name="inches"
+                label="Inches"
+                space={true}
+                defaultValue={info?.inches.toString()}
+                validate={(v: string) => (v ? undefined : "Inches Required")}
+              />
             </Row>
-            <Field
+            <TextF
               name="weight"
-              validate={(v) =>
+              label="Weight*"
+              defaultValue={info?.weight.toString()}
+              validate={(v: string) =>
                 v
                   ? parseInt(v) > 39
                     ? undefined
                     : "Minimum weight is 40"
                   : "Weight Required"
               }
-              defaultValue={info?.weight.toString()}
-            >
-              {({ input, meta }) => (
-                <>
-                  <TextF input={input} label="Weight*" />
-                  {meta.error && meta.touched && (
-                    <WarningText>Weight Required</WarningText>
-                  )}
-                </>
-              )}
-            </Field>
+            />
             <Row>
               <Field
                 name="throw"

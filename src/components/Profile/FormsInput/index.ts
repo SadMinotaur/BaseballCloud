@@ -1,1 +1,1 @@
-export { TextF } from "./ProfileForms";
+export { TextF } from "./FormsInput";
