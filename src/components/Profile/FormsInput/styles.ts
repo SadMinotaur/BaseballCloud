@@ -1,12 +1,26 @@
-import { styled } from "@material-ui/core/styles";
+import { styled as sc } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
+import styledComponentsTS from "styled-components-ts";
+import styled from "styled-components";
 
 export const Stl = {
-  TextF: styled(TextField)({
+  TextF: sc(TextField)({
     width: "100%",
   }),
 };
+
+export const DropdownSpacing = styledComponentsTS<{ leftMargin: boolean }>(
+  styled.div
+)`
+  margin: 0 0 0  ${(p) => p.leftMargin && "10"}px;
+  width: 100%;
+`;
+
+export const WarningText = styled.p`
+  color: #f05f62;
+  font-size: 1.6rem;
+`;
 
 export const MaterialStyles = makeStyles({
   input: {

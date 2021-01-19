@@ -18,7 +18,7 @@ export const Stl = {
     control: (b: any) => ({
       ...b,
       border: 0,
-      "&:hover": {
+      ":hover": {
         backgroundColor: "#fff",
       },
     }),
@@ -42,5 +42,9 @@ export const Stl = {
     transition: 0.2s ease all;
     top: ${(props) => (props.isFloating ? `5px` : `35%`)};
     font-size: ${(props) => (props.isFloating ? `0.8rem` : `1.3rem`)};
+  `,
+  WarningText: styled.p`
+    color: #f05f62;
+    font-size: 1.6rem;
   `,
 };

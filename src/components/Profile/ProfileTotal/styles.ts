@@ -7,9 +7,11 @@ export const Styles = {
     overflow-y: auto;
     padding: 16px 16px 0 16px;
     box-sizing: border-box;
+    position: relative;
   `,
   FloatingIcon: styled.img`
-    margin: 0 0 0 200px;
+    position: absolute;
+    left: 230px;
   `,
   ItemsRow: styled.div`
     width: 100%;

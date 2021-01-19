@@ -4,13 +4,13 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { CommonQueries } from "./../../../utils/graphql";
+import { GraphqlCom } from "./../../../utils/graphql";
 import {
   ButtonState,
   Profiles,
   ProfilesInfo,
 } from "../../../utils/types/network";
-import { Queries } from "./../graphql/query";
+import { Graphql } from "./../graphql/query";
 import {
   ShowSuccessToast,
   ShowErrorToast,
@@ -48,7 +48,7 @@ export const NetworkPage: React.FC = () => {
   const getProfiles = useCallback(
     (req: any = { profiles_count: showNum, offset: offset }) => {
       setLoadingContent(true);
-      API.graphqlPost(Queries.getProfiles, {
+      API.graphqlPost(Graphql.getProfiles, {
         input: { ...req, profiles_count: showNum, offset: offset },
       }).then((v: { profiles: Profiles }) => {
         const prof: Profiles = v.profiles;
@@ -61,7 +61,7 @@ export const NetworkPage: React.FC = () => {
   );
 
   function onClickFav(v: ProfilesInfo): void {
-    API.graphqlPost(CommonQueries.favoriteProfile, {
+    API.graphqlPost(GraphqlCom.favoriteProfile, {
       form: {
         favorite: !v.favorite,
         profile_id: v.id,

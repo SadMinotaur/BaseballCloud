@@ -1,4 +1,4 @@
-export const Queries = {
+export const Graphql = {
   getCurrentUserInfo: `{ current_profile ()
     {
        id
@@ -161,10 +161,9 @@ export const Queries = {
       }
     }
   }`,
-  updateProfile: `mutation UpdateProfile($form:UpdateProfileInput!)
-   { update_profile (input:$form)
-     { profile
-       {
+  updateProfile: `mutation UpdateProfile($form:UpdateProfileInput!) { 
+    update_profile (input:$form) { 
+      profile {
          id
          first_name
          last_name
@@ -175,21 +174,20 @@ export const Queries = {
          bats_hand
          biography
          school_year
-        }
-      }
-      school {
-        id
-        name
-      }
-      teams {
-        id
-        name
-      }
-      facilities {
-        id
-        email
-        u_name
       }
     }
-  `,
+    school {
+      id
+      name
+    }
+    teams {
+      id
+      name
+    }
+    facilities {
+      id        
+      email
+      u_name
+    }
+  }`,
 };
