@@ -156,6 +156,12 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
 @font-face {
   font-family: "Lato";
   font-style: normal;

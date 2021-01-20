@@ -44,8 +44,9 @@ export const ProfileForms: React.FC<{
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
         weight: parseInt(v.weight),
-        facilities: [v.facilities],
-        teams: [v.teams],
+        school: v.school?.value,
+        facilities: [v.facilities?.value],
+        teams: [v.teams?.value],
       },
     })
       .then(() => {
@@ -307,7 +308,7 @@ export const ProfileForms: React.FC<{
               biography={info?.biography}
               placeholder="Describe yourself in a few words"
             />
-            <WarningText>* Fill out the required fields</WarningText>
+            {info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
               <ButtonProfile
                 onClick={() => {

@@ -4,14 +4,14 @@ import { Options } from "../../types/req-types";
 import "./style.css";
 
 export const DropdownBlue: React.FC<{
-  input: any;
+  input?: any;
   options: Options[];
   width: number;
 }> = ({ options, width, input }) => (
   <div style={{ width: width }}>
     <Dropdown
       {...input}
-      onChange={(p) => input.onChange(p.value)}
+      onChange={(p) => input?.onChange(p.value)}
       className="leaderboard-dropdown-main"
       menuClassName="leaderboard-dropdown-menu"
       arrowOpen={<span className="leaderboard-dropdown-arrow-open" />}

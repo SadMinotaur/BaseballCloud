@@ -42,9 +42,6 @@ export const FormsDropdown: React.FC<{
             styles={Stl.Styles}
             options={options}
             placeholder={placeholder}
-            onChange={(v) => {
-              input.onChange(v?.value);
-            }}
             components={{ Control }}
           />
         ) : (
@@ -55,10 +52,9 @@ export const FormsDropdown: React.FC<{
             placeholder={placeholder}
             theme={Stl.DropdownTheme}
             styles={Stl.Styles}
-            loadOptions={async () => loadOptions && loadOptions.then((v) => v)}
-            onChange={(v) => {
-              input.onChange(v?.value);
-            }}
+            defaultOptions
+            cacheOptions
+            loadOptions={() => loadOptions?.then((v) => v)}
             components={{ Control }}
           />
         )}

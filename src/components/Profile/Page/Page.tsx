@@ -53,12 +53,12 @@ export const ProfilePage: React.FC = () => {
                     info={profile}
                     onEditEnd={() => setEditState(false)}
                   />
-                  <StatsBlock id={profile && profile.id} />
+                  <StatsBlock info={profile} />
                 </>
               ) : userId && profile ? (
                 <>
                   <ProfileTotal info={profile} />
-                  <StatsBlock id={profile.id} />
+                  <StatsBlock info={profile} />
                 </>
               ) : (
                 profile && (
@@ -67,7 +67,7 @@ export const ProfilePage: React.FC = () => {
                       info={profile}
                       onEditPress={() => setEditState(true)}
                     />
-                    <StatsBlock id={profile.id} />
+                    <StatsBlock info={profile} />
                   </>
                 )
               )}
