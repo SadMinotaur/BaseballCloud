@@ -3,7 +3,7 @@ import Stl from "./styles";
 import Arrow from "./../../../assets/arrow.svg";
 
 export const InputBlue: React.FC<{
-  input: any;
+  input?: any;
   name: string;
   width: number;
   widthFocus: number;

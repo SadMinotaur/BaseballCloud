@@ -11,7 +11,7 @@ export const DropdownBlue: React.FC<{
   <div style={{ width: width }}>
     <Dropdown
       {...input}
-      onChange={(p) => input.onChange(p.value)}
+      onChange={(p) => input?.onChange(p.value)}
       className="leaderboard-dropdown-main"
       menuClassName="leaderboard-dropdown-menu"
       arrowOpen={<span className="leaderboard-dropdown-arrow-open" />}

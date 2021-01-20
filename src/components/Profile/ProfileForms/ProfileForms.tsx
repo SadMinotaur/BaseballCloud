@@ -308,7 +308,7 @@ export const ProfileForms: React.FC<{
               biography={info?.biography}
               placeholder="Describe yourself in a few words"
             />
-            <WarningText>* Fill out the required fields</WarningText>
+            {info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
               <ButtonProfile
                 onClick={() => {

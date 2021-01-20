@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stl } from "./styles";
 import CommonStyle from "../../../utils/common-styles/styles";
-import { SearchInput } from "../../../utils/common-components/search-input";
+import { SearchInput } from "../../../utils/common-components/search-input-right";
 import { GraphqlProfile } from "../../../utils/types/profile";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
+import PictureProf from "./../../../assets/profileIcon.png";
+import API from "../../../utils/api";
 
 export const Cards: React.FC<{ info?: GraphqlProfile }> = ({ info }) => {
+  const [picture, setPicture] = useState<string>();
+
+  useEffect(() => {
+    info?.avatar && API.getPicture(info.avatar).then((v) => setPicture(v));
+    return () => {};
+  }, [info?.avatar]);
+
   return (
     <Stl.Container>
       <CommonStyle.HeaderTab>Batting</CommonStyle.HeaderTab>
       <CommonStyle.HeaderTab active={true}>Comparison</CommonStyle.HeaderTab>
       <Stl.Table>
         <Stl.ResponsiveRow>
-          <div></div>
           <div>
-            <SearchInput placeholder="" width={80} />
+            <Stl.Image
+              src={picture ? `data:image/jpeg;base64,${picture}` : PictureProf}
+              alt="avatar"
+            />
+            {info?.first_name} {info?.last_name}
+          </div>
+          <div>
+            <SearchInput
+              placeholder="Enter player name"
+              width={150}
+              widthFocused={170}
+            />
           </div>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
@@ -31,35 +50,45 @@ export const Cards: React.FC<{ info?: GraphqlProfile }> = ({ info }) => {
           <h4>Weight: {info?.weight} lbs</h4>
           <h4>Weight: 0 lbs</h4>
         </Stl.ResponsiveRow>
-        <div style={{ position: "relative" }}>
-          <DropdownBlue
-            options={[
-              { label: "Top bating Values - Distance", value: "Distance" },
-              {
-                label: "Top bating Values - Launch angle",
-                value: "Launch angle",
-              },
-              {
-                label: "Top bating Values - Exit Velocity",
-                value: "Exit Velocity",
-              },
-            ]}
-            width={250}
-          />
-        </div>
-        <CommonStyle.Item>
-          <CommonStyle.ItemText>Fastball</CommonStyle.ItemText>
-        </CommonStyle.Item>
-        <CommonStyle.Item>
-          <CommonStyle.ItemText>Curveball</CommonStyle.ItemText>
-        </CommonStyle.Item>
-        <CommonStyle.Item>
-          <CommonStyle.ItemText>Changeup</CommonStyle.ItemText>
-        </CommonStyle.Item>
-        <CommonStyle.Item>
-          <CommonStyle.ItemText>Slider</CommonStyle.ItemText>
-        </CommonStyle.Item>
       </Stl.Table>
+      <div style={{ position: "relative" }}>
+        <DropdownBlue
+          options={[
+            { label: "Top bating Values - Distance", value: "Distance" },
+            {
+              label: "Top bating Values - Launch angle",
+              value: "Launch angle",
+            },
+            {
+              label: "Top bating Values - Exit Velocity",
+              value: "Exit Velocity",
+            },
+          ]}
+          width={250}
+        />
+      </div>
+      <Stl.ItemTable>
+        <CommonStyle.Item>
+          <CommonStyle.ItemText width={33}>Fastball</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+        </CommonStyle.Item>
+        <CommonStyle.Item>
+          <CommonStyle.ItemText width={33}>Curveball</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+        </CommonStyle.Item>
+        <CommonStyle.Item>
+          <CommonStyle.ItemText width={33}>Changeup</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+        </CommonStyle.Item>
+        <CommonStyle.Item>
+          <CommonStyle.ItemText width={33}>Slider</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+        </CommonStyle.Item>
+      </Stl.ItemTable>
     </Stl.Container>
   );
 };
