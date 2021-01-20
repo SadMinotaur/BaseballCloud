@@ -4,7 +4,7 @@ import { Options } from "../../types/req-types";
 import "./style.css";
 
 export const DropdownBlue: React.FC<{
-  input: any;
+  input?: any;
   options: Options[];
   width: number;
 }> = ({ options, width, input }) => (

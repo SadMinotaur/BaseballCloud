@@ -3,7 +3,7 @@ import Search from "./../../../assets/search.svg";
 import Stl from "./styles";
 
 export const SearchInput: React.FC<{
-  input: any;
+  input?: any;
   placeholder: string;
   width: number;
 }> = ({ placeholder, width, input }) => (

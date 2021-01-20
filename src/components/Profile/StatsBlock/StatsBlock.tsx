@@ -14,24 +14,26 @@ import {
   BattingSummary,
   Event,
   Summary,
+  GraphqlProfile,
 } from "../../../utils/types/profile";
+import { Cards } from "./../Cards";
 import API from "../../../utils/api";
 import "./progress.css";
 
-export const StatsBlock: React.FC<{ id?: string }> = ({ id }) => {
+export const StatsBlock: React.FC<{ info?: GraphqlProfile }> = ({ info }) => {
   const [events, setEvents] = useState<Event[]>();
   const [battingSummary, setBattingSummary] = useState<Summary>();
 
   useEffect(() => {
     API.graphqlPost(Graphql.profileEvents, {
-      input: { count: 10, offset: 0, profile_id: id },
+      input: { count: 10, offset: 0, profile_id: info?.id },
     }).then((v: ProfileEvents) => setEvents(v && v.profile_events.events));
     API.graphqlPost(Graphql.battingSummary, {
-      id: id,
+      id: info?.id,
     }).then((v: BattingSummary) => {
       setBattingSummary(v && v.batting_summary);
     });
-  }, [id]);
+  }, [info?.id]);
 
   return (
     <StBlock>
@@ -92,7 +94,9 @@ export const StatsBlock: React.FC<{ id?: string }> = ({ id }) => {
         <Text>Recent Session Reports</Text>
         <p>No data currently linked to this profile</p>
       </Stats>
-      <Stats></Stats>
+      <Stats height={"600px"}>
+        <Cards info={info} />
+      </Stats>
     </StBlock>
   );
 };

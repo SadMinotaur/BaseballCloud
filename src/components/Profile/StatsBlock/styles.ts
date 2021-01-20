@@ -4,9 +4,11 @@ export const StBlock = styled.div`
   width: 100%;
   height: 100%;
   background: #788b99;
+  overflow-y: auto;
 `;
 
-export const Stats = styled.div`
+export const Stats = styled.div<{ height?: string }>`
+  height: ${(p) => p.height && p.height};
   background: #fff;
   margin: 16px;
   padding: 16px;
