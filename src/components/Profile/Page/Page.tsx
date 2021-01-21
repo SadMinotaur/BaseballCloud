@@ -21,6 +21,11 @@ export const ProfilePage: React.FC<{
 
   const { userId } = useParams<Record<string, string | undefined>>();
 
+  function onEditEnd(profile: GraphqlProfile): void {
+    setProfile(profile);
+    setEditState(false);
+  }
+
   useEffect(() => {
     API.graphqlPost(Graphql.getCurrentUserInfo, {}).then(
       (v: { current_profile: { id: number } }) =>
@@ -43,34 +48,25 @@ export const ProfilePage: React.FC<{
         <Spinner loading={loading} />
       ) : (
         <Container>
-          {!profileStatus ? (
+          {profileStatus ? (
             <>
-              <ProfileForms
-                ShowSuccessToast={ShowSuccessToast}
-                ShowErrorToast={ShowErrorToast}
-                onEditEnd={() => setEditState(false)}
-              />
-              <YourAccount />
-            </>
-          ) : (
-            <>
-              {editState ? (
-                <>
-                  <ProfileForms
-                    ShowSuccessToast={ShowSuccessToast}
-                    ShowErrorToast={ShowErrorToast}
-                    info={profile}
-                    onEditEnd={() => setEditState(false)}
-                  />
-                  <StatsBlock info={profile} />
-                </>
-              ) : userId && profile ? (
-                <>
-                  <ProfileTotal info={profile} />
-                  <StatsBlock info={profile} />
-                </>
-              ) : (
-                profile && (
+              {profile &&
+                (editState ? (
+                  <>
+                    <ProfileForms
+                      ShowSuccessToast={ShowSuccessToast}
+                      ShowErrorToast={ShowErrorToast}
+                      info={profile}
+                      onEditEnd={onEditEnd}
+                    />
+                    <StatsBlock info={profile} />
+                  </>
+                ) : userId ? (
+                  <>
+                    <ProfileTotal info={profile} />
+                    <StatsBlock info={profile} />
+                  </>
+                ) : (
                   <>
                     <ProfileTotal
                       info={profile}
@@ -78,8 +74,16 @@ export const ProfilePage: React.FC<{
                     />
                     <StatsBlock info={profile} />
                   </>
-                )
-              )}
+                ))}
+            </>
+          ) : (
+            <>
+              <ProfileForms
+                ShowSuccessToast={ShowSuccessToast}
+                ShowErrorToast={ShowErrorToast}
+                onEditEnd={onEditEnd}
+              />
+              <YourAccount />
             </>
           )}
         </Container>

@@ -1,31 +1,30 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stl } from "./styles";
 import { SearchInput } from "../../../utils/common-components/search-input-right";
 import { GraphqlProfile } from "../../../utils/types/profile";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
-import { ProfileNames } from "./../../../utils/types/profile";
+// import { ProfileNames } from "./../../../utils/types/profile";
 import { Graphql } from "../graphql/query";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
-export const Cards: React.FC<{ info?: GraphqlProfile }> = ({ info }) => {
+export const Cards: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
   const [picture, setPicture] = useState<string>();
-  const [playersNames, setPlayersNames] = useState<ProfileNames[]>();
+  // const [playersNames, setPlayersNames] = useState<ProfileNames[]>();
 
   useEffect(() => {
     info?.avatar && API.getPicture(info.avatar).then((v) => setPicture(v));
     console.log();
   }, [info?.avatar]);
 
-  const getNames = useCallback(() => {
+  const getNames = () =>
     API.graphqlPost(Graphql.getProfiles, {
       input: {
         player_name: "asd",
         position: "catcher",
       },
     });
-  }, []);
 
   return (
     <Stl.Container>

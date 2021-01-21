@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
@@ -23,15 +23,14 @@ import API from "../../../utils/api";
 export const ProfileForms: React.FC<{
   ShowErrorToast: (text: string) => void;
   ShowSuccessToast: (text: string) => void;
+  onEditEnd: (profile: GraphqlProfile) => void;
   info?: GraphqlProfile;
-  onEditEnd: () => void;
 }> = ({ info, onEditEnd, ShowSuccessToast, ShowErrorToast }) => {
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
 
   function onSubmitForm(v: any): void {
-    console.log(v);
     API.graphqlPost(Graphql.updateProfile, {
       form: {
         id: info?.id,
@@ -46,56 +45,47 @@ export const ProfileForms: React.FC<{
         position2: v.position2?.value,
         school: v.school?.value,
         school_year: v.school_year?.value,
-        teams: v.teams ? [v.teams[0].value] : [],
-        facilities: v.facilities ? [v.facilities[0].value] : [],
+        teams: [v.teams?.value],
+        facilities: [v.facilities && v?.facilities[0]?.value],
         avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
-      .then(() => {
-        onEditEnd();
+      .then((v) => {
+        onEditEnd(v.update_profile.profile);
         ShowSuccessToast("Profile has been updated successfully");
       })
       .catch(() => ShowErrorToast("Error occurred"));
   }
 
-  const getSchools = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getSchools, {
-        search: "",
-      }).then((v) =>
-        v.schools.schools.map((resp: School) => ({
-          value: resp,
-          label: resp.name,
-        }))
-      ),
-    []
-  );
+  const getSchools = () =>
+    API.graphqlPost(Graphql.getSchools, {
+      search: "",
+    }).then((v) =>
+      v.schools.schools.map((resp: School) => ({
+        value: resp,
+        label: resp.name,
+      }))
+    );
 
-  const getTeams = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getTeams, {
-        search: "",
-      }).then((v) =>
-        v.teams.teams.map((resp: Team) => ({
-          value: resp,
-          label: resp.name,
-        }))
-      ),
-    []
-  );
+  const getTeams = () =>
+    API.graphqlPost(Graphql.getTeams, {
+      search: "",
+    }).then((v) =>
+      v.teams.teams.map((resp: Team) => ({
+        value: resp,
+        label: resp.name,
+      }))
+    );
 
-  const getFacilities = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getFacilities, {
-        search: "",
-      }).then((v) =>
-        v.facilities.facilities.map((resp: Facilities) => ({
-          value: resp,
-          label: resp.u_name,
-        }))
-      ),
-    []
-  );
+  const getFacilities = () =>
+    API.graphqlPost(Graphql.getFacilities, {
+      search: "",
+    }).then((v) =>
+      v.facilities.facilities.map((resp: Facilities) => ({
+        value: resp,
+        label: resp.u_name,
+      }))
+    );
 
   useEffect(() => {
     info &&
@@ -288,7 +278,7 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="School"
               name="school"
-              loadOptions={getSchools()}
+              loadOptions={getSchools}
               validate={(v) => undefined}
               defaultValue={
                 info?.school && {
@@ -318,7 +308,7 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="Team"
               name="teams"
-              loadOptions={getTeams()}
+              loadOptions={getTeams}
               validate={(v) => undefined}
               defaultValue={
                 info?.teams.length !== 0 && info?.teams[0].name
@@ -334,7 +324,7 @@ export const ProfileForms: React.FC<{
               multiple={true}
               placeholder="Facility"
               name="facilities"
-              loadOptions={getFacilities()}
+              loadOptions={getFacilities}
               validate={(v) => undefined}
               defaultValue={
                 info?.facilities[0]?.u_name
@@ -350,9 +340,12 @@ export const ProfileForms: React.FC<{
               biography={info?.biography}
               placeholder="Describe yourself in a few words"
             />
-            {info && <WarningText>* Fill out the required fields</WarningText>}
+            {!info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
-              <ButtonProfile onClick={() => info && onEditEnd()} type="reset">
+              <ButtonProfile
+                onClick={() => info && onEditEnd(info)}
+                type="reset"
+              >
                 Cancel
               </ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">

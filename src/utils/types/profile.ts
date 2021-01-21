@@ -108,3 +108,5 @@ export interface ProfileNames {
   weight: 50;
   age: 1;
 }
+
+export type Options = { label: string; value: any };
