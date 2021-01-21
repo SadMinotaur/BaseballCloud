@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Graphql } from "./../graphql/query";
-import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { GraphqlCom } from "./../../../utils/graphql";
@@ -13,17 +12,14 @@ import {
 import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
-import {
-  ShowSuccessToast,
-  ShowErrorToast,
-} from "./../../../utils/common-components/toast/toast";
 import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../utils/api";
 import Stl from "./styles";
 
-export const LeaderboardPage: React.FC = () => {
-  let container: ToastContainer | null = null;
-
+export const LeaderboardPage: React.FC<{
+  ShowErrorToast: (text: string) => void;
+  ShowSuccessToast: (text: string) => void;
+}> = ({ ShowSuccessToast, ShowErrorToast }) => {
   const [loadingContent, setLoadingContent] = useState<boolean>(false);
   const [currentSwitch, setCurrentSwitch] = useState<boolean>(true);
 
@@ -58,7 +54,11 @@ export const LeaderboardPage: React.FC = () => {
       },
     })
       .then(() => {
-        ShowSuccessToast(v.favorite, container as ToastContainer);
+        ShowSuccessToast(
+          `This profile ${
+            !v.favorite ? "removed from favorite" : "added to favorite"
+          }  list successfully.`
+        );
         setBattingContent((ps: BattingUser[]) =>
           ps.map((item: BattingUser) =>
             item.batter_datraks_id !== v.batter_datraks_id
@@ -67,7 +67,7 @@ export const LeaderboardPage: React.FC = () => {
           )
         );
       })
-      .catch(() => ShowErrorToast(container as ToastContainer));
+      .catch(() => ShowErrorToast("Error updating profile"));
   }
 
   function onClickFavP(v: PitchingUser): void {
@@ -78,7 +78,11 @@ export const LeaderboardPage: React.FC = () => {
       },
     })
       .then(() => {
-        ShowSuccessToast(v.favorite, container as ToastContainer);
+        ShowSuccessToast(
+          `This profile ${
+            !v.favorite ? "removed from favorite" : "added to favorite"
+          }  list successfully.`
+        );
         setPitchingContent((ps: PitchingUser[]) =>
           ps.map((item: PitchingUser) =>
             item.pitcher_datraks_id !== v.pitcher_datraks_id
@@ -87,7 +91,7 @@ export const LeaderboardPage: React.FC = () => {
           )
         );
       })
-      .catch(() => ShowErrorToast(container as ToastContainer));
+      .catch(() => ShowErrorToast("Error updating profile"));
   }
 
   function updateContent(fields: FormState<Record<string, any>>): void {
@@ -106,12 +110,6 @@ export const LeaderboardPage: React.FC = () => {
 
   return (
     <Stl.Container>
-      <CommonStyle.Toast>
-        <ToastContainer
-          ref={(ref) => (container = ref)}
-          toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-        />
-      </CommonStyle.Toast>
       <Form
         onSubmit={() => {}}
         render={() => (

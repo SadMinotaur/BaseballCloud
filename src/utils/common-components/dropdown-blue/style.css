@@ -4,10 +4,6 @@
   margin: 0 20px 0 0;
 }
 
-::placeholder {
-  color: #6fc7f2;
-}
-
 .leaderboard-dropdown-menu {
   color: #788b99;
   margin: -15px 0 0 -20px;

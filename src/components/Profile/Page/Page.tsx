@@ -10,7 +10,10 @@ import { useParams } from "react-router-dom";
 import { GraphqlProfile } from "../../../utils/types/profile";
 import API from "../../../utils/api";
 
-export const ProfilePage: React.FC = () => {
+export const ProfilePage: React.FC<{
+  ShowErrorToast: (text: string) => void;
+  ShowSuccessToast: (text: string) => void;
+}> = ({ ShowErrorToast, ShowSuccessToast }) => {
   const [profileStatus, setProfileStatus] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<GraphqlProfile>();

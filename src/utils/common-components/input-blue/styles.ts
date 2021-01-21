@@ -16,6 +16,9 @@ const Stl = {
       color: #788b99;
       width: ${(p) => p.widthFocus}px;
     }
+    ::placeholder {
+      color: #6fc7f2;
+    }
   `,
   Arrow: styledComponentsTS<{ state: boolean }>(styled.img)`
     ${(p) => p.state && "transform: rotate(180deg);"}

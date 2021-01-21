@@ -19,18 +19,11 @@ import { Facilities, School, Team } from "../../../utils/types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
-import { ToastContainer, ToastMessageAnimated } from "react-toastr";
-import {
-  ShowErrorUProfileToast,
-  ShowSuccessUProfileToast,
-} from "../../../utils/common-components/toast/toast";
 
 export const ProfileForms: React.FC<{
   info?: GraphqlProfile;
   onEditEnd: () => void;
 }> = ({ info, onEditEnd }) => {
-  let container: ToastContainer | null;
-
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
@@ -38,6 +31,7 @@ export const ProfileForms: React.FC<{
   function onSubmitForm(v: any): void {
     API.graphqlPost(Graphql.updateProfile, {
       form: {
+        id: info?.id,
         ...v,
         avatar: pictureUrl ? pictureUrl : info?.avatar,
         age: parseInt(v.age),
@@ -51,11 +45,8 @@ export const ProfileForms: React.FC<{
     })
       .then(() => {
         onEditEnd();
-        ShowSuccessUProfileToast(container as ToastContainer);
       })
-      .catch(() => {
-        ShowErrorUProfileToast(container as ToastContainer);
-      });
+      .catch(() => {});
   }
 
   const getSchools = useCallback(
@@ -110,12 +101,6 @@ export const ProfileForms: React.FC<{
         onSubmit={onSubmitForm}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <CommonStyle.Toast>
-              <ToastContainer
-                ref={(ref) => (container = ref)}
-                toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-              />
-            </CommonStyle.Toast>
             <CommonStyle.ProfileContainer>
               <CommonStyle.ProfilePic
                 src={
@@ -171,7 +156,7 @@ export const ProfileForms: React.FC<{
             </Row>
             <FormsDropdown
               placeholder="Position in Game*"
-              name="position_in_game"
+              name="position"
               validate={(v: string) => (v ? undefined : "Position Required")}
               defaultValue={info?.position}
               options={[
@@ -186,7 +171,7 @@ export const ProfileForms: React.FC<{
             />
             <FormsDropdown
               placeholder="Secondary Position in Game"
-              name="secondary_position_in_game"
+              name="position2"
               validate={(v: string) => undefined}
               defaultValue={info?.position2}
               options={[
@@ -244,7 +229,7 @@ export const ProfileForms: React.FC<{
               <DropdownSpacing>
                 <FormsDropdown
                   placeholder="Throw*"
-                  name="throw"
+                  name="throws_hand"
                   validate={(v) => (v ? undefined : "Throws Required")}
                   defaultValue={info?.throws_hand}
                   options={[
@@ -256,8 +241,8 @@ export const ProfileForms: React.FC<{
               <DropdownSpacing leftMargin={true}>
                 <FormsDropdown
                   placeholder="Bats*"
-                  name="bats"
-                  validate={(v: string) => (v ? undefined : "Bats Required")}
+                  name="bats_hand"
+                  validate={(v) => (v ? undefined : "Bats Required")}
                   defaultValue={info?.bats_hand}
                   options={[
                     { value: "R", label: "R" },
@@ -271,13 +256,13 @@ export const ProfileForms: React.FC<{
               placeholder="School"
               name="school"
               loadOptions={getSchools()}
-              validate={(v: string) => undefined}
+              validate={(v) => undefined}
               defaultValue={info?.school}
             />
             <FormsDropdown
               placeholder="School Year"
               name="school_year"
-              validate={(v: string) => undefined}
+              validate={(v) => undefined}
               defaultValue={info?.school_year}
               options={[
                 { value: "Freshman", label: "Freshman" },
@@ -291,7 +276,7 @@ export const ProfileForms: React.FC<{
               placeholder="Team"
               name="teams"
               loadOptions={getTeams()}
-              validate={(v: string) => undefined}
+              validate={(v) => undefined}
               defaultValue={info?.teams[0]}
             />
             <SectText text="Facility" />
@@ -300,7 +285,7 @@ export const ProfileForms: React.FC<{
               placeholder="Facility"
               name="facilities"
               loadOptions={getFacilities()}
-              validate={(v: string) => undefined}
+              validate={(v) => undefined}
               defaultValue={info?.facilities[0]}
             />
             <SectText text="About" />

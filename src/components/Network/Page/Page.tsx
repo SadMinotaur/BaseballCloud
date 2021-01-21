@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ToastContainer, ToastMessageAnimated } from "react-toastr";
 import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
@@ -11,10 +10,6 @@ import {
   ProfilesInfo,
 } from "../../../utils/types/network";
 import { Graphql } from "./../graphql/query";
-import {
-  ShowSuccessToast,
-  ShowErrorToast,
-} from "./../../../utils/common-components/toast/toast";
 import { NetworkContent } from "./../NetworkContent";
 import { FormState } from "final-form";
 import usePagination from "./../../../utils/usePagination";
@@ -22,9 +17,10 @@ import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
 import API from "../../../utils/api";
 
-export const NetworkPage: React.FC = () => {
-  let container: ToastContainer | null;
-
+export const NetworkPage: React.FC<{
+  ShowErrorToast: (text: string) => void;
+  ShowSuccessToast: (text: string) => void;
+}> = ({ ShowErrorToast, ShowSuccessToast }) => {
   const [loadingContent, setLoadingContent] = useState<boolean>(true);
   const [totalNumber, setTotalNumber] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
@@ -68,14 +64,18 @@ export const NetworkPage: React.FC = () => {
       },
     })
       .then(() => {
-        ShowSuccessToast(v.favorite, container as ToastContainer);
+        ShowSuccessToast(
+          `This profile ${
+            !v.favorite ? "removed from favorite" : "added to favorite"
+          }  list successfully.`
+        );
         setProfiles((ps: ProfilesInfo[]) =>
           ps.map((item: ProfilesInfo) =>
             item.id !== v.id ? item : { ...v, favorite: !v.favorite }
           )
         );
       })
-      .catch(() => ShowErrorToast(container as ToastContainer));
+      .catch(() => ShowErrorToast("Error updating profile"));
   }
 
   useEffect(() => {
@@ -84,12 +84,6 @@ export const NetworkPage: React.FC = () => {
 
   return (
     <Stl.Container>
-      <CommonStyle.Toast>
-        <ToastContainer
-          ref={(ref) => (container = ref)}
-          toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-        />
-      </CommonStyle.Toast>
       <Form
         onSubmit={() => {}}
         render={() => (
