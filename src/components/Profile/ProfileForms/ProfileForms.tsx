@@ -121,7 +121,7 @@ export const ProfileForms: React.FC<{
               <label htmlFor="my-file">
                 {pictureInfo ? pictureInfo.name : "Choose photo"}
               </label>
-              {pictureInfo && (
+              {pictureInfo && !pictureUrl && (
                 <>
                   <UploadPhoto
                     onClick={() =>

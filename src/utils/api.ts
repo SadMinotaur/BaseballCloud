@@ -95,16 +95,21 @@ class Api {
       {
         headers: this.getStandardHeaders(),
       }
-    ).then((v) => v.data.signedUrl);
+    ).then((v) => {
+      this.putReq(v.data.signedUrl);
+      return v.data.signedUrl;
+    });
   }
 
   public validateToken() {
     return Axios.get(
       "https://baseballcloud-back.herokuapp.com/api/v1/auth/validate_token",
-      {
-        headers: this.getStandardHeaders(),
-      }
+      {}
     );
+  }
+
+  private putReq(url: string) {
+    return Axios.put(url, {}, { headers: this.getStandardHeaders() });
   }
 
   private getStandardHeaders() {

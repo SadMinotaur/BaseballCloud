@@ -1,21 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
 import { GraphqlCom } from "./../../../utils/graphql";
-import {
-  ButtonState,
-  Profiles,
-  ProfilesInfo,
-} from "../../../utils/types/network";
+import { Profiles, ProfilesInfo } from "../../../utils/types/network";
 import { Graphql } from "./../graphql/query";
 import { NetworkContent } from "./../NetworkContent";
-import { FormState } from "final-form";
-import usePagination from "./../../../utils/usePagination";
-import CommonStyle from "../../../utils/common-styles/styles";
 import Stl from "./styles";
 import API from "../../../utils/api";
+import { RenderButtons } from "../RenderButtons";
 
 export const NetworkPage: React.FC<{
   ShowErrorToast: (text: string) => void;
@@ -27,34 +21,31 @@ export const NetworkPage: React.FC<{
   const [showNum, setShowNum] = useState<number>(10);
   const [profiles, setProfiles] = useState<ProfilesInfo[]>([]);
 
-  const buttonsArray = usePagination(totalNumber, offset, showNum);
-
-  function updateContent(fields: FormState<Record<string, any>>): void {
-    const v = fields.values;
+  function updateContent(v: any, offsetC?: number): void {
+    const offs = offsetC ? offsetC : 0;
     const req = {
       ...v,
-      offset: offset,
       age: v.age && parseInt(v.age),
       favorite: v.favorite && parseInt(v.favorite),
+      offset: offs,
+      profiles_count: parseInt(v.profiles_count),
     };
     setShowNum(parseInt(v.profiles_count));
+    setOffset(offs);
     getProfiles(req);
   }
 
-  const getProfiles = useCallback(
-    (req: any = { profiles_count: showNum, offset: offset }) => {
-      setLoadingContent(true);
-      API.graphqlPost(Graphql.getProfiles, {
-        input: { ...req, profiles_count: showNum, offset: offset },
-      }).then((v: { profiles: Profiles }) => {
-        const prof: Profiles = v.profiles;
-        setProfiles(prof.profiles);
-        setTotalNumber(prof.total_count);
-        setLoadingContent(false);
-      });
-    },
-    [offset, showNum]
-  );
+  const getProfiles = (req: any) => {
+    setLoadingContent(true);
+    API.graphqlPost(Graphql.getProfiles, {
+      input: req,
+    }).then((v: { profiles: Profiles }) => {
+      const prof: Profiles = v.profiles;
+      setProfiles(prof.profiles);
+      setTotalNumber(prof.total_count);
+      setLoadingContent(false);
+    });
+  };
 
   function onClickFav(v: ProfilesInfo): void {
     API.graphqlPost(GraphqlCom.favoriteProfile, {
@@ -78,15 +69,11 @@ export const NetworkPage: React.FC<{
       .catch(() => ShowErrorToast("Error updating profile"));
   }
 
-  useEffect(() => {
-    getProfiles();
-  }, [getProfiles]);
-
   return (
     <Stl.Container>
       <Form
         onSubmit={() => {}}
-        render={() => (
+        render={({ values }) => (
           <>
             <Stl.HeaderInputsContainer>
               <h3>Network</h3>
@@ -178,46 +165,27 @@ export const NetworkPage: React.FC<{
                 )}
               </Field>
             </Stl.HeaderInputsContainer>
-            <FormSpy subscription={{ values: true }} onChange={updateContent} />
+
+            <NetworkContent
+              loadingContent={loadingContent}
+              content={profiles}
+              onClickHeart={onClickFav}
+            />
+            <RenderButtons
+              offset={offset}
+              showNum={showNum}
+              totalNumber={totalNumber}
+              updateContent={updateContent}
+              values={values}
+            />
+
+            <FormSpy
+              subscription={{ values: true }}
+              onChange={(v) => updateContent(v.values)}
+            />
           </>
         )}
       />
-      <NetworkContent
-        loadingContent={loadingContent}
-        content={profiles}
-        onClickHeart={onClickFav}
-      />
-      {buttonsArray.length !== 0 && (
-        <CommonStyle.Pagination>
-          <CommonStyle.PaginationButton
-            key={"«"}
-            state={offset === 0 ? "dis" : "act"}
-            onClick={() => setOffset((ps) => (ps !== 0 ? ps - showNum : 0))}
-          >
-            «
-          </CommonStyle.PaginationButton>
-          {buttonsArray.map((v: ButtonState, i: number) => (
-            <CommonStyle.PaginationButton
-              key={v.button + i}
-              onClick={() => setOffset((parseInt(v.button) - 1) * showNum)}
-              state={v.state}
-            >
-              {v.button}
-            </CommonStyle.PaginationButton>
-          ))}
-          <CommonStyle.PaginationButton
-            key={"»"}
-            state={totalNumber - showNum <= offset ? "dis" : "act"}
-            onClick={() =>
-              setOffset((ps) =>
-                ps + showNum !== totalNumber ? ps + showNum : ps
-              )
-            }
-          >
-            »
-          </CommonStyle.PaginationButton>
-        </CommonStyle.Pagination>
-      )}
     </Stl.Container>
   );
 };
