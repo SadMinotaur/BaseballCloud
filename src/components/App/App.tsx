@@ -1,22 +1,24 @@
 import React, { useRef } from "react";
 import { Footer } from "../Footer/Footer";
-import { LoginPageStyle, MainComp } from "./styles";
+import { LoginPageStyle, MainComp, Toaster } from "./styles";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { Header } from "../Header";
 import { SignInForm } from "../Auth/SignInForm";
 import { RegForm } from "../Auth/RegForm";
-import API from "../../utils/api";
 import { ProfilePage } from "./../Profile/Page";
 import { LeaderboardPage } from "./../Leaderboard/Page";
 import { NetworkPage } from "./../Network/Page";
 import { ToastContainer, ToastMessageAnimated } from "react-toastr";
+import API from "../../utils/api";
 import "./../../css/global.css";
 
 const timeout: number = 3000;
 
 export const App: React.FC = () => {
-  const history = useHistory();
   const refC = useRef<ToastContainer>(null);
+  const history = useHistory();
+
+  API.validateToken().catch(() => history.push("/login"));
 
   function ShowSuccessToast(text: string): void {
     refC.current &&
@@ -37,10 +39,12 @@ export const App: React.FC = () => {
   return (
     <>
       <Header />
-      <ToastContainer
-        ref={refC}
-        toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-      />
+      <Toaster>
+        <ToastContainer
+          ref={refC}
+          toastMessageFactory={React.createFactory(ToastMessageAnimated)}
+        />
+      </Toaster>
       <MainComp>
         <Switch>
           <Route path="/login">

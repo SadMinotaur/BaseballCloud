@@ -21,32 +21,41 @@ import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
 export const ProfileForms: React.FC<{
+  ShowErrorToast: (text: string) => void;
+  ShowSuccessToast: (text: string) => void;
   info?: GraphqlProfile;
   onEditEnd: () => void;
-}> = ({ info, onEditEnd }) => {
+}> = ({ info, onEditEnd, ShowSuccessToast, ShowErrorToast }) => {
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
 
   function onSubmitForm(v: any): void {
+    console.log(v);
     API.graphqlPost(Graphql.updateProfile, {
       form: {
         id: info?.id,
         ...v,
-        avatar: pictureUrl ? pictureUrl : info?.avatar,
         age: parseInt(v.age),
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
         weight: parseInt(v.weight),
+        throws_hand: v.throws_hand.value,
+        bats_hand: v.bats_hand.value,
+        position: v.position.value,
+        position2: v.position2?.value,
         school: v.school?.value,
-        facilities: [v.facilities?.value],
-        teams: [v.teams?.value],
+        school_year: v.school_year?.value,
+        teams: v.teams ? [v.teams[0].value] : [],
+        facilities: v.facilities ? [v.facilities[0].value] : [],
+        avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
       .then(() => {
         onEditEnd();
+        ShowSuccessToast("Profile has been updated successfully");
       })
-      .catch(() => {});
+      .catch(() => ShowErrorToast("Error occurred"));
   }
 
   const getSchools = useCallback(
@@ -126,7 +135,7 @@ export const ProfileForms: React.FC<{
                 <>
                   <UploadPhoto
                     onClick={() =>
-                      API.uploadAws(pictureInfo).then((v) => setPictureUrl(v))
+                      API.uploadPic(pictureInfo).then((v) => setPictureUrl(v))
                     }
                   >
                     Upload photo
@@ -158,7 +167,12 @@ export const ProfileForms: React.FC<{
               placeholder="Position in Game*"
               name="position"
               validate={(v: string) => (v ? undefined : "Position Required")}
-              defaultValue={info?.position}
+              defaultValue={
+                info?.position && {
+                  label: info?.position,
+                  value: info?.position,
+                }
+              }
               options={[
                 { label: "Catcher", value: "catcher" },
                 { label: "First Base", value: "first_base" },
@@ -173,7 +187,12 @@ export const ProfileForms: React.FC<{
               placeholder="Secondary Position in Game"
               name="position2"
               validate={(v: string) => undefined}
-              defaultValue={info?.position2}
+              defaultValue={
+                info?.position2 && {
+                  label: info?.position2,
+                  value: info?.position2,
+                }
+              }
               options={[
                 { label: "-", value: "" },
                 { label: "Catcher", value: "catcher" },
@@ -231,7 +250,14 @@ export const ProfileForms: React.FC<{
                   placeholder="Throw*"
                   name="throws_hand"
                   validate={(v) => (v ? undefined : "Throws Required")}
-                  defaultValue={info?.throws_hand}
+                  defaultValue={
+                    info?.throws_hand
+                      ? {
+                          label: info?.throws_hand,
+                          value: info?.throws_hand,
+                        }
+                      : undefined
+                  }
                   options={[
                     { value: "R", label: "R" },
                     { value: "L", label: "L" },
@@ -243,7 +269,14 @@ export const ProfileForms: React.FC<{
                   placeholder="Bats*"
                   name="bats_hand"
                   validate={(v) => (v ? undefined : "Bats Required")}
-                  defaultValue={info?.bats_hand}
+                  defaultValue={
+                    info?.bats_hand
+                      ? {
+                          label: info?.bats_hand,
+                          value: info?.bats_hand,
+                        }
+                      : undefined
+                  }
                   options={[
                     { value: "R", label: "R" },
                     { value: "L", label: "L" },
@@ -257,13 +290,23 @@ export const ProfileForms: React.FC<{
               name="school"
               loadOptions={getSchools()}
               validate={(v) => undefined}
-              defaultValue={info?.school}
+              defaultValue={
+                info?.school && {
+                  label: info?.school.name,
+                  value: info?.school,
+                }
+              }
             />
             <FormsDropdown
               placeholder="School Year"
               name="school_year"
               validate={(v) => undefined}
-              defaultValue={info?.school_year}
+              defaultValue={
+                info?.school_year && {
+                  label: info?.school_year,
+                  value: info?.school_year,
+                }
+              }
               options={[
                 { value: "Freshman", label: "Freshman" },
                 { value: "Sophomore", label: "Sophomore" },
@@ -277,7 +320,14 @@ export const ProfileForms: React.FC<{
               name="teams"
               loadOptions={getTeams()}
               validate={(v) => undefined}
-              defaultValue={info?.teams[0]}
+              defaultValue={
+                info?.teams.length !== 0 && info?.teams[0].name
+                  ? {
+                      label: info?.teams[0].name,
+                      value: info?.teams[0],
+                    }
+                  : undefined
+              }
             />
             <SectText text="Facility" />
             <FormsDropdown
@@ -286,7 +336,14 @@ export const ProfileForms: React.FC<{
               name="facilities"
               loadOptions={getFacilities()}
               validate={(v) => undefined}
-              defaultValue={info?.facilities[0]}
+              defaultValue={
+                info?.facilities[0]?.u_name
+                  ? {
+                      label: info?.facilities[0].u_name,
+                      value: info?.facilities[0],
+                    }
+                  : undefined
+              }
             />
             <SectText text="About" />
             <FormsAbout
@@ -295,12 +352,7 @@ export const ProfileForms: React.FC<{
             />
             {info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
-              <ButtonProfile
-                onClick={() => {
-                  info && onEditEnd();
-                }}
-                type="reset"
-              >
+              <ButtonProfile onClick={() => info && onEditEnd()} type="reset">
                 Cancel
               </ButtonProfile>
               <ButtonProfile borderBlue={true} type="submit">

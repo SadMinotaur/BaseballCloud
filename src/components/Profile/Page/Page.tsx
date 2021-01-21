@@ -45,7 +45,11 @@ export const ProfilePage: React.FC<{
         <Container>
           {!profileStatus ? (
             <>
-              <ProfileForms onEditEnd={() => setEditState(false)} />
+              <ProfileForms
+                ShowSuccessToast={ShowSuccessToast}
+                ShowErrorToast={ShowErrorToast}
+                onEditEnd={() => setEditState(false)}
+              />
               <YourAccount />
             </>
           ) : (
@@ -53,6 +57,8 @@ export const ProfilePage: React.FC<{
               {editState ? (
                 <>
                   <ProfileForms
+                    ShowSuccessToast={ShowSuccessToast}
+                    ShowErrorToast={ShowErrorToast}
                     info={profile}
                     onEditEnd={() => setEditState(false)}
                   />

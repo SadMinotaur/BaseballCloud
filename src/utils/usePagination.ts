@@ -21,7 +21,6 @@ export default function usePagination(
         { button: "1", state: !stateB ? "cur" : "act" },
         { button: "2", state: stateB ? "cur" : "act" },
       ];
-
       break;
     }
     default: {

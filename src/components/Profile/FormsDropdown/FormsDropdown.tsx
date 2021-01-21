@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import { Stl } from "./styles";
 import { components } from "react-select";
 import { Field } from "react-final-form";
+
+type Options = { label: string; value: any };
 
 const Control: React.FC = (props: any) => (
   <>
@@ -15,11 +17,11 @@ const Control: React.FC = (props: any) => (
 );
 
 export const FormsDropdown: React.FC<{
-  loadOptions?: Promise<any>;
   options?: { value: string; label: string }[];
+  defaultValue: Options | undefined;
+  loadOptions?: Promise<any>;
   multiple?: boolean;
   placeholder: string;
-  defaultValue: any;
   name: string;
   validate: (v: any) => undefined | string;
 }> = ({
@@ -30,38 +32,44 @@ export const FormsDropdown: React.FC<{
   defaultValue,
   validate,
   name,
-}) => (
-  <Field name={name} validate={validate} defaultValue={defaultValue}>
-    {({ input, meta }) => (
-      <Stl.Margin>
-        {options ? (
-          <Select
-            {...input}
-            key={placeholder}
-            theme={Stl.DropdownTheme}
-            styles={Stl.Styles}
-            options={options}
-            placeholder={placeholder}
-            components={{ Control }}
-          />
-        ) : (
-          <AsyncSelect
-            {...input}
-            key={placeholder}
-            isMulti={multiple}
-            placeholder={placeholder}
-            theme={Stl.DropdownTheme}
-            styles={Stl.Styles}
-            defaultOptions
-            cacheOptions
-            loadOptions={() => loadOptions?.then((v) => v)}
-            components={{ Control }}
-          />
+}) => {
+  // Used to prevent infinite re render
+  const [state, setstate] = useState(multiple ? [defaultValue] : defaultValue);
+  return (
+    <>
+      <Field name={name} validate={validate} defaultValue={state}>
+        {({ input, meta }) => (
+          <Stl.Margin>
+            {options ? (
+              <Select
+                {...input}
+                key={placeholder}
+                theme={Stl.DropdownTheme}
+                styles={Stl.Styles}
+                options={options}
+                placeholder={placeholder}
+                components={{ Control }}
+              />
+            ) : (
+              <AsyncSelect
+                {...input}
+                key={placeholder}
+                isMulti={multiple}
+                placeholder={placeholder}
+                theme={Stl.DropdownTheme}
+                styles={Stl.Styles}
+                defaultOptions
+                cacheOptions
+                loadOptions={() => loadOptions?.then((v) => v)}
+                components={{ Control }}
+              />
+            )}
+            {meta.error && meta.touched && (
+              <Stl.WarningText>{meta.error}</Stl.WarningText>
+            )}
+          </Stl.Margin>
         )}
-        {meta.error && meta.touched && (
-          <Stl.WarningText>{meta.error}</Stl.WarningText>
-        )}
-      </Stl.Margin>
-    )}
-  </Field>
-);
+      </Field>
+    </>
+  );
+};

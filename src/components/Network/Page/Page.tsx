@@ -66,7 +66,7 @@ export const NetworkPage: React.FC<{
       .then(() => {
         ShowSuccessToast(
           `This profile ${
-            !v.favorite ? "removed from favorite" : "added to favorite"
+            !v.favorite ? "added to favorite" : "removed from favorite"
           }  list successfully.`
         );
         setProfiles((ps: ProfilesInfo[]) =>
