@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
@@ -19,18 +19,13 @@ import { Facilities, School, Team } from "../../../utils/types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
-import { ToastContainer, ToastMessageAnimated } from "react-toastr";
-import {
-  ShowErrorUProfileToast,
-  ShowSuccessUProfileToast,
-} from "../../../utils/common-components/toast/toast";
 
 export const ProfileForms: React.FC<{
+  ShowErrorToast: (text: string) => void;
+  ShowSuccessToast: (text: string) => void;
+  onEditEnd: (profile: GraphqlProfile) => void;
   info?: GraphqlProfile;
-  onEditEnd: () => void;
-}> = ({ info, onEditEnd }) => {
-  let container: ToastContainer | null;
-
+}> = ({ info, onEditEnd, ShowSuccessToast, ShowErrorToast }) => {
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
@@ -38,64 +33,59 @@ export const ProfileForms: React.FC<{
   function onSubmitForm(v: any): void {
     API.graphqlPost(Graphql.updateProfile, {
       form: {
+        id: info?.id,
         ...v,
-        avatar: pictureUrl ? pictureUrl : info?.avatar,
         age: parseInt(v.age),
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
         weight: parseInt(v.weight),
+        throws_hand: v.throws_hand.value,
+        bats_hand: v.bats_hand.value,
+        position: v.position.value,
+        position2: v.position2?.value,
         school: v.school?.value,
-        facilities: [v.facilities?.value],
+        school_year: v.school_year?.value,
         teams: [v.teams?.value],
+        facilities: [v.facilities && v?.facilities[0]?.value],
+        avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
-      .then(() => {
-        onEditEnd();
-        ShowSuccessUProfileToast(container as ToastContainer);
+      .then((v) => {
+        onEditEnd(v.update_profile.profile);
+        ShowSuccessToast("Profile has been updated successfully");
       })
-      .catch(() => {
-        ShowErrorUProfileToast(container as ToastContainer);
-      });
+      .catch(() => ShowErrorToast("Error occurred"));
   }
 
-  const getSchools = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getSchools, {
-        search: "",
-      }).then((v) =>
-        v.schools.schools.map((resp: School) => ({
-          value: resp,
-          label: resp.name,
-        }))
-      ),
-    []
-  );
+  const getSchools = () =>
+    API.graphqlPost(Graphql.getSchools, {
+      search: "",
+    }).then((v) =>
+      v.schools.schools.map((resp: School) => ({
+        value: resp,
+        label: resp.name,
+      }))
+    );
 
-  const getTeams = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getTeams, {
-        search: "",
-      }).then((v) =>
-        v.teams.teams.map((resp: Team) => ({
-          value: resp,
-          label: resp.name,
-        }))
-      ),
-    []
-  );
+  const getTeams = () =>
+    API.graphqlPost(Graphql.getTeams, {
+      search: "",
+    }).then((v) =>
+      v.teams.teams.map((resp: Team) => ({
+        value: resp,
+        label: resp.name,
+      }))
+    );
 
-  const getFacilities = useCallback(
-    () =>
-      API.graphqlPost(Graphql.getFacilities, {
-        search: "",
-      }).then((v) =>
-        v.facilities.facilities.map((resp: Facilities) => ({
-          value: resp,
-          label: resp.u_name,
-        }))
-      ),
-    []
-  );
+  const getFacilities = () =>
+    API.graphqlPost(Graphql.getFacilities, {
+      search: "",
+    }).then((v) =>
+      v.facilities.facilities.map((resp: Facilities) => ({
+        value: resp,
+        label: resp.u_name,
+      }))
+    );
 
   useEffect(() => {
     info &&
@@ -110,12 +100,6 @@ export const ProfileForms: React.FC<{
         onSubmit={onSubmitForm}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <CommonStyle.Toast>
-              <ToastContainer
-                ref={(ref) => (container = ref)}
-                toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-              />
-            </CommonStyle.Toast>
             <CommonStyle.ProfileContainer>
               <CommonStyle.ProfilePic
                 src={
@@ -137,11 +121,11 @@ export const ProfileForms: React.FC<{
               <label htmlFor="my-file">
                 {pictureInfo ? pictureInfo.name : "Choose photo"}
               </label>
-              {pictureInfo && (
+              {pictureInfo && !pictureUrl && (
                 <>
                   <UploadPhoto
                     onClick={() =>
-                      API.uploadAws(pictureInfo).then((v) => setPictureUrl(v))
+                      API.uploadPic(pictureInfo).then((v) => setPictureUrl(v))
                     }
                   >
                     Upload photo
@@ -171,9 +155,14 @@ export const ProfileForms: React.FC<{
             </Row>
             <FormsDropdown
               placeholder="Position in Game*"
-              name="position_in_game"
+              name="position"
               validate={(v: string) => (v ? undefined : "Position Required")}
-              defaultValue={info?.position}
+              defaultValue={
+                info?.position && {
+                  label: info?.position,
+                  value: info?.position,
+                }
+              }
               options={[
                 { label: "Catcher", value: "catcher" },
                 { label: "First Base", value: "first_base" },
@@ -186,9 +175,14 @@ export const ProfileForms: React.FC<{
             />
             <FormsDropdown
               placeholder="Secondary Position in Game"
-              name="secondary_position_in_game"
+              name="position2"
               validate={(v: string) => undefined}
-              defaultValue={info?.position2}
+              defaultValue={
+                info?.position2 && {
+                  label: info?.position2,
+                  value: info?.position2,
+                }
+              }
               options={[
                 { label: "-", value: "" },
                 { label: "Catcher", value: "catcher" },
@@ -244,9 +238,16 @@ export const ProfileForms: React.FC<{
               <DropdownSpacing>
                 <FormsDropdown
                   placeholder="Throw*"
-                  name="throw"
+                  name="throws_hand"
                   validate={(v) => (v ? undefined : "Throws Required")}
-                  defaultValue={info?.throws_hand}
+                  defaultValue={
+                    info?.throws_hand
+                      ? {
+                          label: info?.throws_hand,
+                          value: info?.throws_hand,
+                        }
+                      : undefined
+                  }
                   options={[
                     { value: "R", label: "R" },
                     { value: "L", label: "L" },
@@ -256,9 +257,16 @@ export const ProfileForms: React.FC<{
               <DropdownSpacing leftMargin={true}>
                 <FormsDropdown
                   placeholder="Bats*"
-                  name="bats"
-                  validate={(v: string) => (v ? undefined : "Bats Required")}
-                  defaultValue={info?.bats_hand}
+                  name="bats_hand"
+                  validate={(v) => (v ? undefined : "Bats Required")}
+                  defaultValue={
+                    info?.bats_hand
+                      ? {
+                          label: info?.bats_hand,
+                          value: info?.bats_hand,
+                        }
+                      : undefined
+                  }
                   options={[
                     { value: "R", label: "R" },
                     { value: "L", label: "L" },
@@ -270,15 +278,25 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="School"
               name="school"
-              loadOptions={getSchools()}
-              validate={(v: string) => undefined}
-              defaultValue={info?.school}
+              loadOptions={getSchools}
+              validate={(v) => undefined}
+              defaultValue={
+                info?.school && {
+                  label: info?.school.name,
+                  value: info?.school,
+                }
+              }
             />
             <FormsDropdown
               placeholder="School Year"
               name="school_year"
-              validate={(v: string) => undefined}
-              defaultValue={info?.school_year}
+              validate={(v) => undefined}
+              defaultValue={
+                info?.school_year && {
+                  label: info?.school_year,
+                  value: info?.school_year,
+                }
+              }
               options={[
                 { value: "Freshman", label: "Freshman" },
                 { value: "Sophomore", label: "Sophomore" },
@@ -290,30 +308,42 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="Team"
               name="teams"
-              loadOptions={getTeams()}
-              validate={(v: string) => undefined}
-              defaultValue={info?.teams[0]}
+              loadOptions={getTeams}
+              validate={(v) => undefined}
+              defaultValue={
+                info?.teams.length !== 0 && info?.teams[0].name
+                  ? {
+                      label: info?.teams[0].name,
+                      value: info?.teams[0],
+                    }
+                  : undefined
+              }
             />
             <SectText text="Facility" />
             <FormsDropdown
               multiple={true}
               placeholder="Facility"
               name="facilities"
-              loadOptions={getFacilities()}
-              validate={(v: string) => undefined}
-              defaultValue={info?.facilities[0]}
+              loadOptions={getFacilities}
+              validate={(v) => undefined}
+              defaultValue={
+                info?.facilities[0]?.u_name
+                  ? {
+                      label: info?.facilities[0].u_name,
+                      value: info?.facilities[0],
+                    }
+                  : undefined
+              }
             />
             <SectText text="About" />
             <FormsAbout
               biography={info?.biography}
               placeholder="Describe yourself in a few words"
             />
-            {info && <WarningText>* Fill out the required fields</WarningText>}
+            {!info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
               <ButtonProfile
-                onClick={() => {
-                  info && onEditEnd();
-                }}
+                onClick={() => info && onEditEnd(info)}
                 type="reset"
               >
                 Cancel

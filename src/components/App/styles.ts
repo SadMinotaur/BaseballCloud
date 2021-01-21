@@ -6,6 +6,12 @@ export const MainComp = styled.div`
   overflow: hidden;
 `;
 
+export const Toaster = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 310px;
+`;
+
 export const LoginPageStyle = styled.div`
   display: flex;
   height: 100%;

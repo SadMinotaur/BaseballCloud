@@ -76,7 +76,9 @@ class Api {
       headers: {
         Accept: "image/webp,*/*",
       },
-    }).then((v) => Buffer.from(v.data, "binary").toString("base64"));
+    })
+      .then((v) => Buffer.from(v.data, "binary").toString("base64"))
+      .catch();
   }
 
   public async logout() {
@@ -86,14 +88,28 @@ class Api {
     );
   }
 
-  public async uploadAws(picture: File) {
+  public async uploadPic(picture: File): Promise<string> {
     return Axios.post(
       "https://baseballcloud-back.herokuapp.com/api/v1/s3/signed_url",
       { name: picture.name },
       {
         headers: this.getStandardHeaders(),
       }
-    ).then((v) => v.data.signedUrl);
+    ).then((v) => {
+      this.putReq(v.data.signedUrl);
+      return v.data.signedUrl;
+    });
+  }
+
+  public validateToken() {
+    return Axios.get(
+      "https://baseballcloud-back.herokuapp.com/api/v1/auth/validate_token",
+      {}
+    );
+  }
+
+  private putReq(url: string) {
+    return Axios.put(url, {}, { headers: this.getStandardHeaders() });
   }
 
   private getStandardHeaders() {

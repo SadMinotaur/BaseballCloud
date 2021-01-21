@@ -97,3 +97,16 @@ export type Summary = {
 export interface BattingSummary {
   batting_summary: Summary;
 }
+
+export interface ProfileNames {
+  id: "626";
+  position: "catcher";
+  first_name: "asd";
+  last_name: "asd";
+  inches: 0;
+  feet: 4;
+  weight: 50;
+  age: 1;
+}
+
+export type Options = { label: string; value: any };

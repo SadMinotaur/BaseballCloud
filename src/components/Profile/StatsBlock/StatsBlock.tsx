@@ -10,9 +10,9 @@ import {
 import { Progress } from "reactstrap";
 import { Graphql } from "../graphql/query";
 import {
-  ProfileEvents,
+  // ProfileEvents,
   BattingSummary,
-  Event,
+  // Event,
   Summary,
   GraphqlProfile,
 } from "../../../utils/types/profile";
@@ -20,20 +20,20 @@ import { Cards } from "./../Cards";
 import API from "../../../utils/api";
 import "./progress.css";
 
-export const StatsBlock: React.FC<{ info?: GraphqlProfile }> = ({ info }) => {
-  const [events, setEvents] = useState<Event[]>();
+export const StatsBlock: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
+  // const [events, setEvents] = useState<Event[]>();
   const [battingSummary, setBattingSummary] = useState<Summary>();
 
   useEffect(() => {
-    API.graphqlPost(Graphql.profileEvents, {
-      input: { count: 10, offset: 0, profile_id: info?.id },
-    }).then((v: ProfileEvents) => setEvents(v && v.profile_events.events));
+    // API.graphqlPost(Graphql.profileEvents, {
+    //   input: { count: 10, offset: 0, profile_id: info?.id },
+    // }).then((v: ProfileEvents) => setEvents(v && v.profile_events.events));
     API.graphqlPost(Graphql.battingSummary, {
-      id: info?.id,
+      id: info.id,
     }).then((v: BattingSummary) => {
       setBattingSummary(v && v.batting_summary);
     });
-  }, [info?.id]);
+  }, [info.id]);
 
   return (
     <StBlock>

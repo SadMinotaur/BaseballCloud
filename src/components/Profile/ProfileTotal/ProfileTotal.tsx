@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Styles } from "./styles";
 import { GraphqlProfile } from "../../../utils/types/profile";
-import { ToastContainer, ToastMessageAnimated } from "react-toastr";
-import {
-  ShowSuccessToast,
-  ShowErrorToast,
-} from "./../../../utils/common-components/toast/toast";
 import { GraphqlCom } from "./../../../utils/graphql";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
@@ -23,8 +18,6 @@ export const ProfileTotal: React.FC<{
   info: GraphqlProfile;
   onEditPress?: () => void;
 }> = ({ info, onEditPress }) => {
-  let container: ToastContainer | null = null;
-
   const [picture, setPicture] = useState<string>();
   const [favorite, setFavorite] = useState<boolean>(info.favorite);
 
@@ -40,23 +33,16 @@ export const ProfileTotal: React.FC<{
         variables: { form: { profile_id: info.id, favorite: !favorite } },
       })
         .then(() => {
-          ShowSuccessToast(favorite, container as ToastContainer);
           setFavorite(!favorite);
         })
-        .catch(() => ShowErrorToast(container as ToastContainer)),
-    [container, favorite, info.id]
+        .catch(() => {}),
+    [favorite, info.id]
   );
 
   return (
     <>
       {info && (
         <Styles.Container>
-          <CommonStyle.Toast>
-            <ToastContainer
-              ref={(ref) => (container = ref)}
-              toastMessageFactory={React.createFactory(ToastMessageAnimated)}
-            />
-          </CommonStyle.Toast>
           <CommonStyle.ProfileContainer>
             {onEditPress ? (
               <Styles.FloatingIcon src={Edit} onClick={onEditPress} />

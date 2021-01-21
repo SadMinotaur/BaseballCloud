@@ -16,11 +16,6 @@ const CommonStyle = {
     border-radius: 50%;
     object-fit: cover;
   `,
-  Toast: styled.div`
-    position: absolute;
-    top: 10px;
-    right: 320px;
-  `,
   InputFormInput: styledComponentsTS<{ imageLock: boolean }>(styled.input)`
     background-image: url(${(p) =>
       p.imageLock !== undefined ? (p.imageLock ? faLock : faUser) : faCheck});

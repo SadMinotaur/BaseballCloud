@@ -6,9 +6,9 @@ export const FormsAbout: React.FC<{
   placeholder: string;
   biography?: string;
 }> = ({ placeholder, biography }) => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(biography !== undefined);
   return (
-    <Field name="about" component="textarea" defaultValue={biography}>
+    <Field name="biography" component="textarea" defaultValue={biography}>
       {({ input }) => (
         <div style={{ position: "relative" }}>
           <Stl.Label isFloating={state}>{placeholder}</Stl.Label>

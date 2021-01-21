@@ -161,33 +161,51 @@ export const Graphql = {
       }
     }
   }`,
-  updateProfile: `mutation UpdateProfile($form:UpdateProfileInput!) { 
-    update_profile (input:$form) { 
+  updateProfile: `mutation UpdateProfile($form: UpdateProfileInput!) {
+    update_profile(input: $form) {
       profile {
-         id
-         first_name
-         last_name
-         position
-         position2
-         avatar
-         throws_hand
-         bats_hand
-         biography
-         school_year
+        id
+        first_name
+        last_name
+        position
+        position2
+        avatar
+        throws_hand
+        bats_hand
+        biography
+        school_year
+        feet
+        inches
+        weight
+        age
+        school {
+          id
+          name
+        }
+        teams {
+          id
+          name
+        }
+        facilities {
+          id
+          email
+          u_name
+        }
       }
     }
-    school {
-      id
-      name
-    }
-    teams {
-      id
-      name
-    }
-    facilities {
-      id        
-      email
-      u_name
+  }`,
+  getProfiles: `query ProfileNames($input:FilterProfileNamesInput!) { 
+    profile_names(input: $input) {
+      profile_names {
+        id
+        position
+        first_name
+        last_name
+        inches
+        feet
+        weight
+        age
+      }
     }
   }`,
 };
