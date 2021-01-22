@@ -77,7 +77,9 @@ class Api {
         Accept: "image/webp,*/*",
       },
     })
-      .then((v) => Buffer.from(v.data, "binary").toString("base64"))
+      .then((v) => {
+        return Buffer.from(v.data, "binary").toString("base64");
+      })
       .catch();
   }
 
@@ -104,7 +106,9 @@ class Api {
   public validateToken() {
     return Axios.get(
       "https://baseballcloud-back.herokuapp.com/api/v1/auth/validate_token",
-      {}
+      {
+        headers: this.getStandardHeaders(),
+      }
     );
   }
 

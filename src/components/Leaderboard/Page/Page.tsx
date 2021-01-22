@@ -56,7 +56,7 @@ export const LeaderboardPage: React.FC<{
       .then(() => {
         ShowSuccessToast(
           `This profile ${
-            !v.favorite ? "removed from favorite" : "added to favorite"
+            v.favorite ? "removed from favorite" : "added to favorite"
           }  list successfully.`
         );
         setBattingContent((ps: BattingUser[]) =>
@@ -80,7 +80,7 @@ export const LeaderboardPage: React.FC<{
       .then(() => {
         ShowSuccessToast(
           `This profile ${
-            !v.favorite ? "removed from favorite" : "added to favorite"
+            v.favorite ? "removed from favorite" : "added to favorite"
           }  list successfully.`
         );
         setPitchingContent((ps: PitchingUser[]) =>

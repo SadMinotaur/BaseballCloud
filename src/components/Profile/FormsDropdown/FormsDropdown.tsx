@@ -17,7 +17,7 @@ const Control: React.FC = (props: any) => (
 
 export const FormsDropdown: React.FC<{
   validate: (v: any) => undefined | string;
-  defaultValue: Options | undefined;
+  defaultValue: Options | Options[] | undefined;
   placeholder: string;
   name: string;
   loadOptions?: () => Promise<any>;
@@ -33,7 +33,13 @@ export const FormsDropdown: React.FC<{
   name,
 }) => {
   //Used to prevent infinite re render
-  const [state] = useState(multiple ? [defaultValue] : defaultValue);
+  const [state] = useState(
+    multiple
+      ? Array.isArray(defaultValue)
+        ? defaultValue
+        : [defaultValue]
+      : defaultValue
+  );
   return (
     <Field name={name} validate={validate} defaultValue={state}>
       {({ input, meta }) => (

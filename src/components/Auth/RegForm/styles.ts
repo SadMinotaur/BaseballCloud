@@ -81,6 +81,8 @@ export const TextRectMain = styled.div`
 
 export const SignUpSwitch = styled.div`
   display: flex;
+  width: 180px;
+  justify-content: space-around;
 `;
 
 export const Warning = styled.p`

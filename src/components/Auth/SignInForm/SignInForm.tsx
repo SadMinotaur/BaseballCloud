@@ -7,6 +7,7 @@ import {
   FormText,
   FormTextSign,
   SignIn,
+  SignUp,
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
@@ -71,7 +72,9 @@ export const SignInForm: React.FC = () => {
       />
       <SignIn>
         <p>Don’t have an account?</p>
-        <Link to="registration">Sign Up</Link>
+        <SignUp>
+          <Link to="registration">Sign Up</Link>
+        </SignUp>
       </SignIn>
     </FormContainer>
   );
