@@ -198,14 +198,14 @@ export const ProfileForms: React.FC<{
             <TextF
               name="age"
               label="Age*"
-              defaultValue={info?.age.toString()}
+              defaultValue={info?.age?.toString()}
               validate={(v: string) => (v ? undefined : "Age Required")}
             />
             <Row>
               <TextF
                 name="feet"
                 label="Feet*"
-                defaultValue={info?.feet.toString()}
+                defaultValue={info?.feet?.toString()}
                 validate={(v: string) =>
                   v
                     ? parseInt(v) > 3
@@ -218,14 +218,14 @@ export const ProfileForms: React.FC<{
                 name="inches"
                 label="Inches"
                 space={true}
-                defaultValue={info?.inches.toString()}
+                defaultValue={info?.inches?.toString()}
                 validate={(v: string) => undefined}
               />
             </Row>
             <TextF
               name="weight"
               label="Weight*"
-              defaultValue={info?.weight.toString()}
+              defaultValue={info?.weight?.toString()}
               validate={(v: string) =>
                 v
                   ? parseInt(v) > 39

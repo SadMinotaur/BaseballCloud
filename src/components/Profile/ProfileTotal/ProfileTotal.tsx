@@ -59,9 +59,9 @@ export const ProfileTotal: React.FC<{
       </CommonStyle.ProfileContainer>
       <Styles.NameContainer>
         <h3>
-          {info.first_name} {info.last_name}
+          {info?.first_name} {info?.last_name}
         </h3>
-        <h4>{info.position}</h4>
+        <h4>{info?.position}</h4>
         <h4>{info?.position2}</h4>
       </Styles.NameContainer>
       <Styles.ItemsRow>
@@ -69,7 +69,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemImage src={AgeSvg} alt="Age" />
           <Styles.ItemText>Age</Styles.ItemText>
         </div>
-        <Styles.ItemText>{info.age}</Styles.ItemText>
+        <Styles.ItemText>{info?.age}</Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>
         <div>
@@ -77,7 +77,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemText>Height</Styles.ItemText>
         </div>
         <Styles.ItemText>
-          {info.feet} ft {info.inches} in
+          {info?.feet} ft {info?.inches} in
         </Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>
@@ -85,7 +85,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemImage src={WeightSvg} alt="Weigh" />
           <Styles.ItemText>Weight</Styles.ItemText>
         </div>
-        <Styles.ItemText>{info.weight} lbs</Styles.ItemText>
+        <Styles.ItemText>{info?.weight} lbs</Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>
         <div>
@@ -93,7 +93,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemText>Throw</Styles.ItemText>
         </div>
         <Styles.ItemText>
-          {info.throws_hand.toLocaleUpperCase()}
+          {info.throws_hand?.toLocaleUpperCase()}
         </Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>
@@ -101,7 +101,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemImage src={BatsSvg} alt="Bats" />
           <Styles.ItemText>Bats</Styles.ItemText>
         </div>
-        <Styles.ItemText>{info.bats_hand.toLocaleUpperCase()}</Styles.ItemText>
+        <Styles.ItemText>{info.bats_hand?.toLocaleUpperCase()}</Styles.ItemText>
       </Styles.ItemsRow>
       {info.school && (
         <>

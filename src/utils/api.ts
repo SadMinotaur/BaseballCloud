@@ -98,7 +98,6 @@ class Api {
         headers: this.getStandardHeaders(),
       }
     ).then((v) => {
-      console.log(v);
       this.putReq(v.data.signedUrl);
       return v.data.signedUrl;
     });
@@ -114,11 +113,7 @@ class Api {
   }
 
   private putReq(url: string) {
-    return Axios.put(
-      url,
-      {},
-      { headers: this.getStandardHeaders() }
-    ).then((v) => console.log(v));
+    return Axios.put(url, {}, { headers: this.getStandardHeaders() });
   }
 
   private getStandardHeaders() {
