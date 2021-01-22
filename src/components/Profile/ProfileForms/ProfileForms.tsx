@@ -14,7 +14,7 @@ import { FormsAbout } from "./../FormsAbout";
 import { Graphql } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
-import { GraphqlProfile } from "../../../utils/types/profile";
+import { GraphqlProfile, Options } from "../../../utils/types/profile";
 import { Facilities, School, Team } from "../../../utils/types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
@@ -45,7 +45,7 @@ export const ProfileForms: React.FC<{
         position2: v.position2?.value,
         school: v.school?.value,
         school_year: v.school_year?.value,
-        teams: [v.teams?.value],
+        teams: v.teams && v.teams.map((v: Options) => v?.value),
         facilities: [v.facilities && v?.facilities[0]?.value],
         avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
@@ -307,15 +307,16 @@ export const ProfileForms: React.FC<{
             />
             <FormsDropdown
               placeholder="Team"
+              multiple={true}
               name="teams"
               loadOptions={getTeams}
               validate={(v) => undefined}
               defaultValue={
-                info?.teams.length !== 0 && info?.teams[0].name
-                  ? {
-                      label: info?.teams[0].name,
-                      value: info?.teams[0],
-                    }
+                info && info.teams.length !== 0
+                  ? info.teams.map((v) => ({
+                      label: v.name,
+                      value: v,
+                    }))
                   : undefined
               }
             />

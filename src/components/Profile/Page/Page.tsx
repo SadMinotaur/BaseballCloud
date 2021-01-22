@@ -63,12 +63,18 @@ export const ProfilePage: React.FC<{
                   </>
                 ) : userId ? (
                   <>
-                    <ProfileTotal info={profile} />
+                    <ProfileTotal
+                      ShowSuccessToast={ShowSuccessToast}
+                      ShowErrorToast={ShowErrorToast}
+                      info={profile}
+                    />
                     <StatsBlock info={profile} />
                   </>
                 ) : (
                   <>
                     <ProfileTotal
+                      ShowSuccessToast={ShowSuccessToast}
+                      ShowErrorToast={ShowErrorToast}
                       info={profile}
                       onEditPress={() => setEditState(true)}
                     />

@@ -54,3 +54,7 @@ export const SignIn = styled.div`
 export const ErrorText = styled.p`
   color: #f05f62;
 `;
+
+export const SignUp = styled.div`
+  margin: 0 0 0 5px;
+`;
