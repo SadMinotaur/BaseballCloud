@@ -88,7 +88,7 @@ export const ProfileForms: React.FC<{
     );
 
   useEffect(() => {
-    info &&
+    info?.avatar &&
       API.getPicture(info.avatar).then((v) =>
         setDefaultPicture(`data:image/jpeg;base64,${v}`)
       );

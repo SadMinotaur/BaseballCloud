@@ -22,6 +22,7 @@ export const ProfilePage: React.FC<{
   const { userId } = useParams<Record<string, string | undefined>>();
 
   function onEditEnd(profile: GraphqlProfile): void {
+    setProfileStatus(true);
     setProfile(profile);
     setEditState(false);
   }
@@ -49,45 +50,43 @@ export const ProfilePage: React.FC<{
       ) : (
         <Container>
           {profileStatus ? (
-            <>
-              {profile &&
-                (editState ? (
-                  <>
-                    <ProfileForms
-                      ShowSuccessToast={ShowSuccessToast}
-                      ShowErrorToast={ShowErrorToast}
-                      info={profile}
-                      onEditEnd={onEditEnd}
-                    />
-                    <StatsBlock info={profile} />
-                  </>
-                ) : userId ? (
-                  <>
-                    <ProfileTotal
-                      ShowSuccessToast={ShowSuccessToast}
-                      ShowErrorToast={ShowErrorToast}
-                      info={profile}
-                    />
-                    <StatsBlock info={profile} />
-                  </>
+            profile &&
+            (editState ? (
+              <>
+                <ProfileForms
+                  ShowSuccessToast={ShowSuccessToast}
+                  ShowErrorToast={ShowErrorToast}
+                  info={profile}
+                  onEditEnd={onEditEnd}
+                />
+                <StatsBlock info={profile} />
+              </>
+            ) : (
+              <>
+                {userId ? (
+                  <ProfileTotal
+                    ShowSuccessToast={ShowSuccessToast}
+                    ShowErrorToast={ShowErrorToast}
+                    info={profile}
+                  />
                 ) : (
-                  <>
-                    <ProfileTotal
-                      ShowSuccessToast={ShowSuccessToast}
-                      ShowErrorToast={ShowErrorToast}
-                      info={profile}
-                      onEditPress={() => setEditState(true)}
-                    />
-                    <StatsBlock info={profile} />
-                  </>
-                ))}
-            </>
+                  <ProfileTotal
+                    ShowSuccessToast={ShowSuccessToast}
+                    ShowErrorToast={ShowErrorToast}
+                    info={profile}
+                    onEditPress={() => setEditState(true)}
+                  />
+                )}
+                <StatsBlock info={profile} />
+              </>
+            ))
           ) : (
             <>
               <ProfileForms
                 ShowSuccessToast={ShowSuccessToast}
                 ShowErrorToast={ShowErrorToast}
                 onEditEnd={onEditEnd}
+                info={profile}
               />
               <YourAccount />
             </>

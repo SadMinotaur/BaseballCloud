@@ -17,9 +17,9 @@ import API from "../../../utils/api";
 
 export const ProfileTotal: React.FC<{
   info: GraphqlProfile;
-  onEditPress?: () => void;
   ShowErrorToast: (text: string) => void;
   ShowSuccessToast: (text: string) => void;
+  onEditPress?: () => void;
 }> = ({ info, onEditPress, ShowSuccessToast, ShowErrorToast }) => {
   const [picture, setPicture] = useState<string>();
   const [favorite, setFavorite] = useState<boolean>(info.favorite);
@@ -77,7 +77,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemText>Height</Styles.ItemText>
         </div>
         <Styles.ItemText>
-          {info?.feet} ft {info?.inches} in
+          {info?.feet} ft {info?.inches && info?.inches + " in"}
         </Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>

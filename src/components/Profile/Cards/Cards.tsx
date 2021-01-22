@@ -54,7 +54,7 @@ export const Cards: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
           <h4>
-            Height: {info?.feet} ft {info?.inches} in
+            Height: {info?.feet} ft {info?.inches && info?.inches + " in"}
           </h4>
           <h4>Height: 0 ft 0 in</h4>
         </Stl.ResponsiveRow>
