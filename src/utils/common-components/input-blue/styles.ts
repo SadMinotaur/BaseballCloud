@@ -17,7 +17,7 @@ const Stl = {
       width: ${(p) => p.widthFocus}px;
     }
     ::placeholder {
-      color: #6fc7f2;
+      color: #48bbff;
     }
   `,
   Arrow: styledComponentsTS<{ state: boolean }>(styled.img)`

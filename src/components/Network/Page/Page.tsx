@@ -140,15 +140,18 @@ export const NetworkPage: React.FC<{
                 </Field>
                 <Field name="profiles_count" defaultValue={"10"}>
                   {({ input }) => (
-                    <DropdownBlue
-                      input={input}
-                      width={100}
-                      options={[
-                        { label: "Show: 10", value: "10" },
-                        { label: "Show: 15", value: "15" },
-                        { label: "Show: 25", value: "25" },
-                      ]}
-                    />
+                    <Stl.ShowItems>
+                      Show:
+                      <DropdownBlue
+                        input={input}
+                        width={50}
+                        options={[
+                          { label: "10", value: "10" },
+                          { label: "15", value: "15" },
+                          { label: "25", value: "25" },
+                        ]}
+                      />
+                    </Stl.ShowItems>
                   )}
                 </Field>
               </Stl.HeaderInputs>

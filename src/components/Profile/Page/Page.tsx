@@ -14,12 +14,12 @@ export const ProfilePage: React.FC<{
   ShowErrorToast: (text: string) => void;
   ShowSuccessToast: (text: string) => void;
 }> = ({ ShowErrorToast, ShowSuccessToast }) => {
+  const { userId } = useParams<Record<string, string | undefined>>();
+
   const [profileStatus, setProfileStatus] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<GraphqlProfile>();
   const [editState, setEditState] = useState<boolean>(false);
-
-  const { userId } = useParams<Record<string, string | undefined>>();
 
   function onEditEnd(profile: GraphqlProfile): void {
     setProfileStatus(true);

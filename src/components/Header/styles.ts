@@ -49,7 +49,7 @@ export const ProfileIcon = styled.img`
 export const DropdownText = styled.div`
   padding: 5px 0 5px 10px;
   :hover {
-    background-color: #48bbff;
+    background-color: #ecf8ff;
   }
 `;
 

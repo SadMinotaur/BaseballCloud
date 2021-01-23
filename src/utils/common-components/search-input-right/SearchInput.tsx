@@ -6,17 +6,17 @@ export const SearchInput: React.FC<{
   placeholder: string;
   width: number;
   widthFocused: number;
-  onChange: () => void;
-}> = ({ placeholder, width, widthFocused, onChange }) => {
-  return (
-    <>
-      <Stl.PageInput
-        width={width}
-        widthFocus={widthFocused}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
-      <img src={Search} alt="Search" />
-    </>
-  );
-};
+  onChange: (v: string) => void;
+  setNames: (v: []) => void;
+}> = ({ placeholder, width, widthFocused, onChange, setNames }) => (
+  <>
+    <Stl.PageInput
+      width={width}
+      widthFocus={widthFocused}
+      placeholder={placeholder}
+      onBlur={() => setNames([])}
+      onChange={(v) => onChange(v.target.value)}
+    />
+    <img src={Search} alt="Search" />
+  </>
+);
