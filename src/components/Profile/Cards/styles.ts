@@ -27,4 +27,11 @@ export const Stl = {
     border-radius: 50%;
     object-fit: cover;
   `,
+  Dropdown: styled.div`
+    color: #6fc7f2;
+    width: 228px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  `,
 };

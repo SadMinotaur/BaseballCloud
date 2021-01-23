@@ -1,30 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { Stl } from "./styles";
 import { SearchInput } from "../../../utils/common-components/search-input-right";
-import { GraphqlProfile } from "../../../utils/types/profile";
+import { GraphqlProfile, TopBatting } from "../../../utils/types/profile";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
-// import { ProfileNames } from "./../../../utils/types/profile";
+import { ProfileNames } from "./../../../utils/types/profile";
 import { Graphql } from "../graphql/query";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
-export const Cards: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
+export const Cards: React.FC<{
+  info: GraphqlProfile;
+  topBatting: TopBatting[];
+}> = ({ info, topBatting }) => {
   const [picture, setPicture] = useState<string>();
-  // const [playersNames, setPlayersNames] = useState<ProfileNames[]>();
-
-  useEffect(() => {
-    info?.avatar && API.getPicture(info.avatar).then((v) => setPicture(v));
-    console.log();
-  }, [info?.avatar]);
+  const [dropdownValue, setDropdownValue] = useState<string>("Distance");
+  const [playersNames, setPlayersNames] = useState<ProfileNames[]>();
 
   const getNames = () =>
     API.graphqlPost(Graphql.getProfiles, {
       input: {
-        player_name: "asd",
+        player_name: "",
         position: "catcher",
       },
-    });
+    }).then((v: { profile_names: { profile_names: ProfileNames[] } }) =>
+      setPlayersNames(v.profile_names.profile_names)
+    );
+
+  useEffect(() => {
+    info?.avatar && API.getPicture(info.avatar).then((v) => setPicture(v));
+    // getNames();
+  }, [info.avatar]);
+
+  function showVal(v: TopBatting | undefined): string {
+    if (v) {
+      switch (dropdownValue) {
+        case "Distance":
+          return v.distance.toString();
+        case "Launch angle":
+          return v.launch_angle.toString();
+        case "Exit Velocity":
+          return v.exit_velocity.toString();
+        default:
+          break;
+      }
+    }
+    return "-";
+  }
 
   return (
     <Stl.Container>
@@ -42,7 +64,7 @@ export const Cards: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
           <div>
             <SearchInput
               placeholder="Enter player name"
-              width={150}
+              width={135}
               widthFocused={170}
               onChange={getNames}
             />
@@ -63,41 +85,51 @@ export const Cards: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
           <h4>Weight: 0 lbs</h4>
         </Stl.ResponsiveRow>
       </Stl.Table>
-      <div style={{ position: "relative" }}>
+      <Stl.Dropdown>
+        Top bating Values -
         <DropdownBlue
+          input={{ value: dropdownValue, onChange: setDropdownValue }}
           options={[
-            { label: "Top bating Values - Distance", value: "Distance" },
+            { label: "Distance", value: "Distance" },
             {
-              label: "Top bating Values - Launch angle",
+              label: "Launch angle",
               value: "Launch angle",
             },
             {
-              label: "Top bating Values - Exit Velocity",
+              label: "Exit Velocity",
               value: "Exit Velocity",
             },
           ]}
-          width={250}
+          width={110}
         />
-      </div>
+      </Stl.Dropdown>
       <Stl.ItemTable>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Fastball</CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(topBatting.find((v) => v.pitch_type === "Fastball"))}
+          </CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Curveball</CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(topBatting.find((v) => v.pitch_type === "Curveball"))}
+          </CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Changeup</CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(topBatting.find((v) => v.pitch_type === "Changeup"))}
+          </CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Slider</CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(topBatting.find((v) => v.pitch_type === "Slider"))}
+          </CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
         </CommonStyle.Item>
       </Stl.ItemTable>

@@ -8,11 +8,16 @@ const Stl = {
     font-size: 16px;
     line-height: 19px;
     font-weight: 500;
-    color: #b6c1c8;
     :focus {
       border-bottom: 1px solid #6fc7f2;
       color: #788b99;
       width: ${(p) => p.widthFocus}px;
+      ::placeholder {
+        color: #b6c1c8;
+      }
+    }
+    ::placeholder {
+      color: #48bbff;
     }
   `,
 };

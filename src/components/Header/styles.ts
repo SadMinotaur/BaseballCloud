@@ -53,4 +53,9 @@ export const DropdownText = styled.div`
   }
 `;
 
-export const DropStyle = { background: "#fff", color: "#788b99", border: 0 };
+export const DropStyle = {
+  background: "#fff",
+  color: "#788b99",
+  border: 0,
+  width: 100,
+};

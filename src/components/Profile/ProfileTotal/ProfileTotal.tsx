@@ -77,7 +77,7 @@ export const ProfileTotal: React.FC<{
           <Styles.ItemText>Height</Styles.ItemText>
         </div>
         <Styles.ItemText>
-          {info?.feet} ft {info?.inches && info?.inches + " in"}
+          {info?.feet} ft {info?.inches && info?.inches.toString() + " in"}
         </Styles.ItemText>
       </Styles.ItemsRow>
       <Styles.ItemsRow>
