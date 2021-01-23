@@ -27,4 +27,49 @@ export const Stl = {
     border-radius: 50%;
     object-fit: cover;
   `,
+  Spinner: styled.div`
+    position: absolute;
+    top: 10px;
+    left: -60px;
+  `,
+  Dropdown: styled.div`
+    color: #6fc7f2;
+    width: 228px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  `,
+  InputMenu: styled.div`
+    z-index: 100;
+    color: #788b99;
+    position: absolute;
+    background-color: white;
+    font-size: 16px;
+    line-height: 38px;
+    font-weight: 400;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+    border: solid 1px #ebebeb;
+    top: 30px;
+    left: 40px;
+    border-radius: 5px;
+    padding: 5px 0 5px 0;
+    ::before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: -8px;
+      left: 25px;
+      border-style: solid;
+      border-width: 0 8px 8px 8px;
+      border-color: transparent transparent #b8b8b8 transparent;
+    }
+  `,
+  MenuItem: styled.div`
+    line-height: 30px;
+    padding: 0 10px 0 10px;
+    :hover {
+      background: #ecf8ff;
+    }
+  `,
 };

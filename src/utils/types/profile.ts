@@ -77,14 +77,16 @@ export type ProfileEvents = {
   };
 };
 
+export type TopBatting = {
+  id: string | null;
+  distance: number;
+  pitch_type: string;
+  launch_angle: number;
+  exit_velocity: number;
+};
+
 export type Summary = {
-  top_values: {
-    id: string | null;
-    distance: number;
-    pitch_type: string;
-    launch_angle: number;
-    exit_velocity: number;
-  }[];
+  top_values: TopBatting[];
   average_values: {
     id: string | null;
     distance: number;
@@ -94,19 +96,25 @@ export type Summary = {
   }[];
 };
 
+export type TopBattingBlock = {
+  distance: number;
+  launch_angle: number;
+  exit_velocity: number;
+};
+
 export interface BattingSummary {
   batting_summary: Summary;
 }
 
 export interface ProfileNames {
-  id: "626";
-  position: "catcher";
-  first_name: "asd";
-  last_name: "asd";
-  inches: 0;
-  feet: 4;
-  weight: 50;
-  age: 1;
+  id: string;
+  position: string;
+  first_name: string;
+  last_name: string;
+  inches: number;
+  feet: number;
+  weight: number;
+  age: number;
 }
 
 export type Options = { label: string; value: any };

@@ -21,5 +21,11 @@ const Stl = {
     display: flex;
     padding: 0 0 0 0px;
   `,
+  ShowItems: styled.div`
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    color: #6fc7f2;
+  `,
 };
 export default Stl;
