@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Graphql } from "./../graphql/query";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
-import { GraphqlCom } from "./../../../utils/graphql";
 import {
   BattingUser,
   PitchingUser,
@@ -12,6 +11,7 @@ import {
 import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
+import { CommonGraphql } from "./../../../utils/common-query";
 import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../utils/api";
 import Stl from "./styles";
@@ -47,7 +47,7 @@ export const LeaderboardPage: React.FC<{
   }, []);
 
   function onClickFavB(v: BattingUser): void {
-    API.graphqlPost(GraphqlCom.favoriteProfile, {
+    API.graphqlPost(CommonGraphql.favorite, {
       form: {
         favorite: !v.favorite,
         profile_id: v.batter_datraks_id,
@@ -71,7 +71,7 @@ export const LeaderboardPage: React.FC<{
   }
 
   function onClickFavP(v: PitchingUser): void {
-    API.graphqlPost(GraphqlCom.favoriteProfile, {
+    API.graphqlPost(CommonGraphql.favorite, {
       form: {
         favorite: !v.favorite,
         profile_id: v.pitcher_datraks_id,
@@ -119,15 +119,18 @@ export const LeaderboardPage: React.FC<{
               <Stl.InputGroup>
                 <Field name="date">
                   {({ input }) => (
-                    <DropdownBlue
-                      input={input}
-                      width={150}
-                      options={[
-                        { label: "All", value: "" },
-                        { label: "Last Week", value: "last_week" },
-                        { label: "Last Month", value: "last_month" },
-                      ]}
-                    />
+                    <Stl.DropdownText>
+                      Date
+                      <DropdownBlue
+                        input={input}
+                        width={100}
+                        options={[
+                          { label: "All", value: "" },
+                          { label: "Last Week", value: "last_week" },
+                          { label: "Last Month", value: "last_month" },
+                        ]}
+                      />
+                    </Stl.DropdownText>
                   )}
                 </Field>
                 <Field name="school" type="input">

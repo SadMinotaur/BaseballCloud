@@ -20,6 +20,7 @@ export const Cards: React.FC<{
 }> = ({ info, topBatting }) => {
   const [pictureMain, setMainPicture] = useState<string>();
   const [dropdownValue, setDropdownValue] = useState<string>("Distance");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const [playersNames, setPlayersNames] = useState<ProfileNames[]>([]);
   const [loadingNames, setLoadingNames] = useState<boolean>(false);
@@ -29,6 +30,7 @@ export const Cards: React.FC<{
   const [choosedBatting, setChoosedBatting] = useState<TopBatting[]>([]);
 
   function getNames(input: string): void {
+    setSearchValue(input);
     setLoadingNames(true);
     API.graphqlPost(Graphql.getProfiles, {
       input: {
@@ -46,16 +48,15 @@ export const Cards: React.FC<{
       id: id,
     }).then((v: { profile: GraphqlProfile }) => {
       setChoosedProfile(v.profile);
+      setSearchValue(`${v.profile.first_name} ${v.profile.last_name}`);
       API.graphqlPost(Graphql.battingSummary, {
         id: id,
       }).then((v: BattingSummary) =>
         setChoosedBatting(v.batting_summary.top_values)
       );
-      if (v.profile.avatar) {
-        API.getPicture(v.profile.avatar)
-          .then((v) => setComparePicture(v))
-          .then((v) => {});
-      }
+      v.profile.avatar
+        ? API.getPicture(v.profile.avatar).then((v) => setComparePicture(v))
+        : setComparePicture(undefined);
     });
   }
 
@@ -85,7 +86,7 @@ export const Cards: React.FC<{
       <CommonStyle.HeaderTab active={true}>Comparison</CommonStyle.HeaderTab>
       <Stl.Table>
         <Stl.ResponsiveRow>
-          <div>
+          <Stl.Text>
             <Stl.Image
               src={
                 pictureMain
@@ -95,20 +96,21 @@ export const Cards: React.FC<{
               alt="avatar"
             />
             {info?.first_name} {info?.last_name}
-          </div>
+          </Stl.Text>
           <div style={{ position: "relative" }}>
             <Stl.Spinner>
               <BeatLoader color={"#48bbff"} loading={loadingNames} size={10} />
             </Stl.Spinner>
             <Stl.Image
               src={
-                pictureMain
+                comparePicture
                   ? `data:image/jpeg;base64,${comparePicture}`
                   : PictureProf
               }
               alt="avatar"
             />
             <SearchInput
+              value={searchValue}
               placeholder="Enter player name"
               width={135}
               widthFocused={170}
@@ -130,21 +132,26 @@ export const Cards: React.FC<{
           </div>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>Age: {info?.age}</h4>
-          <h4>Age: {choosedProfile?.age}</h4>
+          <Stl.Text>Age: {info?.age}</Stl.Text>
+          <Stl.Text>
+            Age: {choosedProfile?.age ? choosedProfile.age : " -"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>
+          <Stl.Text>
             Height: {info?.feet} ft {info?.inches && info?.inches + " in"}
-          </h4>
-          <h4>
-            Height: {choosedProfile?.feet} ft
-            {choosedProfile?.inches && info?.inches + " in"}
-          </h4>
+          </Stl.Text>
+          <Stl.Text>
+            Height: {choosedProfile?.feet ? choosedProfile?.feet + "ft" : " -"}
+            {choosedProfile?.inches && info.inches + " in"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>Weight: {info?.weight} lbs</h4>
-          <h4>Weight: {choosedProfile?.weight} lbs</h4>
+          <Stl.Text>Weight: {info?.weight} lbs</Stl.Text>
+          <Stl.Text>
+            Weight:
+            {choosedProfile?.weight ? choosedProfile.weight + "lbs" : " -"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
       </Stl.Table>
       <Stl.Dropdown>

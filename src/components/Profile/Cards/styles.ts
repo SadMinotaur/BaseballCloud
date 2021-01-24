@@ -17,6 +17,10 @@ export const Stl = {
     display: grid;
     grid-template-columns: 1fr 1fr;
   `,
+  Text: styled.div`
+    line-height: 1.42857143;
+    color: #333;
+  `,
   ItemTable: styled.div`
     margin: 20px 0 0 0;
   `,

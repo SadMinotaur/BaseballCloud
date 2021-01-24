@@ -11,7 +11,7 @@ import {
 import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Graphql } from "./graphql/query";
+import { CommonGraphql } from "./../../utils/common-query";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import { GetCurrentUserInfo } from "./../../utils/types/header";
 import Logo from "./../../assets/logo.svg";
@@ -27,7 +27,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
   const [profileName, setProfileName] = useState<string>();
 
   useEffect(() => {
-    API.graphqlPost(Graphql.getCurrentUserInfo, {}).then(
+    API.graphqlPost(CommonGraphql.getCurrentUserInfo, {}).then(
       (v: GetCurrentUserInfo) => {
         const { avatar, first_name, last_name } = v.current_profile;
         setProfileName(

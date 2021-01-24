@@ -1,4 +1,4 @@
-export const Graphql = {
+export const CommonGraphql = {
   getCurrentUserInfo: `{ current_profile ()
        {
           avatar
@@ -28,6 +28,11 @@ export const Graphql = {
              email
              u_name
            }
+        }
+      }`,
+  favorite: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+        update_favorite_profile(input: $form) {
+          favorite
         }
       }`,
 };

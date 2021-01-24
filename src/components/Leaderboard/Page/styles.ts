@@ -39,5 +39,11 @@ const Stl = {
     color: #414f5a;
     padding: 10px 0 10px 0;
   `,
+  DropdownText: styled.div`
+    color: #6fc7f2;
+    display: flex;
+    width: 135px;
+    justify-content: space-between;
+  `,
 };
 export default Stl;

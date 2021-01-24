@@ -7,7 +7,7 @@ const Stl = {
     width: ${(p) => p.width}px;
     height: 20px;
     border: 0;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 19px;
     font-weight: 500;
     color: #48bbff;

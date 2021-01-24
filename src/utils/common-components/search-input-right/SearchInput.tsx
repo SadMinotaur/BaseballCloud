@@ -6,14 +6,16 @@ export const SearchInput: React.FC<{
   placeholder: string;
   width: number;
   widthFocused: number;
+  value: string;
   onChange: (v: string) => void;
   setNames: (v: []) => void;
-}> = ({ placeholder, width, widthFocused, onChange, setNames }) => (
+}> = ({ placeholder, width, widthFocused, onChange, value, setNames }) => (
   <>
     <Stl.PageInput
       width={width}
       widthFocus={widthFocused}
       placeholder={placeholder}
+      value={value}
       onBlur={() =>
         // Blur blocks items onClick
         setTimeout(() => {

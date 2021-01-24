@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
+import { ToNormalState } from "../../../utils/convert-name";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
   ButtonProfile,
   WarningText,
-  CancelPhoto,
-  UploadPhoto,
+  PhotoLabel,
   DropdownSpacing,
 } from "./styles";
 import { FormsAbout } from "./../FormsAbout";
@@ -29,12 +29,13 @@ export const ProfileForms: React.FC<{
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
+  const [labelState, setLabelState] = useState(true);
 
   function onSubmitForm(v: any): void {
     API.graphqlPost(Graphql.updateProfile, {
       form: {
-        id: info?.id,
         ...v,
+        id: info?.id,
         age: parseInt(v.age),
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
@@ -46,7 +47,7 @@ export const ProfileForms: React.FC<{
         school: v.school?.value,
         school_year: v.school_year?.value,
         teams: v.teams && v.teams.map((v: Options) => v?.value),
-        facilities: [v.facilities && v?.facilities[0]?.value],
+        facilities: v.facilities && v.facilities.map((v: Options) => v?.value),
         avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
@@ -113,26 +114,40 @@ export const ProfileForms: React.FC<{
                   style={{ display: "none" }}
                   id="my-file"
                   type="file"
-                  onChange={(e) =>
-                    e.target.files && setPictureInfo(e.target.files[0])
-                  }
+                  onChange={(e) => {
+                    e.target.files && setPictureInfo(e.target.files[0]);
+                    setLabelState(false);
+                  }}
                 />
               </div>
-              <label htmlFor="my-file">
-                {pictureInfo ? pictureInfo.name : "Choose photo"}
-              </label>
-              {pictureInfo && !pictureUrl && (
+              <PhotoLabel htmlFor="my-file">
+                {labelState && "Choose photo"}
+              </PhotoLabel>
+              <PhotoLabel>
+                {pictureInfo && !labelState && pictureInfo.name}
+              </PhotoLabel>
+              {!labelState && (
                 <>
-                  <UploadPhoto
+                  <PhotoLabel
+                    colorBlue={true}
                     onClick={() =>
-                      API.uploadPic(pictureInfo).then((v) => setPictureUrl(v))
+                      pictureInfo &&
+                      API.uploadPic(pictureInfo).then((v: string) => {
+                        setPictureUrl(v);
+                        setLabelState(true);
+                      })
                     }
                   >
                     Upload photo
-                  </UploadPhoto>
-                  <CancelPhoto onClick={() => setPictureInfo(undefined)}>
+                  </PhotoLabel>
+                  <PhotoLabel
+                    onClick={() => {
+                      setPictureInfo(undefined);
+                      setLabelState(true);
+                    }}
+                  >
                     Cancel
-                  </CancelPhoto>
+                  </PhotoLabel>
                 </>
               )}
             </CommonStyle.ProfileContainer>
@@ -159,8 +174,8 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => (v ? undefined : "Position Required")}
               defaultValue={
                 info?.position && {
-                  label: info?.position,
-                  value: info?.position,
+                  label: ToNormalState(info.position),
+                  value: info.position,
                 }
               }
               options={[
@@ -179,8 +194,8 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => undefined}
               defaultValue={
                 info?.position2 && {
-                  label: info?.position2,
-                  value: info?.position2,
+                  label: ToNormalState(info.position2),
+                  value: info.position2,
                 }
               }
               options={[
@@ -243,8 +258,8 @@ export const ProfileForms: React.FC<{
                   defaultValue={
                     info?.throws_hand
                       ? {
-                          label: info?.throws_hand,
-                          value: info?.throws_hand,
+                          label: ToNormalState(info.throws_hand),
+                          value: info.throws_hand,
                         }
                       : undefined
                   }
@@ -262,14 +277,14 @@ export const ProfileForms: React.FC<{
                   defaultValue={
                     info?.bats_hand
                       ? {
-                          label: info?.bats_hand,
-                          value: info?.bats_hand,
+                          label: ToNormalState(info.bats_hand),
+                          value: info.bats_hand,
                         }
                       : undefined
                   }
                   options={[
-                    { value: "R", label: "R" },
-                    { value: "L", label: "L" },
+                    { value: "r", label: "R" },
+                    { value: "l", label: "L" },
                   ]}
                 />
               </DropdownSpacing>
@@ -282,8 +297,8 @@ export const ProfileForms: React.FC<{
               validate={(v) => undefined}
               defaultValue={
                 info?.school && {
-                  label: info?.school.name,
-                  value: info?.school,
+                  label: ToNormalState(info.school.name),
+                  value: info.school,
                 }
               }
             />
@@ -293,8 +308,8 @@ export const ProfileForms: React.FC<{
               validate={(v) => undefined}
               defaultValue={
                 info?.school_year && {
-                  label: info?.school_year,
-                  value: info?.school_year,
+                  label: ToNormalState(info.school_year),
+                  value: info.school_year,
                 }
               }
               options={[
@@ -328,7 +343,7 @@ export const ProfileForms: React.FC<{
               loadOptions={getFacilities}
               validate={(v) => undefined}
               defaultValue={
-                info?.facilities[0]?.u_name
+                info?.facilities[0]
                   ? {
                       label: info?.facilities[0].u_name,
                       value: info?.facilities[0],
