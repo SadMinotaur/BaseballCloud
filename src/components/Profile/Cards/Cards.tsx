@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Stl } from "./styles";
 import { SearchInput } from "../../../utils/common-components/search-input-right";
-import { GraphqlProfile, TopBatting } from "../../../utils/types/profile";
+import {
+  BattingSummary,
+  GraphqlProfile,
+  TopBatting,
+} from "../../../utils/types/profile";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { ProfileNames } from "./../../../utils/types/profile";
 import { Graphql } from "../graphql/query";
@@ -22,7 +26,7 @@ export const Cards: React.FC<{
 
   const [comparePicture, setComparePicture] = useState<string>();
   const [choosedProfile, setChoosedProfile] = useState<ProfileNames>();
-  const [choosedBatting, setChoosedBatting] = useState<TopBatting[]>();
+  const [choosedBatting, setChoosedBatting] = useState<TopBatting[]>([]);
 
   function getNames(input: string): void {
     setLoadingNames(true);
@@ -37,12 +41,21 @@ export const Cards: React.FC<{
     });
   }
 
-  function chooseUser(id: number): void {
+  function chooseUser(id: string): void {
     API.graphqlPost(Graphql.getUserInfo, {
       id: id,
     }).then((v: { profile: GraphqlProfile }) => {
       setChoosedProfile(v.profile);
-      API.getPicture(v.profile.avatar).then((v) => setComparePicture(v));
+      API.graphqlPost(Graphql.battingSummary, {
+        id: id,
+      }).then((v: BattingSummary) =>
+        setChoosedBatting(v.batting_summary.top_values)
+      );
+      if (v.profile.avatar) {
+        API.getPicture(v.profile.avatar)
+          .then((v) => setComparePicture(v))
+          .then((v) => {});
+      }
     });
   }
 
@@ -107,10 +120,7 @@ export const Cards: React.FC<{
                 {playersNames.map((prof) => (
                   <Stl.MenuItem
                     key={prof.id + prof.age}
-                    onClick={(v) => {
-                      console.log("here");
-                      // chooseUser(parseInt(prof.id));
-                    }}
+                    onClick={() => chooseUser(prof.id)}
                   >
                     {prof.first_name} {prof.last_name}
                   </Stl.MenuItem>
@@ -161,28 +171,36 @@ export const Cards: React.FC<{
           <CommonStyle.ItemText width={33}>
             {showVal(topBatting.find((v) => v.pitch_type === "Fastball"))}
           </CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(choosedBatting.find((v) => v.pitch_type === "Fastball"))}
+          </CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Curveball</CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>
             {showVal(topBatting.find((v) => v.pitch_type === "Curveball"))}
           </CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(choosedBatting.find((v) => v.pitch_type === "Curveball"))}
+          </CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Changeup</CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>
             {showVal(topBatting.find((v) => v.pitch_type === "Changeup"))}
           </CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(choosedBatting.find((v) => v.pitch_type === "Changeup"))}
+          </CommonStyle.ItemText>
         </CommonStyle.Item>
         <CommonStyle.Item>
           <CommonStyle.ItemText width={33}>Slider</CommonStyle.ItemText>
           <CommonStyle.ItemText width={33}>
             {showVal(topBatting.find((v) => v.pitch_type === "Slider"))}
           </CommonStyle.ItemText>
-          <CommonStyle.ItemText width={33}>-</CommonStyle.ItemText>
+          <CommonStyle.ItemText width={33}>
+            {showVal(choosedBatting.find((v) => v.pitch_type === "Slider"))}
+          </CommonStyle.ItemText>
         </CommonStyle.Item>
       </Stl.ItemTable>
     </Stl.Container>

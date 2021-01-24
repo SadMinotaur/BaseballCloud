@@ -70,7 +70,7 @@ class Api {
     ).then((v) => v.data.data);
   }
 
-  public async getPicture(url: string): Promise<string> {
+  public async getPicture(url: string): Promise<string | undefined> {
     return Axios.get(url, {
       responseType: "arraybuffer",
       headers: {
@@ -80,7 +80,7 @@ class Api {
       .then((v) => {
         return Buffer.from(v.data, "binary").toString("base64");
       })
-      .catch();
+      .catch(() => undefined);
   }
 
   public async logout() {
