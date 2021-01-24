@@ -16,7 +16,7 @@ export const FormsAbout: React.FC<{
             {...input}
             onBlur={(v) => {
               input.onBlur(v);
-              setState(false);
+              !input.value && setState(false);
             }}
             onFocus={(v) => {
               input.onFocus(v);

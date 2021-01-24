@@ -157,7 +157,7 @@ export const NetworkPage: React.FC<{
               </Stl.HeaderInputs>
             </Stl.HeaderInputsContainer>
             <Stl.HeaderInputsContainer>
-              <p>Available Players ({totalNumber && totalNumber.toString()})</p>
+              <p>Available Players ({totalNumber.toString()})</p>
               <Field name="player_name" type="input">
                 {({ input }) => (
                   <SearchInput

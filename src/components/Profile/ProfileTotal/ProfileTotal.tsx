@@ -108,8 +108,12 @@ export const ProfileTotal: React.FC<{
         <>
           <CommonStyle.ItemHeadText>School</CommonStyle.ItemHeadText>
           <h4>{info.school.name}</h4>
-          <CommonStyle.ItemHeadText>School Year</CommonStyle.ItemHeadText>
-          <h4>{ToNormalState(info.school_year)}</h4>
+          {info.school_year && (
+            <>
+              <CommonStyle.ItemHeadText>School Year</CommonStyle.ItemHeadText>
+              <h4>{ToNormalState(info.school_year)}</h4>
+            </>
+          )}
         </>
       )}
       {info.teams.length !== 0 && (

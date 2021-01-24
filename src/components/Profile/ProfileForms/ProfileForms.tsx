@@ -24,8 +24,9 @@ export const ProfileForms: React.FC<{
   ShowErrorToast: (text: string) => void;
   ShowSuccessToast: (text: string) => void;
   onEditEnd: (profile: GraphqlProfile) => void;
-  info?: GraphqlProfile;
-}> = ({ info, onEditEnd, ShowSuccessToast, ShowErrorToast }) => {
+  info: GraphqlProfile;
+  onCancel?: () => void;
+}> = ({ info, onEditEnd, ShowSuccessToast, ShowErrorToast, onCancel }) => {
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
@@ -35,7 +36,7 @@ export const ProfileForms: React.FC<{
     API.graphqlPost(Graphql.updateProfile, {
       form: {
         ...v,
-        id: info?.id,
+        id: info.id,
         age: parseInt(v.age),
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
@@ -46,8 +47,10 @@ export const ProfileForms: React.FC<{
         position2: v.position2?.value,
         school: v.school?.value,
         school_year: v.school_year?.value,
-        teams: v.teams && v.teams.map((v: Options) => v?.value),
-        facilities: v.facilities && v.facilities.map((v: Options) => v?.value),
+        teams: v.teams ? v.teams.map((v: Options) => v?.value) : [],
+        facilities: v.facilities
+          ? v.facilities.map((v: Options) => v?.value)
+          : [],
         avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
@@ -89,7 +92,7 @@ export const ProfileForms: React.FC<{
     );
 
   useEffect(() => {
-    info?.avatar &&
+    info.avatar &&
       API.getPicture(info.avatar).then((v) =>
         setDefaultPicture(`data:image/jpeg;base64,${v}`)
       );
@@ -99,7 +102,7 @@ export const ProfileForms: React.FC<{
     <FormsDiv>
       <Form
         onSubmit={onSubmitForm}
-        render={({ handleSubmit }) => (
+        render={({ handleSubmit, form, submitting, pristine }) => (
           <form onSubmit={handleSubmit}>
             <CommonStyle.ProfileContainer>
               <CommonStyle.ProfilePic
@@ -143,6 +146,7 @@ export const ProfileForms: React.FC<{
                   <PhotoLabel
                     onClick={() => {
                       setPictureInfo(undefined);
+                      setPictureUrl(undefined);
                       setLabelState(true);
                     }}
                   >
@@ -155,7 +159,7 @@ export const ProfileForms: React.FC<{
               <TextF
                 name="first_name"
                 label="First Name*"
-                defaultValue={info?.first_name}
+                defaultValue={info.first_name}
                 validate={(v: string) =>
                   v ? undefined : "First Name Required"
                 }
@@ -164,7 +168,7 @@ export const ProfileForms: React.FC<{
                 name="last_name"
                 label="Last Name*"
                 space={true}
-                defaultValue={info?.last_name}
+                defaultValue={info.last_name}
                 validate={(v: string) => (v ? undefined : "Last Name Required")}
               />
             </Row>
@@ -173,7 +177,7 @@ export const ProfileForms: React.FC<{
               name="position"
               validate={(v: string) => (v ? undefined : "Position Required")}
               defaultValue={
-                info?.position && {
+                info.position && {
                   label: ToNormalState(info.position),
                   value: info.position,
                 }
@@ -193,7 +197,7 @@ export const ProfileForms: React.FC<{
               name="position2"
               validate={(v: string) => undefined}
               defaultValue={
-                info?.position2 && {
+                info.position2 && {
                   label: ToNormalState(info.position2),
                   value: info.position2,
                 }
@@ -213,34 +217,40 @@ export const ProfileForms: React.FC<{
             <TextF
               name="age"
               label="Age*"
-              defaultValue={info?.age?.toString()}
+              defaultValue={info.age?.toString()}
               validate={(v: string) => (v ? undefined : "Age Required")}
             />
             <Row>
               <TextF
                 name="feet"
                 label="Feet*"
-                defaultValue={info?.feet?.toString()}
-                validate={(v: string) =>
-                  v
-                    ? parseInt(v) > 3
-                      ? undefined
-                      : "Minimum height is 4"
-                    : "Feet Required"
-                }
+                defaultValue={info.feet?.toString()}
+                validate={(v: string) => {
+                  if (v) {
+                    if (parseInt(v) > 3) {
+                      if (parseInt(v) > 7) {
+                        return "Maximum height is 7";
+                      } else {
+                        return undefined;
+                      }
+                    } else {
+                      return "Minimum height is 4";
+                    }
+                  } else return "Feet Required";
+                }}
               />
               <TextF
                 name="inches"
                 label="Inches"
                 space={true}
-                defaultValue={info?.inches?.toString()}
+                defaultValue={info.inches?.toString()}
                 validate={(v: string) => undefined}
               />
             </Row>
             <TextF
               name="weight"
               label="Weight*"
-              defaultValue={info?.weight?.toString()}
+              defaultValue={info.weight?.toString()}
               validate={(v: string) =>
                 v
                   ? parseInt(v) > 39
@@ -256,7 +266,7 @@ export const ProfileForms: React.FC<{
                   name="throws_hand"
                   validate={(v) => (v ? undefined : "Throws Required")}
                   defaultValue={
-                    info?.throws_hand
+                    info.throws_hand
                       ? {
                           label: ToNormalState(info.throws_hand),
                           value: info.throws_hand,
@@ -275,7 +285,7 @@ export const ProfileForms: React.FC<{
                   name="bats_hand"
                   validate={(v) => (v ? undefined : "Bats Required")}
                   defaultValue={
-                    info?.bats_hand
+                    info.bats_hand
                       ? {
                           label: ToNormalState(info.bats_hand),
                           value: info.bats_hand,
@@ -296,7 +306,7 @@ export const ProfileForms: React.FC<{
               loadOptions={getSchools}
               validate={(v) => undefined}
               defaultValue={
-                info?.school && {
+                info.school && {
                   label: ToNormalState(info.school.name),
                   value: info.school,
                 }
@@ -307,7 +317,7 @@ export const ProfileForms: React.FC<{
               name="school_year"
               validate={(v) => undefined}
               defaultValue={
-                info?.school_year && {
+                info.school_year && {
                   label: ToNormalState(info.school_year),
                   value: info.school_year,
                 }
@@ -353,18 +363,26 @@ export const ProfileForms: React.FC<{
             />
             <SectText text="About" />
             <FormsAbout
-              biography={info?.biography}
+              biography={info.biography}
               placeholder="Describe yourself in a few words"
             />
             {!info && <WarningText>* Fill out the required fields</WarningText>}
             <Row>
               <ButtonProfile
-                onClick={() => info && onEditEnd(info)}
+                onClick={() => {
+                  form.reset();
+                  onCancel && onCancel();
+                }}
                 type="reset"
+                disabled={submitting || pristine}
               >
                 Cancel
               </ButtonProfile>
-              <ButtonProfile borderBlue={true} type="submit">
+              <ButtonProfile
+                borderBlue={true}
+                disabled={submitting || pristine}
+                type="submit"
+              >
                 Save
               </ButtonProfile>
             </Row>

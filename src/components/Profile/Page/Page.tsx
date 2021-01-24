@@ -37,7 +37,9 @@ export const ProfilePage: React.FC<{
           .then((v: { profile: GraphqlProfile }) => {
             const pr = v.profile;
             setProfile(pr);
-            if (pr.first_name !== null) setProfileStatus(true);
+            if (pr.first_name) {
+              setProfileStatus(true);
+            }
             setLoading(false);
           })
           .catch(() => setLoading(false))
@@ -50,48 +52,49 @@ export const ProfilePage: React.FC<{
         <Spinner loading={loading} />
       ) : (
         <Container>
-          {profileStatus ? (
-            profile &&
-            (editState ? (
+          {profile &&
+            (profileStatus ? (
+              editState ? (
+                <>
+                  <ProfileForms
+                    ShowSuccessToast={ShowSuccessToast}
+                    ShowErrorToast={ShowErrorToast}
+                    info={profile}
+                    onEditEnd={onEditEnd}
+                    onCancel={() => setEditState(false)}
+                  />
+                  <StatsBlock info={profile} />
+                </>
+              ) : (
+                <>
+                  {userId ? (
+                    <ProfileTotal
+                      ShowSuccessToast={ShowSuccessToast}
+                      ShowErrorToast={ShowErrorToast}
+                      info={profile}
+                    />
+                  ) : (
+                    <ProfileTotal
+                      ShowSuccessToast={ShowSuccessToast}
+                      ShowErrorToast={ShowErrorToast}
+                      info={profile}
+                      onEditPress={() => setEditState(true)}
+                    />
+                  )}
+                  <StatsBlock info={profile} />
+                </>
+              )
+            ) : (
               <>
                 <ProfileForms
                   ShowSuccessToast={ShowSuccessToast}
                   ShowErrorToast={ShowErrorToast}
-                  info={profile}
                   onEditEnd={onEditEnd}
+                  info={profile}
                 />
-                <StatsBlock info={profile} />
+                <YourAccount />
               </>
-            ) : (
-              <>
-                {userId ? (
-                  <ProfileTotal
-                    ShowSuccessToast={ShowSuccessToast}
-                    ShowErrorToast={ShowErrorToast}
-                    info={profile}
-                  />
-                ) : (
-                  <ProfileTotal
-                    ShowSuccessToast={ShowSuccessToast}
-                    ShowErrorToast={ShowErrorToast}
-                    info={profile}
-                    onEditPress={() => setEditState(true)}
-                  />
-                )}
-                <StatsBlock info={profile} />
-              </>
-            ))
-          ) : (
-            <>
-              <ProfileForms
-                ShowSuccessToast={ShowSuccessToast}
-                ShowErrorToast={ShowErrorToast}
-                onEditEnd={onEditEnd}
-                info={profile}
-              />
-              <YourAccount />
-            </>
-          )}
+            ))}
         </Container>
       )}
     </>

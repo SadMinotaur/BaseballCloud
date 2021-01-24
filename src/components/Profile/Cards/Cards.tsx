@@ -143,14 +143,16 @@ export const Cards: React.FC<{
           </Stl.Text>
           <Stl.Text>
             Height: {choosedProfile?.feet ? choosedProfile?.feet + "ft" : " -"}
-            {choosedProfile?.inches && info.inches + " in"}
+            {choosedProfile?.inches ? " " + info.inches + " in" : ""}
           </Stl.Text>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
           <Stl.Text>Weight: {info?.weight} lbs</Stl.Text>
           <Stl.Text>
             Weight:
-            {choosedProfile?.weight ? choosedProfile.weight + "lbs" : " -"}
+            {choosedProfile?.weight
+              ? " " + choosedProfile.weight + "lbs"
+              : " -"}
           </Stl.Text>
         </Stl.ResponsiveRow>
       </Stl.Table>

@@ -10,14 +10,15 @@ const Stl = {
     font-size: 15px;
     line-height: 19px;
     font-weight: 500;
-    color: #48bbff;
+    ::placeholder {
+      color: #6fc7f2;
+    }
     :focus {
-      color: #788b99;
       border-bottom: 1px solid #6fc7f2;
       width: ${(p) => p.widthFocus}px;
-    }
-    ::placeholder {
-      color: #48bbff;
+      ::placeholder {
+        color: #788b99;
+      }
     }
   `,
   Arrow: styledComponentsTS<{ state: boolean }>(styled.img)`

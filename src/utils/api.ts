@@ -90,6 +90,10 @@ class Api {
     );
   }
 
+  private putReq(url: string) {
+    return Axios.put(url, { headers: this.getStandardHeaders() });
+  }
+
   public async uploadPic(picture: File): Promise<string> {
     return Axios.post(
       "https://baseballcloud-back.herokuapp.com/api/v1/s3/signed_url",
@@ -113,10 +117,6 @@ class Api {
         headers: this.getStandardHeaders(),
       }
     );
-  }
-
-  private putReq(url: string) {
-    return Axios.put(url, { headers: this.getStandardHeaders() });
   }
 
   private getStandardHeaders() {

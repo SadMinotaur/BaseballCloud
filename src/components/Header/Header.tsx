@@ -76,7 +76,7 @@ const LinksComp: React.FC<{ network?: boolean; leaderboard?: boolean }> = (
         <DropdownToggle style={DropStyle}>
           {profileName ? profileName : "Profile Name"}
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu right>
           <DropdownText
             onClick={(v) => {
               nav.push("/profile");

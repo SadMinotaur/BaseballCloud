@@ -10,8 +10,7 @@ export const Stl = {
       ...theme.colors,
       neutral0: "#EFF1F3",
       primary: "#48BBFF",
-      // neutral20: "#fff",
-      // neutral40: "#fff",
+      neutral80: "#667784",
     },
   }),
   Styles: {
