@@ -14,7 +14,12 @@ export const SearchInput: React.FC<{
       width={width}
       widthFocus={widthFocused}
       placeholder={placeholder}
-      onBlur={() => setNames([])}
+      onBlur={() =>
+        // Blur blocks items onClick
+        setTimeout(() => {
+          setNames([]);
+        }, 1000)
+      }
       onChange={(v) => onChange(v.target.value)}
     />
     <img src={Search} alt="Search" />
