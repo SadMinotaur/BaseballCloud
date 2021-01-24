@@ -20,6 +20,7 @@ export const Cards: React.FC<{
 }> = ({ info, topBatting }) => {
   const [pictureMain, setMainPicture] = useState<string>();
   const [dropdownValue, setDropdownValue] = useState<string>("Distance");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const [playersNames, setPlayersNames] = useState<ProfileNames[]>([]);
   const [loadingNames, setLoadingNames] = useState<boolean>(false);
@@ -29,6 +30,7 @@ export const Cards: React.FC<{
   const [choosedBatting, setChoosedBatting] = useState<TopBatting[]>([]);
 
   function getNames(input: string): void {
+    setSearchValue(input);
     setLoadingNames(true);
     API.graphqlPost(Graphql.getProfiles, {
       input: {
@@ -46,16 +48,15 @@ export const Cards: React.FC<{
       id: id,
     }).then((v: { profile: GraphqlProfile }) => {
       setChoosedProfile(v.profile);
+      setSearchValue(`${v.profile.first_name} ${v.profile.last_name}`);
       API.graphqlPost(Graphql.battingSummary, {
         id: id,
       }).then((v: BattingSummary) =>
         setChoosedBatting(v.batting_summary.top_values)
       );
-      if (v.profile.avatar) {
-        API.getPicture(v.profile.avatar)
-          .then((v) => setComparePicture(v))
-          .then((v) => {});
-      }
+      v.profile.avatar
+        ? API.getPicture(v.profile.avatar).then((v) => setComparePicture(v))
+        : setComparePicture(undefined);
     });
   }
 
@@ -102,13 +103,14 @@ export const Cards: React.FC<{
             </Stl.Spinner>
             <Stl.Image
               src={
-                pictureMain
+                comparePicture
                   ? `data:image/jpeg;base64,${comparePicture}`
                   : PictureProf
               }
               alt="avatar"
             />
             <SearchInput
+              value={searchValue}
               placeholder="Enter player name"
               width={135}
               widthFocused={170}

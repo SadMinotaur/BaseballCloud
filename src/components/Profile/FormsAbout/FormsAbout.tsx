@@ -8,14 +8,20 @@ export const FormsAbout: React.FC<{
 }> = ({ placeholder, biography }) => {
   const [state, setState] = useState(biography !== undefined);
   return (
-    <Field name="biography" component="textarea" defaultValue={biography}>
+    <Field name="biography" defaultValue={biography}>
       {({ input }) => (
         <div style={{ position: "relative" }}>
           <Stl.Label isFloating={state}>{placeholder}</Stl.Label>
           <Stl.AboutArea
             {...input}
-            onBlur={() => setState(false)}
-            onFocus={() => setState(true)}
+            onBlur={(v) => {
+              input.onBlur(v);
+              setState(false);
+            }}
+            onFocus={(v) => {
+              input.onFocus(v);
+              setState(true);
+            }}
           />
         </div>
       )}

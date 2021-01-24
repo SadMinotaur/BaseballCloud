@@ -22,9 +22,9 @@ export const ProfilePage: React.FC<{
   const [editState, setEditState] = useState<boolean>(false);
 
   function onEditEnd(profile: GraphqlProfile): void {
+    setEditState(false);
     setProfileStatus(true);
     setProfile(profile);
-    setEditState(false);
   }
 
   useEffect(() => {

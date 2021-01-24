@@ -119,15 +119,18 @@ export const LeaderboardPage: React.FC<{
               <Stl.InputGroup>
                 <Field name="date">
                   {({ input }) => (
-                    <DropdownBlue
-                      input={input}
-                      width={150}
-                      options={[
-                        { label: "All", value: "" },
-                        { label: "Last Week", value: "last_week" },
-                        { label: "Last Month", value: "last_month" },
-                      ]}
-                    />
+                    <Stl.DropdownText>
+                      Date
+                      <DropdownBlue
+                        input={input}
+                        width={100}
+                        options={[
+                          { label: "All", value: "" },
+                          { label: "Last Week", value: "last_week" },
+                          { label: "Last Month", value: "last_month" },
+                        ]}
+                      />
+                    </Stl.DropdownText>
                   )}
                 </Field>
                 <Field name="school" type="input">

@@ -11,3 +11,9 @@ export interface SignInResp {
   email: string;
   role: string;
 }
+
+export type PictureResp = {
+  fileKey: string;
+  fileName: string;
+  signedUrl: string;
+};

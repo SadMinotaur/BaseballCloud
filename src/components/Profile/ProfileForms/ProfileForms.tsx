@@ -29,12 +29,13 @@ export const ProfileForms: React.FC<{
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
+  const [labelState, setLabelState] = useState(true);
 
   function onSubmitForm(v: any): void {
     API.graphqlPost(Graphql.updateProfile, {
       form: {
-        id: info?.id,
         ...v,
+        id: info?.id,
         age: parseInt(v.age),
         feet: parseInt(v.feet),
         inches: parseInt(v.inches),
@@ -46,7 +47,7 @@ export const ProfileForms: React.FC<{
         school: v.school?.value,
         school_year: v.school_year?.value,
         teams: v.teams && v.teams.map((v: Options) => v?.value),
-        facilities: [v.facilities && v?.facilities[0]?.value],
+        facilities: v.facilities && v.facilities.map((v: Options) => v?.value),
         avatar: pictureUrl ? pictureUrl : info?.avatar,
       },
     })
@@ -113,24 +114,33 @@ export const ProfileForms: React.FC<{
                   style={{ display: "none" }}
                   id="my-file"
                   type="file"
-                  onChange={(e) =>
-                    e.target.files && setPictureInfo(e.target.files[0])
-                  }
+                  onChange={(e) => {
+                    e.target.files && setPictureInfo(e.target.files[0]);
+                    setLabelState(false);
+                  }}
                 />
               </div>
-              <label htmlFor="my-file">
-                {pictureInfo ? pictureInfo.name : "Choose photo"}
-              </label>
-              {pictureInfo && !pictureUrl && (
+              <label htmlFor="my-file">{labelState && "Choose photo"}</label>
+              <label>{pictureInfo && !labelState && pictureInfo.name}</label>
+              {!labelState && (
                 <>
                   <UploadPhoto
                     onClick={() =>
-                      API.uploadPic(pictureInfo).then((v) => setPictureUrl(v))
+                      pictureInfo &&
+                      API.uploadPic(pictureInfo).then((v: string) => {
+                        setPictureUrl(v);
+                        setLabelState(true);
+                      })
                     }
                   >
                     Upload photo
                   </UploadPhoto>
-                  <CancelPhoto onClick={() => setPictureInfo(undefined)}>
+                  <CancelPhoto
+                    onClick={() => {
+                      setPictureInfo(undefined);
+                      setLabelState(true);
+                    }}
+                  >
                     Cancel
                   </CancelPhoto>
                 </>
@@ -328,7 +338,7 @@ export const ProfileForms: React.FC<{
               loadOptions={getFacilities}
               validate={(v) => undefined}
               defaultValue={
-                info?.facilities[0]?.u_name
+                info?.facilities[0]
                   ? {
                       label: info?.facilities[0].u_name,
                       value: info?.facilities[0],

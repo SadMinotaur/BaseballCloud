@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import { SignInResp } from "./types/req-types";
+import { SignInResp, PictureResp } from "./types/req-types";
 
 class Api {
   public id: number = localStorage.getItem("id")
@@ -97,9 +97,12 @@ class Api {
       {
         headers: this.getStandardHeaders(),
       }
-    ).then((v) => {
+    ).then((v: { data: PictureResp }) => {
       this.putReq(v.data.signedUrl);
-      return v.data.signedUrl;
+      return (
+        "https://baseballcloud-staging-assets.s3.us-east-2.amazonaws.com/" +
+        v.data.fileKey
+      );
     });
   }
 
@@ -113,7 +116,7 @@ class Api {
   }
 
   private putReq(url: string) {
-    return Axios.put(url, {}, { headers: this.getStandardHeaders() });
+    return Axios.put(url, { headers: this.getStandardHeaders() });
   }
 
   private getStandardHeaders() {
