@@ -3,6 +3,7 @@ import { Spinner } from "../../../utils/common-components/spinner";
 import { Graphql } from "../graphql/query";
 import { StatsBlock } from "../StatsBlock";
 import { ProfileForms } from "./../ProfileForms";
+import { CommonGraphql } from "./../../../utils/common-query";
 import { Container } from "./styles";
 import { YourAccount } from "./../YourAccount";
 import { ProfileTotal } from "./../ProfileTotal";
@@ -28,7 +29,7 @@ export const ProfilePage: React.FC<{
   }
 
   useEffect(() => {
-    API.graphqlPost(Graphql.getCurrentUserInfo, {}).then(
+    API.graphqlPost(CommonGraphql.getCurrentUserInfo, {}).then(
       (v: { current_profile: { id: number } }) =>
         API.graphqlPost(Graphql.getUserInfo, {
           id: userId ? userId.toString() : v.current_profile.id,

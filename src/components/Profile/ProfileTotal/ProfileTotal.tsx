@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Styles } from "./styles";
 import { GraphqlProfile } from "../../../utils/types/profile";
-import { GraphqlCom } from "./../../../utils/graphql";
+import { CommonGraphql } from "./../../../utils/common-query";
 import { SectText } from "../SectionText";
+import { ToNormalState } from "../../../utils/convert-name";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
@@ -29,7 +30,7 @@ export const ProfileTotal: React.FC<{
   }, [info.avatar]);
 
   const makeFavorite = () =>
-    API.graphqlPost(GraphqlCom.favoriteProfile, {
+    API.graphqlPost(CommonGraphql.favorite, {
       variables: { form: { profile_id: info.id, favorite: !favorite } },
     })
       .then(() => {
@@ -58,11 +59,11 @@ export const ProfileTotal: React.FC<{
         />
       </CommonStyle.ProfileContainer>
       <Styles.NameContainer>
-        <h3>
+        <Styles.ProfileName>
           {info?.first_name} {info?.last_name}
-        </h3>
-        <h4>{info?.position}</h4>
-        <h4>{info?.position2}</h4>
+        </Styles.ProfileName>
+        <h5>{info?.position && ToNormalState(info?.position)}</h5>
+        <h5>{info?.position2 && ToNormalState(info?.position2)}</h5>
       </Styles.NameContainer>
       <Styles.ItemsRow>
         <div>
@@ -105,15 +106,15 @@ export const ProfileTotal: React.FC<{
       </Styles.ItemsRow>
       {info.school && (
         <>
-          <p>School</p>
+          <CommonStyle.ItemHeadText>School</CommonStyle.ItemHeadText>
           <h4>{info.school.name}</h4>
-          <p>School Year</p>
-          <h4>{info.school_year}</h4>
+          <CommonStyle.ItemHeadText>School Year</CommonStyle.ItemHeadText>
+          <h4>{ToNormalState(info.school_year)}</h4>
         </>
       )}
       {info.teams.length !== 0 && (
         <>
-          <p>Team</p>
+          <CommonStyle.ItemHeadText>Team</CommonStyle.ItemHeadText>
           <h4>
             {info.teams.map((v, i: number) =>
               info.teams.length - 1 !== i ? v.name + ", " : v.name
@@ -123,8 +124,12 @@ export const ProfileTotal: React.FC<{
       )}
       {info.facilities.length > 0 && (
         <>
-          <p>Facility</p>
-          <h4>{info.facilities[0].u_name}</h4>
+          <CommonStyle.ItemHeadText>Facility</CommonStyle.ItemHeadText>
+          <h4>
+            {info.facilities.map((v, i: number) =>
+              info.facilities.length - 1 !== i ? v.u_name + ", " : v.u_name
+            )}
+          </h4>
         </>
       )}
       {info.biography && (

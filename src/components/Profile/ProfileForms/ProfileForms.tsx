@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
+import { ToNormalState } from "../../../utils/convert-name";
 import { FormsDropdown } from "./../FormsDropdown";
 import {
   FormsDiv,
   Row,
   ButtonProfile,
   WarningText,
-  CancelPhoto,
-  UploadPhoto,
+  PhotoLabel,
   DropdownSpacing,
 } from "./styles";
 import { FormsAbout } from "./../FormsAbout";
@@ -120,11 +120,16 @@ export const ProfileForms: React.FC<{
                   }}
                 />
               </div>
-              <label htmlFor="my-file">{labelState && "Choose photo"}</label>
-              <label>{pictureInfo && !labelState && pictureInfo.name}</label>
+              <PhotoLabel htmlFor="my-file">
+                {labelState && "Choose photo"}
+              </PhotoLabel>
+              <PhotoLabel>
+                {pictureInfo && !labelState && pictureInfo.name}
+              </PhotoLabel>
               {!labelState && (
                 <>
-                  <UploadPhoto
+                  <PhotoLabel
+                    colorBlue={true}
                     onClick={() =>
                       pictureInfo &&
                       API.uploadPic(pictureInfo).then((v: string) => {
@@ -134,15 +139,15 @@ export const ProfileForms: React.FC<{
                     }
                   >
                     Upload photo
-                  </UploadPhoto>
-                  <CancelPhoto
+                  </PhotoLabel>
+                  <PhotoLabel
                     onClick={() => {
                       setPictureInfo(undefined);
                       setLabelState(true);
                     }}
                   >
                     Cancel
-                  </CancelPhoto>
+                  </PhotoLabel>
                 </>
               )}
             </CommonStyle.ProfileContainer>
@@ -169,8 +174,8 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => (v ? undefined : "Position Required")}
               defaultValue={
                 info?.position && {
-                  label: info?.position,
-                  value: info?.position,
+                  label: ToNormalState(info.position),
+                  value: info.position,
                 }
               }
               options={[
@@ -189,8 +194,8 @@ export const ProfileForms: React.FC<{
               validate={(v: string) => undefined}
               defaultValue={
                 info?.position2 && {
-                  label: info?.position2,
-                  value: info?.position2,
+                  label: ToNormalState(info.position2),
+                  value: info.position2,
                 }
               }
               options={[
@@ -253,8 +258,8 @@ export const ProfileForms: React.FC<{
                   defaultValue={
                     info?.throws_hand
                       ? {
-                          label: info?.throws_hand,
-                          value: info?.throws_hand,
+                          label: ToNormalState(info.throws_hand),
+                          value: info.throws_hand,
                         }
                       : undefined
                   }
@@ -272,14 +277,14 @@ export const ProfileForms: React.FC<{
                   defaultValue={
                     info?.bats_hand
                       ? {
-                          label: info?.bats_hand,
-                          value: info?.bats_hand,
+                          label: ToNormalState(info.bats_hand),
+                          value: info.bats_hand,
                         }
                       : undefined
                   }
                   options={[
-                    { value: "R", label: "R" },
-                    { value: "L", label: "L" },
+                    { value: "r", label: "R" },
+                    { value: "l", label: "L" },
                   ]}
                 />
               </DropdownSpacing>
@@ -292,8 +297,8 @@ export const ProfileForms: React.FC<{
               validate={(v) => undefined}
               defaultValue={
                 info?.school && {
-                  label: info?.school.name,
-                  value: info?.school,
+                  label: ToNormalState(info.school.name),
+                  value: info.school,
                 }
               }
             />
@@ -303,8 +308,8 @@ export const ProfileForms: React.FC<{
               validate={(v) => undefined}
               defaultValue={
                 info?.school_year && {
-                  label: info?.school_year,
-                  value: info?.school_year,
+                  label: ToNormalState(info.school_year),
+                  value: info.school_year,
                 }
               }
               options={[

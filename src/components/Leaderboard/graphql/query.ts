@@ -43,9 +43,4 @@ export const Graphql = {
       }
     }
   }`,
-  favorite: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
-      update_favorite_profile(input: $form) {
-        favorite
-      }
-    }`,
 };

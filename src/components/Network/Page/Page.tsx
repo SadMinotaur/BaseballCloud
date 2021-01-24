@@ -3,7 +3,7 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { GraphqlCom } from "./../../../utils/graphql";
+import { CommonGraphql } from "./../../../utils/common-query";
 import { Profiles, ProfilesInfo } from "../../../utils/types/network";
 import { Graphql } from "./../graphql/query";
 import { NetworkContent } from "./../NetworkContent";
@@ -48,7 +48,7 @@ export const NetworkPage: React.FC<{
   };
 
   function onClickFav(v: ProfilesInfo): void {
-    API.graphqlPost(GraphqlCom.favoriteProfile, {
+    API.graphqlPost(CommonGraphql.favorite, {
       form: {
         favorite: !v.favorite,
         profile_id: v.id,

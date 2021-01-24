@@ -35,4 +35,9 @@ export const Styles = {
     text-align: center;
     width: 100%;
   `,
+  ProfileName: styled.div`
+    font-size: 20px;
+    line-height: 24px;
+    color: #414f5a;
+  `,
 };

@@ -63,9 +63,15 @@ export const WarningText = styled.p`
   font-size: 1.6rem;
 `;
 
-export const UploadPhoto = styled.label`
-  color: #48bbff;
-  margin-right: 10px;
+export const PhotoLabel = styled.label<{ colorBlue?: boolean }>`
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 400;
+  color: ${(p) => (p.colorBlue ? "#48bbff" : "#788b99")};
+  cursor: pointer;
+  margin: 5px ${(p) => (p.colorBlue ? "10px" : 0)} 10px 0;
+  :hover {
+    color: #48bbff;
+    text-decoration: underline;
+  }
 `;
-
-export const CancelPhoto = styled.label``;

@@ -86,7 +86,7 @@ export const Cards: React.FC<{
       <CommonStyle.HeaderTab active={true}>Comparison</CommonStyle.HeaderTab>
       <Stl.Table>
         <Stl.ResponsiveRow>
-          <div>
+          <Stl.Text>
             <Stl.Image
               src={
                 pictureMain
@@ -96,7 +96,7 @@ export const Cards: React.FC<{
               alt="avatar"
             />
             {info?.first_name} {info?.last_name}
-          </div>
+          </Stl.Text>
           <div style={{ position: "relative" }}>
             <Stl.Spinner>
               <BeatLoader color={"#48bbff"} loading={loadingNames} size={10} />
@@ -132,21 +132,26 @@ export const Cards: React.FC<{
           </div>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>Age: {info?.age}</h4>
-          <h4>Age: {choosedProfile?.age}</h4>
+          <Stl.Text>Age: {info?.age}</Stl.Text>
+          <Stl.Text>
+            Age: {choosedProfile?.age ? choosedProfile.age : " -"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>
+          <Stl.Text>
             Height: {info?.feet} ft {info?.inches && info?.inches + " in"}
-          </h4>
-          <h4>
-            Height: {choosedProfile?.feet} ft
-            {choosedProfile?.inches && info?.inches + " in"}
-          </h4>
+          </Stl.Text>
+          <Stl.Text>
+            Height: {choosedProfile?.feet ? choosedProfile?.feet + "ft" : " -"}
+            {choosedProfile?.inches && info.inches + " in"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
         <Stl.ResponsiveRow>
-          <h4>Weight: {info?.weight} lbs</h4>
-          <h4>Weight: {choosedProfile?.weight} lbs</h4>
+          <Stl.Text>Weight: {info?.weight} lbs</Stl.Text>
+          <Stl.Text>
+            Weight:
+            {choosedProfile?.weight ? choosedProfile.weight + "lbs" : " -"}
+          </Stl.Text>
         </Stl.ResponsiveRow>
       </Stl.Table>
       <Stl.Dropdown>
