@@ -126,9 +126,11 @@ export const ProfileForms: React.FC<{
               <PhotoLabel htmlFor="my-file">
                 {labelState && "Choose photo"}
               </PhotoLabel>
-              <PhotoLabel>
-                {pictureInfo && !labelState && pictureInfo.name}
-              </PhotoLabel>
+              <DropdownSpacing>
+                <PhotoLabel>
+                  {pictureInfo && !labelState && pictureInfo.name}
+                </PhotoLabel>
+              </DropdownSpacing>
               {!labelState && (
                 <>
                   <PhotoLabel

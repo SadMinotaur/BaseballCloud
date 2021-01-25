@@ -90,8 +90,8 @@ class Api {
     );
   }
 
-  private putReq(url: string) {
-    return Axios.put(url, { headers: this.getStandardHeaders() });
+  private async putReq(url: string) {
+    return Axios.put(url);
   }
 
   public async uploadPic(picture: File): Promise<string> {
@@ -101,16 +101,16 @@ class Api {
       {
         headers: this.getStandardHeaders(),
       }
-    ).then((v: { data: PictureResp }) => {
-      this.putReq(v.data.signedUrl);
-      return (
-        "https://baseballcloud-staging-assets.s3.us-east-2.amazonaws.com/" +
-        v.data.fileKey
-      );
-    });
+    ).then((v: { data: PictureResp }) =>
+      this.putReq(v.data.signedUrl).then(
+        () =>
+          "https://baseballcloud-staging-assets.s3.us-east-2.amazonaws.com/" +
+          v.data.fileKey
+      )
+    );
   }
 
-  public validateToken() {
+  public async validateToken() {
     return Axios.get(
       "https://baseballcloud-back.herokuapp.com/api/v1/auth/validate_token",
       {
