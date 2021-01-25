@@ -4,6 +4,7 @@ import { GraphqlProfile } from "../../../utils/types/profile";
 import { CommonGraphql } from "./../../../utils/common-query";
 import { SectText } from "../SectionText";
 import { ToNormalState } from "../../../utils/convert-name";
+import { MakeFavorite } from "./../../../utils/make-favotite";
 import CommonStyle from "../../../utils/common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
@@ -29,19 +30,11 @@ export const ProfileTotal: React.FC<{
     info.avatar && API.getPicture(info.avatar).then((v) => setPicture(v));
   }, [info.avatar]);
 
-  const makeFavorite = () =>
-    API.graphqlPost(CommonGraphql.favorite, {
-      variables: { form: { profile_id: info.id, favorite: !favorite } },
-    })
-      .then(() => {
-        setFavorite(!favorite);
-        ShowSuccessToast(
-          `This profile ${
-            favorite ? "removed from favorite" : "added to favorite"
-          }  list successfully.`
-        );
-      })
+  function makeFavorite(): void {
+    MakeFavorite(!favorite, parseInt(info.id), ShowSuccessToast)
+      .then(() => setFavorite(!favorite))
       .catch(() => ShowErrorToast("Error updating profile"));
+  }
 
   return (
     <Styles.Container>

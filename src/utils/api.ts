@@ -101,13 +101,13 @@ class Api {
       {
         headers: this.getStandardHeaders(),
       }
-    ).then((v: { data: PictureResp }) =>
-      this.putReq(v.data.signedUrl).then(
-        () =>
-          "https://baseballcloud-staging-assets.s3.us-east-2.amazonaws.com/" +
-          v.data.fileKey
-      )
-    );
+    ).then((v: { data: PictureResp }) => {
+      this.putReq(v.data.signedUrl);
+      return (
+        "https://baseballcloud-staging-assets.s3.us-east-2.amazonaws.com/" +
+        v.data.fileKey
+      );
+    });
   }
 
   public async validateToken() {

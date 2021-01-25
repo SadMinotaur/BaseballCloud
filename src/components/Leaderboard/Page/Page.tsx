@@ -11,7 +11,7 @@ import {
 import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
-import { CommonGraphql } from "./../../../utils/common-query";
+import { MakeFavorite } from "./../../../utils/make-favotite";
 import CommonStyle from "../../../utils/common-styles/styles";
 import API from "../../../utils/api";
 import Stl from "./styles";
@@ -47,50 +47,30 @@ export const LeaderboardPage: React.FC<{
   }, []);
 
   function onClickFavB(v: BattingUser): void {
-    API.graphqlPost(CommonGraphql.favorite, {
-      form: {
-        favorite: !v.favorite,
-        profile_id: v.batter_datraks_id,
-      },
-    })
-      .then(() => {
-        ShowSuccessToast(
-          `This profile ${
-            v.favorite ? "removed from favorite" : "added to favorite"
-          }  list successfully.`
-        );
+    MakeFavorite(!v.favorite, v.batter_datraks_id, ShowSuccessToast)
+      .then(() =>
         setBattingContent((ps: BattingUser[]) =>
           ps.map((item: BattingUser) =>
             item.batter_datraks_id !== v.batter_datraks_id
               ? item
               : { ...v, favorite: !v.favorite }
           )
-        );
-      })
+        )
+      )
       .catch(() => ShowErrorToast("Error updating profile"));
   }
 
   function onClickFavP(v: PitchingUser): void {
-    API.graphqlPost(CommonGraphql.favorite, {
-      form: {
-        favorite: !v.favorite,
-        profile_id: v.pitcher_datraks_id,
-      },
-    })
-      .then(() => {
-        ShowSuccessToast(
-          `This profile ${
-            v.favorite ? "removed from favorite" : "added to favorite"
-          }  list successfully.`
-        );
+    MakeFavorite(!v.favorite, v.pitcher_datraks_id, ShowSuccessToast)
+      .then(() =>
         setPitchingContent((ps: PitchingUser[]) =>
           ps.map((item: PitchingUser) =>
             item.pitcher_datraks_id !== v.pitcher_datraks_id
               ? item
               : { ...v, favorite: !v.favorite }
           )
-        );
-      })
+        )
+      )
       .catch(() => ShowErrorToast("Error updating profile"));
   }
 
