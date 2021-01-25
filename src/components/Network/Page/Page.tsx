@@ -3,13 +3,13 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
 import { InputBlue } from "../../../utils/common-components/input-blue";
 import { SearchInput } from "../../../utils/common-components/search-input";
-import { CommonGraphql } from "./../../../utils/common-query";
 import { Profiles, ProfilesInfo } from "../../../utils/types/network";
 import { Graphql } from "./../graphql/query";
 import { NetworkContent } from "./../NetworkContent";
+import { MakeFavorite } from "./../../../utils/make-favotite";
+import { RenderButtons } from "../RenderButtons";
 import Stl from "./styles";
 import API from "../../../utils/api";
-import { RenderButtons } from "../RenderButtons";
 
 export const NetworkPage: React.FC<{
   ShowErrorToast: (text: string) => void;
@@ -48,24 +48,14 @@ export const NetworkPage: React.FC<{
   };
 
   function onClickFav(v: ProfilesInfo): void {
-    API.graphqlPost(CommonGraphql.favorite, {
-      form: {
-        favorite: !v.favorite,
-        profile_id: v.id,
-      },
-    })
-      .then(() => {
-        ShowSuccessToast(
-          `This profile ${
-            !v.favorite ? "added to favorite" : "removed from favorite"
-          }  list successfully.`
-        );
+    MakeFavorite(!v.favorite, v.id, ShowSuccessToast)
+      .then(() =>
         setProfiles((ps: ProfilesInfo[]) =>
           ps.map((item: ProfilesInfo) =>
             item.id !== v.id ? item : { ...v, favorite: !v.favorite }
           )
-        );
-      })
+        )
+      )
       .catch(() => ShowErrorToast("Error updating profile"));
   }
 
