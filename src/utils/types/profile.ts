@@ -47,21 +47,22 @@ export type GraphqlProfile = {
 };
 
 export type UpdateProfile = {
-  age: number;
-  bats_hand: string;
-  biography: string;
-  facilities: { id: string; u_name: string }[];
-  feet: number;
-  first_name: string;
   id: string;
-  inches: number;
+  first_name: string;
   last_name: string;
-  position: string;
-  school: { id: number; name: string }[];
-  school_year: string;
-  teams: [];
-  throws_hand: string;
-  weight: number;
+  age: string;
+  biography: string;
+  feet: string;
+  inches: string;
+  position: Options;
+  position2: Options;
+  school_year: Options;
+  throws_hand: Options;
+  bats_hand: Options;
+  weight: string;
+  school: Options;
+  teams: Options[];
+  facilities: Options[];
 };
 
 export type Event = {

@@ -22,6 +22,7 @@ export const TextF: React.FC<{
       {({ input, meta }) => (
         <DropdownSpacing leftMargin={space}>
           <Stl.TextF
+            key={name}
             {...input}
             id="filled-basic"
             label={label}

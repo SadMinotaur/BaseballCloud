@@ -21,7 +21,7 @@ export const NetworkPage: React.FC<{
   const [showNum, setShowNum] = useState<number>(10);
   const [profiles, setProfiles] = useState<ProfilesInfo[]>([]);
 
-  function updateContent(v: any, offsetC?: number): void {
+  function updateContent(v: Record<string, any>, offsetC?: number): void {
     const offs = offsetC ? offsetC : 0;
     const req = {
       ...v,
@@ -35,7 +35,7 @@ export const NetworkPage: React.FC<{
     getProfiles(req);
   }
 
-  const getProfiles = (req: any) => {
+  const getProfiles = (req: Record<string, any>) => {
     setLoadingContent(true);
     API.graphqlPost(Graphql.getProfiles, {
       input: req,
@@ -171,7 +171,6 @@ export const NetworkPage: React.FC<{
               updateContent={updateContent}
               values={values}
             />
-
             <FormSpy
               subscription={{ values: true }}
               onChange={(v) => updateContent(v.values)}

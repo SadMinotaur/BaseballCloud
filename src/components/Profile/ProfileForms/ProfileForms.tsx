@@ -14,7 +14,11 @@ import { FormsAbout } from "./../FormsAbout";
 import { Graphql } from "../graphql/query";
 import { TextF } from "./../FormsInput";
 import { SectText } from "./../SectionText";
-import { GraphqlProfile, Options } from "../../../utils/types/profile";
+import {
+  GraphqlProfile,
+  Options,
+  UpdateProfile,
+} from "../../../utils/types/profile";
 import { Facilities, School, Team } from "../../../utils/types/req-types";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
@@ -30,9 +34,9 @@ export const ProfileForms: React.FC<{
   const [defaultPicture, setDefaultPicture] = useState<string>(PictureProf);
   const [pictureUrl, setPictureUrl] = useState<string>();
   const [pictureInfo, setPictureInfo] = useState<File>();
-  const [labelState, setLabelState] = useState(true);
+  const [labelState, setLabelState] = useState<boolean>(true);
 
-  function onSubmitForm(v: any): void {
+  function onSubmitForm(v: UpdateProfile): void {
     API.graphqlPost(Graphql.updateProfile, {
       form: {
         ...v,

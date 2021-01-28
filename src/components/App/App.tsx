@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Footer } from "../Footer/Footer";
 import { LoginPageStyle, MainComp, Toaster } from "./styles";
 import { Switch, Route, useHistory } from "react-router-dom";
@@ -18,7 +18,10 @@ export const App: React.FC = () => {
   const refC = useRef<ToastContainer>(null);
   const history = useHistory();
 
-  API.validateToken().catch(() => history.push("/login"));
+  useEffect(() => {
+    API.validateToken().catch(() => history.push("/login"));
+    return () => {};
+  }, [history]);
 
   function ShowSuccessToast(text: string): void {
     refC.current &&

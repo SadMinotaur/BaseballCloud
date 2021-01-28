@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Styles } from "./styles";
 import { GraphqlProfile } from "../../../utils/types/profile";
-import { CommonGraphql } from "./../../../utils/common-query";
 import { SectText } from "../SectionText";
 import { ToNormalState } from "../../../utils/convert-name";
 import { MakeFavorite } from "./../../../utils/make-favotite";

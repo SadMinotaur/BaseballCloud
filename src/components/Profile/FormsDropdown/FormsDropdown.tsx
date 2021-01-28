@@ -16,11 +16,11 @@ const Control: React.FC = (props: any) => (
 );
 
 export const FormsDropdown: React.FC<{
-  validate: (v: any) => undefined | string;
-  defaultValue: Options | Options[] | undefined;
   placeholder: string;
   name: string;
+  defaultValue: Options | Options[] | undefined;
   loadOptions?: () => Promise<any>;
+  validate: (v: any) => undefined | string;
   options?: { value: string; label: string }[];
   multiple?: boolean;
 }> = ({

@@ -23,3 +23,13 @@ export type ProfilesInfo = {
 };
 
 export type ButtonState = { button: string; state: string };
+
+export type ReqType = {
+  age: string;
+  favorite: string;
+  player_name: string;
+  position: string;
+  profiles_count: string;
+  school: string;
+  team: string;
+};

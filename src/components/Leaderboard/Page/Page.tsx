@@ -26,25 +26,31 @@ export const LeaderboardPage: React.FC<{
   const [contentBatting, setBattingContent] = useState<BattingUser[]>([]);
   const [contentPitching, setPitchingContent] = useState<PitchingUser[]>([]);
 
-  const getB = useCallback((req: object = { type: "exit_velocity" }) => {
-    setLoadingContent(true);
-    API.graphqlPost(Graphql.getBatting, {
-      input: req,
-    }).then((v: GetBatting) => {
-      setBattingContent(v.leaderboard_batting.leaderboard_batting);
-      setLoadingContent(false);
-    });
-  }, []);
+  const getB = useCallback(
+    (req: Record<string, any> = { type: "exit_velocity" }) => {
+      setLoadingContent(true);
+      API.graphqlPost(Graphql.getBatting, {
+        input: req,
+      }).then((v: GetBatting) => {
+        setBattingContent(v.leaderboard_batting.leaderboard_batting);
+        setLoadingContent(false);
+      });
+    },
+    []
+  );
 
-  const getP = useCallback((req: object = { type: "pitch_velocity" }) => {
-    setLoadingContent(true);
-    API.graphqlPost(Graphql.getPitching, {
-      input: req,
-    }).then((v: GetPitching) => {
-      setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
-      setLoadingContent(false);
-    });
-  }, []);
+  const getP = useCallback(
+    (req: Record<string, any> = { type: "pitch_velocity" }) => {
+      setLoadingContent(true);
+      API.graphqlPost(Graphql.getPitching, {
+        input: req,
+      }).then((v: GetPitching) => {
+        setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
+        setLoadingContent(false);
+      });
+    },
+    []
+  );
 
   function onClickFavB(v: BattingUser): void {
     MakeFavorite(!v.favorite, v.batter_datraks_id, ShowSuccessToast)
