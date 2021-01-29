@@ -112,7 +112,7 @@ export const StatsBlock: React.FC<{ info: GraphqlProfile }> = ({ info }) => {
         <Text>Recent Session Reports</Text>
         <p>No data currently linked to this profile</p>
       </Stats>
-      <Stats height={"600px"}>
+      <Stats height={"500px"}>
         <Cards
           info={info}
           topBatting={

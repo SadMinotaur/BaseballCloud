@@ -35,7 +35,7 @@ export const NetworkPage: React.FC<{
     getProfiles(req);
   }
 
-  const getProfiles = (req: Record<string, any>) => {
+  function getProfiles(req: Record<string, any>): void {
     setLoadingContent(true);
     API.graphqlPost(Graphql.getProfiles, {
       input: req,
@@ -45,7 +45,7 @@ export const NetworkPage: React.FC<{
       setTotalNumber(prof.total_count);
       setLoadingContent(false);
     });
-  };
+  }
 
   function onClickFav(v: ProfilesInfo): void {
     MakeFavorite(!v.favorite, v.id, ShowSuccessToast)
