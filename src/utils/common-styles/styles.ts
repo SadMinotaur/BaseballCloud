@@ -72,8 +72,8 @@ const CommonStyle = {
       height: fit-content;
     }
   `,
-  ItemColumn: styled.div<{ hided?: boolean }>`
-    display: ${(p) => (p.hided ? "none" : "flex")};
+  ItemColumn: styled.div<{ hidden?: boolean }>`
+    display: ${(p) => (p.hidden ? "none" : "flex")};
     width: 100%;
     justify-content: space-between;
     @media (max-width: 700px) {

@@ -13,7 +13,7 @@ export const Item: React.FC<{
   currentSwitch: boolean;
 }> = ({ arr, onC, fav, currentSwitch, idProfile }) => (
   <CommonStyle.Item>
-    <CommonStyle.ItemColumn hided={true}>
+    <CommonStyle.ItemColumn hidden={true}>
       <CommonStyle.ItemText>Rank</CommonStyle.ItemText>
       <CommonStyle.ItemText>
         {currentSwitch ? "Batter" : "Pitcher"} Name

@@ -28,7 +28,7 @@ export const NetworkContent: React.FC<{
     ) : (
       content.map((v, i: number) => (
         <CommonStyle.Item key={i}>
-          <CommonStyle.ItemColumn hided={true}>
+          <CommonStyle.ItemColumn hidden={true}>
             <CommonStyle.ItemText>Rank</CommonStyle.ItemText>
             <CommonStyle.ItemText>Sessions</CommonStyle.ItemText>
             <CommonStyle.ItemText>School</CommonStyle.ItemText>
