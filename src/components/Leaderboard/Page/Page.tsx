@@ -39,18 +39,15 @@ export const LeaderboardPage: React.FC<{
     []
   );
 
-  const getP = useCallback(
-    (req: Record<string, any> = { type: "pitch_velocity" }) => {
-      setLoadingContent(true);
-      API.graphqlPost(Graphql.getPitching, {
-        input: req,
-      }).then((v: GetPitching) => {
-        setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
-        setLoadingContent(false);
-      });
-    },
-    []
-  );
+  function getP(req: Record<string, any> = { type: "pitch_velocity" }): void {
+    setLoadingContent(true);
+    API.graphqlPost(Graphql.getPitching, {
+      input: req,
+    }).then((v: GetPitching) => {
+      setPitchingContent(v.leaderboard_pitching.leaderboard_pitching);
+      setLoadingContent(false);
+    });
+  }
 
   function onClickFavB(v: BattingUser): void {
     MakeFavorite(!v.favorite, v.batter_datraks_id, ShowSuccessToast)

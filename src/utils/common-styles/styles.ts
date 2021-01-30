@@ -53,13 +53,14 @@ const CommonStyle = {
     font-size: 14px;
     font-weight: 300;
     color: #667784;
+    @media (max-width: 700px) {
+      display: none;
+    }
   `,
   Item: styled.div`
     padding: 10px 0 10px 6px;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     border-radius: 4px;
     background-color: #f7f8f9;
     margin: 0 0 5px 0;
@@ -67,17 +68,28 @@ const CommonStyle = {
       background-color: #ecf8ff;
     }
     @media (max-width: 700px) {
-      flex-direction: column;
-      align-items: flex-start;
+      justify-content: space-evenly;
       height: fit-content;
+    }
+  `,
+  ItemColumn: styled.div<{ hidden?: boolean }>`
+    display: ${(p) => (p.hidden ? "none" : "flex")};
+    width: 100%;
+    justify-content: space-between;
+    @media (max-width: 700px) {
+      display: flex;
+      flex-direction: column;
     }
   `,
   ItemText: styled.div<{ width?: number }>`
     width: ${(p) => p.width && p.width}%;
     font-size: 14px;
-    line-height: 1.13;
+    line-height: 20px;
     font-weight: 400;
     color: #414f5a;
+    @media (max-width: 700px) {
+      width: 100%;
+    }
   `,
   HeaderTab: styledComponentsTS<{ active: boolean }>(styled.button)`
     padding: 8px;

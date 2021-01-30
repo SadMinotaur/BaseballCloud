@@ -49,6 +49,7 @@ export const LeaderboardContent: React.FC<{
               <Item
                 key={i}
                 idProfile={v.batter_datraks_id}
+                currentSwitch={currentSwitch}
                 arr={[
                   (i + 1).toString(),
                   v.batter_name,
@@ -67,6 +68,7 @@ export const LeaderboardContent: React.FC<{
               <Item
                 key={i}
                 idProfile={v.pitcher_datraks_id}
+                currentSwitch={currentSwitch}
                 arr={[
                   (i + 1).toString(),
                   v.pitcher_name,
