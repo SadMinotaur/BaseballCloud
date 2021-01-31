@@ -20,6 +20,7 @@ import {
   UpdateProfile,
 } from "../../../utils/types/profile";
 import { Facilities, School, Team } from "../../../utils/types/req-types";
+import { CombinedInputs } from "./../CombinedInputs";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
@@ -101,6 +102,28 @@ export const ProfileForms: React.FC<{
         setDefaultPicture(`data:image/jpeg;base64,${v}`)
       );
   }, [info]);
+
+  function fieldValidation(
+    less: string,
+    lessNum: number,
+    max: string,
+    maxNum: number,
+    req: string | undefined
+  ) {
+    return (v: string) => {
+      if (v) {
+        if (parseInt(v) >= lessNum) {
+          if (parseInt(v) > maxNum) {
+            return max;
+          } else {
+            return undefined;
+          }
+        } else {
+          return less;
+        }
+      } else return req;
+    };
+  }
 
   return (
     <FormsDiv>
@@ -219,51 +242,53 @@ export const ProfileForms: React.FC<{
                 { label: "Pitcher", value: "pitcher" },
               ]}
             />
-            <SectText text="Personal Info" />
+            <SectText textSize={220} text="Personal Info" />
             <TextF
               name="age"
               label="Age*"
               defaultValue={info.age?.toString()}
-              validate={(v: string) => (v ? undefined : "Age Required")}
+              validate={fieldValidation(
+                "You must be older than 0",
+                0,
+                "Must not be older than 30",
+                30,
+                "Age Required"
+              )}
             />
-            <Row>
-              <TextF
-                name="feet"
-                label="Feet*"
-                defaultValue={info.feet?.toString()}
-                validate={(v: string) => {
-                  if (v) {
-                    if (parseInt(v) > 3) {
-                      if (parseInt(v) > 7) {
-                        return "Maximum height is 7";
-                      } else {
-                        return undefined;
-                      }
-                    } else {
-                      return "Minimum height is 4";
-                    }
-                  } else return "Feet Required";
-                }}
-              />
-              <TextF
-                name="inches"
-                label="Inches"
-                space={true}
-                defaultValue={info.inches?.toString()}
-                validate={(v: string) => undefined}
-              />
-            </Row>
+            <CombinedInputs
+              nameFirst="feet"
+              nameSecond="inches"
+              labelFirst="Feet*"
+              labelSecond="Inches*"
+              defaultValueFirst={info.feet?.toString()}
+              defaultValueSecond={info.inches?.toString()}
+              validateFirst={fieldValidation(
+                "Minimum height is 4",
+                4,
+                "Maximum height is 7",
+                7,
+                "Feet Required"
+              )}
+              validateSecond={fieldValidation(
+                "Inches can be from 0 to 11",
+                0,
+                "Inches can be from 0 to 11",
+                11,
+                undefined
+              )}
+              type="number"
+            />
             <TextF
               name="weight"
               label="Weight*"
               defaultValue={info.weight?.toString()}
-              validate={(v: string) =>
-                v
-                  ? parseInt(v) > 39
-                    ? undefined
-                    : "Minimal weight is 50 lbs"
-                  : "Weight Required"
-              }
+              validate={fieldValidation(
+                "Minimal weight is 50 lbs",
+                50,
+                "Maximum weight is 350 lbs",
+                350,
+                "Weight Required"
+              )}
             />
             <Row>
               <DropdownSpacing>

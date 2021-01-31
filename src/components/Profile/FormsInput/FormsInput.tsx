@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field } from "react-final-form";
-import { Stl, MaterialStyles } from "./styles";
-import { DropdownSpacing, WarningText } from "./styles";
+import { Stl, MaterialStyles } from "../../../utils/common-styles/input-styles";
+import {
+  DropdownSpacing,
+  WarningText,
+} from "../../../utils/common-styles/input-styles";
 
 export const TextF: React.FC<{
   name: string;
@@ -12,6 +15,7 @@ export const TextF: React.FC<{
   type?: string;
 }> = ({ name, label, validate, space, type, defaultValue }) => {
   const mStyles = MaterialStyles();
+  const [state, setState] = useState<boolean>(true);
   return (
     <Field
       name={name}
@@ -27,12 +31,17 @@ export const TextF: React.FC<{
             id="filled-basic"
             label={label}
             variant="filled"
+            onFocus={() => setState(false)}
+            onBlur={() => setState(true)}
             InputProps={{
               disableUnderline: true,
               className: mStyles.input,
             }}
             InputLabelProps={{
               className: mStyles.label,
+              style: {
+                visibility: input.value && state ? "hidden" : "visible",
+              },
             }}
           />
           {meta.error && meta.touched && (

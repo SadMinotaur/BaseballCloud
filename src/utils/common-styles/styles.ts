@@ -33,7 +33,7 @@ const CommonStyle = {
     font-weight: 400;
     color: #667784;
     border: 1px solid transparent;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   `,
   ItemHead: styled.div`
     padding: 10px 0 10px 6px;

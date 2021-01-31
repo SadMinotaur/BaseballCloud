@@ -8,7 +8,7 @@ import Select from "react-select";
 
 const Control: React.FC = (props: any) => (
   <>
-    <Stl.Label isFloating={props.isFocused || props.hasValue}>
+    <Stl.Label isFocused={props.isFocused} hasValue={props.hasValue}>
       {props.selectProps.placeholder}
     </Stl.Label>
     <components.Control {...props} />
