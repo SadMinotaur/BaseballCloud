@@ -86,6 +86,6 @@ export const SignUpSwitch = styled.div`
 `;
 
 export const Warning = styled.p`
-  margin-left: 10px;
+  margin: 0 0 5px 10px;
   color: #f05f62;
 `;

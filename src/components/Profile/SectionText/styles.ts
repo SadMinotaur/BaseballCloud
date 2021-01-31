@@ -12,11 +12,13 @@ export const Styles = {
     width: 100%;
     border: 1px solid #e7ebef;
   `,
-  SectionText: styled.p`
+  SectionText: styled.p<{ textSize?: number }>`
     line-height: 1.25;
     font-size: 18px;
     font-weight: 900;
     color: #414f5a;
     padding-right: 12px;
+
+    ${(p) => p.textSize && `width: ${p.textSize}px;`}
   `,
 };

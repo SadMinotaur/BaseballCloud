@@ -25,7 +25,7 @@ export const WarningText = styled.p`
 export const MaterialStyles = makeStyles({
   input: {
     margin: "0 0 10px 0",
-    padding: "0 0 15px 0",
+    padding: "0  0 7px 0",
     height: 40,
     borderRadius: 4,
     backgroundColor: "#eff1f3",
@@ -44,7 +44,8 @@ export const MaterialStyles = makeStyles({
   },
   label: {
     color: "#667784",
-    margin: "-3px 0 0 0",
+    margin: "-7px 0 0 0",
     fontSize: 14,
+    transition: "0.2s ease all",
   },
 });

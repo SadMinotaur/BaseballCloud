@@ -31,7 +31,8 @@ export const Stl = {
   Margin: styled.div`
     margin: 0 0 10px 0;
   `,
-  Label: styled.label<{ isFloating?: boolean }>`
+  Label: styled.label<{ isFocused: boolean; hasValue: boolean }>`
+    visibility: visible;
     color: "#667784";
     font-weight: 400;
     z-index: 100;
@@ -39,8 +40,9 @@ export const Stl = {
     pointer-events: none;
     position: absolute;
     transition: 0.2s ease all;
-    top: ${(props) => (props.isFloating ? `5px` : `35%`)};
-    font-size: ${(props) => (props.isFloating ? `0.8rem` : `1.3rem`)};
+    top: ${(props) => (props.isFocused ? `3px` : `35%`)};
+    font-size: ${(props) => (props.isFocused ? `0.8rem` : `1.3rem`)};
+    ${(props) => props.hasValue && !props.isFocused && `visibility: hidden;`}
   `,
   WarningText: styled.p`
     color: #f05f62;
