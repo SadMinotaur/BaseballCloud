@@ -22,6 +22,10 @@ export const WarningText = styled.p`
   font-size: 1.6rem;
 `;
 
+export const Row = styled.div`
+  display: flex;
+`;
+
 export const MaterialStyles = makeStyles({
   input: {
     margin: "0 0 10px 0",

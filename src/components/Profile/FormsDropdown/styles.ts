@@ -40,7 +40,7 @@ export const Stl = {
     pointer-events: none;
     position: absolute;
     transition: 0.2s ease all;
-    top: ${(props) => (props.isFocused ? `3px` : `35%`)};
+    top: ${(props) => (props.isFocused ? `2px` : `29%`)};
     font-size: ${(props) => (props.isFocused ? `0.8rem` : `1.3rem`)};
     ${(props) => props.hasValue && !props.isFocused && `visibility: hidden;`}
   `,

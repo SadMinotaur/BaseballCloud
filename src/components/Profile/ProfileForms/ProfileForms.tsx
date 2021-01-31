@@ -20,6 +20,7 @@ import {
   UpdateProfile,
 } from "../../../utils/types/profile";
 import { Facilities, School, Team } from "../../../utils/types/req-types";
+import { CombinedInputs } from "./../CombinedInputs";
 import CommonStyle from "../../../utils/common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
@@ -254,33 +255,29 @@ export const ProfileForms: React.FC<{
                 "Age Required"
               )}
             />
-            <Row>
-              <TextF
-                name="feet"
-                label="Feet*"
-                defaultValue={info.feet?.toString()}
-                validate={fieldValidation(
-                  "Minimum height is 4",
-                  4,
-                  "Maximum height is 7",
-                  7,
-                  "Feet Required"
-                )}
-              />
-              <TextF
-                name="inches"
-                label="Inches"
-                space={true}
-                defaultValue={info.inches?.toString()}
-                validate={fieldValidation(
-                  "Inches can be from 0 to 11",
-                  0,
-                  "Inches can be from 0 to 11",
-                  11,
-                  undefined
-                )}
-              />
-            </Row>
+            <CombinedInputs
+              nameFirst="feet"
+              nameSecond="inches"
+              labelFirst="Feet*"
+              labelSecond="Inches*"
+              defaultValueFirst={info.feet?.toString()}
+              defaultValueSecond={info.inches?.toString()}
+              validateFirst={fieldValidation(
+                "Minimum height is 4",
+                4,
+                "Maximum height is 7",
+                7,
+                "Feet Required"
+              )}
+              validateSecond={fieldValidation(
+                "Inches can be from 0 to 11",
+                0,
+                "Inches can be from 0 to 11",
+                11,
+                undefined
+              )}
+              type="number"
+            />
             <TextF
               name="weight"
               label="Weight*"
