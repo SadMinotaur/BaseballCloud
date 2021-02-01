@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Field } from "react-final-form";
+import { useField } from "react-final-form";
 import {
   Stl,
   MaterialStyles,
@@ -32,74 +32,69 @@ export const CombinedInputs: React.FC<{
   const mStyles = MaterialStyles();
   const [stateFirst, setFirstState] = useState<boolean>(true);
   const [stateSecond, setSecondState] = useState<boolean>(true);
+
+  const first = useField(nameFirst, {
+    validate: validateFirst,
+    defaultValue: defaultValueFirst,
+    type: type,
+  });
+
+  const second = useField(nameSecond, {
+    validate: validateSecond,
+    defaultValue: defaultValueSecond,
+    type: type,
+  });
+
   return (
-    <Field
-      name={nameFirst}
-      validate={validateFirst}
-      defaultValue={defaultValueFirst}
-      type={type}
-    >
-      {({ input, meta }) => (
-        <Field
-          name={nameSecond}
-          validate={validateSecond}
-          defaultValue={defaultValueSecond}
-          type={type}
-        >
-          {(i) => (
-            <>
-              <Row>
-                <Stl.TextF
-                  {...input}
-                  id="filled-basic"
-                  label={labelFirst}
-                  variant="filled"
-                  onFocus={() => setFirstState(false)}
-                  onBlur={() => setFirstState(true)}
-                  InputProps={{
-                    disableUnderline: true,
-                    className: mStyles.input,
-                  }}
-                  InputLabelProps={{
-                    className: mStyles.label,
-                    style: {
-                      visibility:
-                        input.value && stateFirst ? "hidden" : "visible",
-                    },
-                  }}
-                />
-                <DropdownSpacing leftMargin={true}>
-                  <Stl.TextF
-                    {...i.input}
-                    id="filled-basic"
-                    label={labelSecond}
-                    variant="filled"
-                    onFocus={() => setSecondState(false)}
-                    onBlur={() => setSecondState(true)}
-                    InputProps={{
-                      disableUnderline: true,
-                      className: mStyles.input,
-                    }}
-                    InputLabelProps={{
-                      className: mStyles.label,
-                      style: {
-                        visibility:
-                          input.value && stateSecond ? "hidden" : "visible",
-                      },
-                    }}
-                  />
-                </DropdownSpacing>
-              </Row>
-              {meta.error && meta.touched && (
-                <WarningText>{meta.error}</WarningText>
-              )}
-              {i.meta.error && i.meta.touched && (
-                <WarningText>{i.meta.error}</WarningText>
-              )}
-            </>
-          )}
-        </Field>
+    <>
+      <Row>
+        <Stl.TextF
+          {...first.input}
+          id="filled-basic"
+          label={labelFirst}
+          variant="filled"
+          onFocus={() => setFirstState(false)}
+          onBlur={() => setFirstState(true)}
+          InputProps={{
+            disableUnderline: true,
+            className: mStyles.input,
+          }}
+          InputLabelProps={{
+            className: mStyles.label,
+            style: {
+              visibility:
+                first.input.value && stateFirst ? "hidden" : "visible",
+            },
+          }}
+        />
+        <DropdownSpacing leftMargin={true}>
+          <Stl.TextF
+            {...second.input}
+            id="filled-basic"
+            label={labelSecond}
+            variant="filled"
+            onFocus={() => setSecondState(false)}
+            onBlur={() => setSecondState(true)}
+            InputProps={{
+              disableUnderline: true,
+              className: mStyles.input,
+            }}
+            InputLabelProps={{
+              className: mStyles.label,
+              style: {
+                visibility:
+                  second.input.value && stateSecond ? "hidden" : "visible",
+              },
+            }}
+          />
+        </DropdownSpacing>
+      </Row>
+      {first.meta.error && first.meta.touched && (
+        <WarningText>{first.meta.error}</WarningText>
       )}
-    </Field>
+      {second.meta.error && second.meta.touched && (
+        <WarningText>{second.meta.error}</WarningText>
+      )}
+    </>
   );
 };
