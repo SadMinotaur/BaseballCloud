@@ -1,6 +1,6 @@
 import React from "react";
 import Dropdown from "react-dropdown";
-import { Options } from "../../types/req-types";
+import { Options } from "../../utils/types/req-types";
 import "./style.css";
 
 export const DropdownBlue: React.FC<{

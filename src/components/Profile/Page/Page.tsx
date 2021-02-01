@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "../../../utils/common-components/spinner";
+import { Spinner } from "../../../common-components/spinner";
 import { Graphql } from "../graphql/query";
 import { StatsBlock } from "../StatsBlock";
 import { ProfileForms } from "./../ProfileForms";

@@ -6,7 +6,7 @@ import {
   Row,
   DropdownSpacing,
   WarningText,
-} from "../../../utils/common-styles/input-styles";
+} from "../../../common-styles/input-styles";
 
 export const CombinedInputs: React.FC<{
   nameFirst: string;

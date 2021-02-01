@@ -1,6 +1,6 @@
 import React from "react";
 import Stl from "./styles";
-import Search from "./../../../assets/search.svg";
+import Search from "./../../assets/search.svg";
 
 export const SearchInput: React.FC<{
   placeholder: string;

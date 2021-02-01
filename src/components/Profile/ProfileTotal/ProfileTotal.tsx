@@ -4,7 +4,7 @@ import { GraphqlProfile } from "../../../utils/types/profile";
 import { SectText } from "../SectionText";
 import { ToNormalState } from "../../../utils/convert-name";
 import { MakeFavorite } from "./../../../utils/make-favotite";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import AgeSvg from "./../../../assets/profile/age.svg";
 import HeightSvg from "./../../../assets/profile/height.svg";
 import WeightSvg from "./../../../assets/profile/weight.svg";

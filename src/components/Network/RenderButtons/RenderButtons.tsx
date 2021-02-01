@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonState } from "../../../utils/types/network";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import usePagination from "../../../utils/usePagination";
 
 export const RenderButtons: React.FC<{

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Graphql } from "./../graphql/query";
-import { InputBlue } from "../../../utils/common-components/input-blue";
-import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
+import { InputBlue } from "../../../common-components/input-blue";
+import { DropdownBlue } from "../../../common-components/dropdown-blue";
 import {
   BattingUser,
   PitchingUser,
@@ -12,7 +12,7 @@ import { Field, Form, FormSpy } from "react-final-form";
 import { FormState } from "final-form";
 import { LeaderboardContent } from "./../LeaderboardContent";
 import { MakeFavorite } from "./../../../utils/make-favotite";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import API from "../../../utils/api";
 import Stl from "./styles";
 

@@ -21,7 +21,12 @@ import {
 } from "../../../utils/types/profile";
 import { Facilities, School, Team } from "../../../utils/types/req-types";
 import { CombinedInputs } from "./../CombinedInputs";
-import CommonStyle from "../../../utils/common-styles/styles";
+import { fieldValidation } from "./../../../utils/validation/profile";
+import {
+  noValidation,
+  requiredValue,
+} from "./../../../utils/validation/common";
+import CommonStyle from "../../../common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
@@ -103,28 +108,6 @@ export const ProfileForms: React.FC<{
       );
   }, [info]);
 
-  function fieldValidation(
-    less: string,
-    lessNum: number,
-    max: string,
-    maxNum: number,
-    req: string | undefined
-  ) {
-    return (v: string) => {
-      if (v) {
-        if (parseInt(v) >= lessNum) {
-          if (parseInt(v) > maxNum) {
-            return max;
-          } else {
-            return undefined;
-          }
-        } else {
-          return less;
-        }
-      } else return req;
-    };
-  }
-
   return (
     <FormsDiv>
       <Form
@@ -189,22 +172,20 @@ export const ProfileForms: React.FC<{
                 name="first_name"
                 label="First Name*"
                 defaultValue={info.first_name}
-                validate={(v: string) =>
-                  v ? undefined : "First Name Required"
-                }
+                validate={requiredValue("First Name Required")}
               />
               <TextF
                 name="last_name"
                 label="Last Name*"
                 space={true}
                 defaultValue={info.last_name}
-                validate={(v: string) => (v ? undefined : "Last Name Required")}
+                validate={requiredValue("Last Name Required")}
               />
             </Row>
             <FormsDropdown
               placeholder="Position in Game*"
               name="position"
-              validate={(v: string) => (v ? undefined : "Position Required")}
+              validate={requiredValue("Position Required")}
               defaultValue={
                 info.position && {
                   label: ToNormalState(info.position),
@@ -224,7 +205,7 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="Secondary Position in Game"
               name="position2"
-              validate={(v: string) => undefined}
+              validate={noValidation}
               defaultValue={
                 info.position2 && {
                   label: ToNormalState(info.position2),
@@ -335,7 +316,7 @@ export const ProfileForms: React.FC<{
               placeholder="School"
               name="school"
               loadOptions={getSchools}
-              validate={(v) => undefined}
+              validate={noValidation}
               defaultValue={
                 info.school && {
                   label: ToNormalState(info.school.name),
@@ -346,7 +327,7 @@ export const ProfileForms: React.FC<{
             <FormsDropdown
               placeholder="School Year"
               name="school_year"
-              validate={(v) => undefined}
+              validate={noValidation}
               defaultValue={
                 info.school_year && {
                   label: ToNormalState(info.school_year),
@@ -366,7 +347,7 @@ export const ProfileForms: React.FC<{
               multiple={true}
               name="teams"
               loadOptions={getTeams}
-              validate={(v) => undefined}
+              validate={noValidation}
               defaultValue={
                 info && info.teams.length !== 0
                   ? info.teams.map((v) => ({
@@ -382,7 +363,7 @@ export const ProfileForms: React.FC<{
               placeholder="Facility"
               name="facilities"
               loadOptions={getFacilities}
-              validate={(v) => undefined}
+              validate={noValidation}
               defaultValue={
                 info?.facilities[0]
                   ? {

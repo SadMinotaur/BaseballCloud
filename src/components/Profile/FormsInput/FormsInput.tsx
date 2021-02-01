@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Field } from "react-final-form";
-import { Stl, MaterialStyles } from "../../../utils/common-styles/input-styles";
+import { Stl, MaterialStyles } from "../../../common-styles/input-styles";
 import {
   DropdownSpacing,
   WarningText,
-} from "../../../utils/common-styles/input-styles";
+} from "../../../common-styles/input-styles";
 
 export const TextF: React.FC<{
   name: string;

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Stl } from "./styles";
-import { SearchInput } from "../../../utils/common-components/search-input-right";
+import { SearchInput } from "../../../common-components/search-input-right";
 import {
   BattingSummary,
   GraphqlProfile,
   TopBatting,
 } from "../../../utils/types/profile";
-import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
+import { DropdownBlue } from "../../../common-components/dropdown-blue";
 import { ProfileNames } from "./../../../utils/types/profile";
 import { Graphql } from "../graphql/query";
 import BeatLoader from "react-spinners/BeatLoader";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import PictureProf from "./../../../assets/profileIcon.png";
 import API from "../../../utils/api";
 
