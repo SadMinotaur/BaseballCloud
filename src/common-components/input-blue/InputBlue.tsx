@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Stl from "./styles";
-import Arrow from "./../../../assets/arrow.svg";
+import Arrow from "./../../assets/arrow.svg";
 
 export const InputBlue: React.FC<{
   input?: any;

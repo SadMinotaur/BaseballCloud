@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Field, Form, FormSpy } from "react-final-form";
-import { DropdownBlue } from "../../../utils/common-components/dropdown-blue";
-import { InputBlue } from "../../../utils/common-components/input-blue";
-import { SearchInput } from "../../../utils/common-components/search-input";
+import { DropdownBlue } from "../../../common-components/dropdown-blue";
+import { InputBlue } from "../../../common-components/input-blue";
+import { SearchInput } from "../../../common-components/search-input";
 import { Profiles, ProfilesInfo } from "../../../utils/types/network";
 import { Graphql } from "./../graphql/query";
 import { NetworkContent } from "./../NetworkContent";

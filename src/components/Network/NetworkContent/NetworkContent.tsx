@@ -1,10 +1,10 @@
 import React from "react";
 import { ProfilesInfo } from "../../../utils/types/network";
-import { Spinner } from "../../../utils/common-components/spinner";
+import { Spinner } from "../../../common-components/spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as heartReg } from "@fortawesome/free-regular-svg-icons";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import { Link } from "react-router-dom";
 
 export const NetworkContent: React.FC<{

@@ -31,3 +31,16 @@ export type GetBatting = {
 export type GetPitching = {
   leaderboard_pitching: { leaderboard_pitching: PitchingUser[] };
 };
+
+export type LeaderboardItem = {
+  number: string;
+  name: string;
+  age: string;
+  school: string;
+  teams: string;
+  statsFirst: string;
+  statsSecond: string;
+  statsThird: string;
+  favorite: boolean;
+  idProfile: number;
+};

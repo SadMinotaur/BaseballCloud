@@ -11,12 +11,14 @@ import {
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
+import {
+  validateEmail,
+  passwordVal,
+  confirmPasswordVal,
+} from "./../../../utils/validation/auth";
 import checkbox from "./../../../assets/checkbox.svg";
 import API from "../../../utils/api";
-import CommonStyle from "../../../utils/common-styles/styles";
-
-// From SO
-const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import CommonStyle from "../../../common-styles/styles";
 
 export const RegForm: React.FC = () => {
   const history = useHistory();
@@ -63,17 +65,7 @@ export const RegForm: React.FC = () => {
         }
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
-            <Field
-              name="email"
-              type="email"
-              validate={(value) =>
-                value
-                  ? reg.test(value)
-                    ? undefined
-                    : "Invalid email"
-                  : "Required"
-              }
-            >
+            <Field name="email" type="email" validate={validateEmail}>
               {({ input, meta }) => (
                 <>
                   <CommonStyle.InputFormInput
@@ -94,17 +86,7 @@ export const RegForm: React.FC = () => {
                 </>
               )}
             </Field>
-            <Field
-              name="password"
-              type="password"
-              validate={(value) =>
-                value && value.length > 7
-                  ? undefined
-                  : value
-                  ? "Required"
-                  : "Must contain more than 8 characters"
-              }
-            >
+            <Field name="password" type="password" validate={passwordVal}>
               {({ input, meta }) => (
                 <>
                   <CommonStyle.InputFormInput
@@ -121,11 +103,7 @@ export const RegForm: React.FC = () => {
             <Field
               name="confirm_password"
               type="password"
-              validate={(value) =>
-                value === values.password
-                  ? undefined
-                  : "Passwords are not equal"
-              }
+              validate={confirmPasswordVal(values)}
             >
               {({ input, meta }) => (
                 <>

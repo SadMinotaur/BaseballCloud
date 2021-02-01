@@ -1,5 +1,5 @@
 import React from "react";
-import Search from "./../../../assets/search.svg";
+import Search from "./../../assets/search.svg";
 import Stl from "./styles";
 
 export const SearchInput: React.FC<{

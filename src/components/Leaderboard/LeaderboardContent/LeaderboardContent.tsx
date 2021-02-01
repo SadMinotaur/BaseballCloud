@@ -1,8 +1,8 @@
 import React from "react";
-import { Spinner } from "../../../utils/common-components/spinner";
+import { Spinner } from "../../../common-components/spinner";
 import { Item } from "../Item";
 import { BattingUser, PitchingUser } from "../../../utils/types/leaderboard";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 import Stl from "./styles";
 
 export const LeaderboardContent: React.FC<{
@@ -48,39 +48,39 @@ export const LeaderboardContent: React.FC<{
           ? contentBatting.map((v: BattingUser, i: number) => (
               <Item
                 key={i}
-                idProfile={v.batter_datraks_id}
+                itemInfo={{
+                  number: (i + 1).toString(),
+                  name: v.batter_name,
+                  age: v.age.toString(),
+                  school: v.school.name,
+                  teams: v.teams[0].name,
+                  statsFirst: v.exit_velocity.toString(),
+                  statsSecond: v.launch_angle ? v.launch_angle.toString() : "-",
+                  statsThird: v.distance.toString(),
+                  favorite: v.favorite,
+                  idProfile: v.batter_datraks_id,
+                }}
                 currentSwitch={currentSwitch}
-                arr={[
-                  (i + 1).toString(),
-                  v.batter_name,
-                  v.age.toString(),
-                  v.school.name,
-                  v.teams[0].name,
-                  v.exit_velocity.toString(),
-                  v.launch_angle ? v.launch_angle.toString() : "-",
-                  v.distance.toString(),
-                ]}
                 onC={() => onClickFavB(v)}
-                fav={v.favorite}
               />
             ))
           : contentPitching.map((v, i: number) => (
               <Item
                 key={i}
-                idProfile={v.pitcher_datraks_id}
+                itemInfo={{
+                  number: (i + 1).toString(),
+                  name: v.pitcher_name,
+                  age: v.age.toString(),
+                  school: v.school.name,
+                  teams: v.teams[0].name,
+                  statsFirst: v.pitch_type,
+                  statsSecond: v.velocity ? v.velocity.toString() : "-",
+                  statsThird: v.spin_rate.toString(),
+                  favorite: v.favorite,
+                  idProfile: v.pitcher_datraks_id,
+                }}
                 currentSwitch={currentSwitch}
-                arr={[
-                  (i + 1).toString(),
-                  v.pitcher_name,
-                  v.age.toString(),
-                  v.school.name,
-                  v.teams[0].name,
-                  v.pitch_type,
-                  v.velocity.toString(),
-                  v.spin_rate.toString(),
-                ]}
                 onC={() => onClickFavP(v)}
-                fav={v.favorite}
               />
             ))}
       </>

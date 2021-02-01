@@ -3,15 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as heartSol } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as heartReg } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
-import CommonStyle from "../../../utils/common-styles/styles";
+import { LeaderboardItem } from "../../../utils/types/leaderboard";
+import CommonStyle from "../../../common-styles/styles";
 
 export const Item: React.FC<{
-  arr: string[];
-  idProfile: number;
+  itemInfo: LeaderboardItem;
   onC: () => void;
-  fav: boolean;
   currentSwitch: boolean;
-}> = ({ arr, onC, fav, currentSwitch, idProfile }) => (
+}> = ({ itemInfo, onC, currentSwitch }) => (
   <CommonStyle.Item>
     <CommonStyle.ItemColumn hidden={true}>
       <CommonStyle.ItemText>Rank</CommonStyle.ItemText>
@@ -33,25 +32,32 @@ export const Item: React.FC<{
       <CommonStyle.ItemText>Favorite</CommonStyle.ItemText>
     </CommonStyle.ItemColumn>
     <CommonStyle.ItemColumn>
-      <CommonStyle.ItemText width={6.5}>{arr[0]}</CommonStyle.ItemText>
+      <CommonStyle.ItemText width={6.5}>{itemInfo.number}</CommonStyle.ItemText>
       <CommonStyle.ItemText width={14}>
-        <Link style={{ color: "#56636D" }} to={"/profile/" + idProfile}>
-          {arr[1]}
+        <Link
+          style={{ color: "#56636D" }}
+          to={"/profile/" + itemInfo.idProfile}
+        >
+          {itemInfo.name}
         </Link>
       </CommonStyle.ItemText>
-      <CommonStyle.ItemText width={5}>{arr[2]}</CommonStyle.ItemText>
-      <CommonStyle.ItemText width={14}>{arr[3]}</CommonStyle.ItemText>
-      <CommonStyle.ItemText width={14.5}>{arr[4]}</CommonStyle.ItemText>
-      <CommonStyle.ItemText width={14.5}>{arr[5]}</CommonStyle.ItemText>
+      <CommonStyle.ItemText width={5}>{itemInfo.age}</CommonStyle.ItemText>
+      <CommonStyle.ItemText width={14}>{itemInfo.school}</CommonStyle.ItemText>
+      <CommonStyle.ItemText width={14.5}>{itemInfo.teams}</CommonStyle.ItemText>
       <CommonStyle.ItemText width={14.5}>
-        {arr[6] ? arr[6] : "-"}
+        {itemInfo.statsFirst}
       </CommonStyle.ItemText>
-      <CommonStyle.ItemText width={10}>{arr[7]}</CommonStyle.ItemText>
+      <CommonStyle.ItemText width={14.5}>
+        {itemInfo.statsSecond ? itemInfo.statsSecond : "-"}
+      </CommonStyle.ItemText>
+      <CommonStyle.ItemText width={10}>
+        {itemInfo.statsThird}
+      </CommonStyle.ItemText>
       <CommonStyle.ItemText width={5}>
         <FontAwesomeIcon
           onClick={onC}
           style={{ color: "#4abdff" }}
-          icon={fav ? heartSol : heartReg}
+          icon={itemInfo.favorite ? heartSol : heartReg}
         />
       </CommonStyle.ItemText>
     </CommonStyle.ItemColumn>

@@ -11,16 +11,13 @@ import {
 } from "./styles";
 import { Form, Field } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
+import { requiredValue } from "./../../../utils/validation/common";
 import API from "../../../utils/api";
-import CommonStyle from "../../../utils/common-styles/styles";
+import CommonStyle from "../../../common-styles/styles";
 
 export const SignInForm: React.FC = () => {
   const history = useHistory();
   const [showError, setShowError] = useState<boolean>(false);
-
-  function required(value: string): string | undefined {
-    return value ? undefined : "Required";
-  }
 
   return (
     <FormContainer>
@@ -36,7 +33,7 @@ export const SignInForm: React.FC = () => {
         }}
         render={({ handleSubmit, submitting, invalid }) => (
           <form onSubmit={handleSubmit}>
-            <Field name="email" validate={required}>
+            <Field name="email" validate={requiredValue()}>
               {({ input }) => (
                 <CommonStyle.InputFormInput
                   {...input}
@@ -46,7 +43,7 @@ export const SignInForm: React.FC = () => {
                 />
               )}
             </Field>
-            <Field name="password" validate={required}>
+            <Field name="password" validate={requiredValue()}>
               {({ input }) => (
                 <CommonStyle.InputFormInput
                   {...input}
